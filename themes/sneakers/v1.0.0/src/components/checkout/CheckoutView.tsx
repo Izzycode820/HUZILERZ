@@ -530,8 +530,8 @@ export function CheckoutView() {
                                         >
                                             <option value="">Select delivery zone</option>
                                             {regions.map(region => region && (
-                                                <option key={region.name} value={region.name}>
-                                                    {region.name} — {formatPrice(region.price || 0)} ({region.estimatedDays})
+                                                <option key={region.name} value={region.name || ""}>
+                                                    {region.name} — {formatPrice(Number(region.price) || 0)} ({region.estimatedDays})
                                                 </option>
                                             ))}
                                         </select>
@@ -676,7 +676,7 @@ export function CheckoutView() {
                                                 )}
                                             </div>
                                             <p className="text-sm font-medium">
-                                                {item.totalPrice ? formatPrice(item.totalPrice) : '-'}
+                                                {item.totalPrice ? formatPrice(Number(item.totalPrice)) : '-'}
                                             </p>
                                         </div>
                                     );

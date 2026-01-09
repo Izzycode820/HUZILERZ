@@ -5,11 +5,7 @@ import { Button } from '@/components/shadcn-ui/button';
 import { AccordionItem } from '@/components/ui/Accordion';
 import { GetProductDetailsQuery } from '@/services/products/__generated__/get-product-details.generated';
 import { Star } from 'lucide-react';
-import { useSession } from '@/lib/session/SessionProvider';
-import { useMutation } from '@apollo/client/react';
-import { AddToCartDocument } from '@/services/cart/__generated__/add-to-cart.generated';
-import { GetCartDocument } from '@/services/cart/__generated__/get-cart.generated';
-import { CartAnimation } from '@/components/shared/CartAnimation';
+
 import { cn } from '@/lib/utils';
 
 type ProductType = NonNullable<GetProductDetailsQuery['product']>;

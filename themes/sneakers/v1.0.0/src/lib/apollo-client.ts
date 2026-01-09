@@ -3,9 +3,9 @@ import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 
 // Error handling middleware
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError }: any) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
+    graphQLErrors.forEach(({ message, locations, path }: any) =>
       console.log(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       )
@@ -26,7 +26,8 @@ const storeIdentificationLink = setContext((_, { headers }) => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     const params = new URLSearchParams(window.location.search)
     const storeSlug = params.get('store') || 'demo-store'
-    storeHostname = `${storeSlug}.huzilerz.com`
+    const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'huzilerz.com'
+    storeHostname = `${storeSlug}.${rootDomain}`
   }
 
   console.log('[Apollo Store ID] Sending hostname:', {
