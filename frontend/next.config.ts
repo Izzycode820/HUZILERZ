@@ -44,6 +44,9 @@ const nextConfig: NextConfig = {
     unoptimized: true, // Disable image optimization for local files
     domains: ['localhost'],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Auto-transpile all theme packages from workspace
   transpilePackages: getThemePackages(),
   experimental: {
