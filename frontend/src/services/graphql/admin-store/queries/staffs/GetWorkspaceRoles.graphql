@@ -1,0 +1,30 @@
+query GetWorkspaceRoles(
+  $first: Int
+  $after: String
+  $name_Icontains: String
+  $isSystem: Boolean
+) {
+  workspaceRoles(
+    first: $first
+    after: $after
+    name_Icontains: $name_Icontains
+    isSystem: $isSystem
+  ) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
+        description
+        isSystem
+        permissionCount
+        memberCount
+      }
+    }
+  }
+}

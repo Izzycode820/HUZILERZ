@@ -1,0 +1,8 @@
+query GetAvailablePaymentMethods {
+  availablePaymentMethods {
+    provider
+    displayName
+    checkoutUrl
+    description
+  }
+}

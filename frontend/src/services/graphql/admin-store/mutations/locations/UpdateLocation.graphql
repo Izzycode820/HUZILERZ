@@ -1,0 +1,26 @@
+mutation UpdateLocation($id: ID!, $input: LocationInput!) {
+  updateLocation(id: $id, input: $input) {
+    success
+    message
+    error
+    location {
+      id
+      name
+      region
+      addressLine1
+      addressLine2
+      city
+      phone
+      email
+      isActive
+      isPrimary
+      lowStockThreshold
+      managerName
+      totalProducts
+      totalStockValue
+      lowStockAlerts
+      createdAt
+      updatedAt
+    }
+  }
+}

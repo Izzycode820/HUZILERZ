@@ -1,0 +1,45 @@
+query Categories(
+  $first: Int
+  $search: String
+  $isVisible: Boolean
+  $isFeatured: Boolean
+) {
+  categories(
+    first: $first
+    search: $search
+    isVisible: $isVisible
+    isFeatured: $isFeatured
+  ) {
+    edges {
+      node {
+        id
+        name
+        description
+        slug
+        metaTitle
+        metaDescription
+        featuredMedia {
+          id
+          url
+          thumbnailUrl
+          optimizedUrl
+          width
+          height
+        }
+        isVisible
+        isFeatured
+        sortOrder
+        productCount
+        createdAt
+        updatedAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

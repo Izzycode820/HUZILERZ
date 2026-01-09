@@ -1,0 +1,6 @@
+query GetBillingProfile {
+  billingProfile {
+    primaryPaymentMethod
+    userPhone
+  }
+}

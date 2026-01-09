@@ -1,0 +1,11 @@
+mutation UpdateThemeCustomization($id: ID!, $input: UpdateThemeCustomizationInput!) {
+  updateThemeCustomization(id: $id, input: $input) {
+    success
+    message
+    error
+    customization {
+      id
+      lastEditedAt
+    }
+  }
+}

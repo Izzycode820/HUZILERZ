@@ -1,0 +1,8 @@
+query GetPurchaseStatus($purchaseId: ID!) {
+  purchaseStatus(purchaseId: $purchaseId) {
+    id
+    paymentStatus
+    errorMessage
+    createdAt
+  }
+}

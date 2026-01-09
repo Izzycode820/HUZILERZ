@@ -1,0 +1,12 @@
+import * as Types from '../../../../../../types/workspace/store/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type ArchiveOrderMutationVariables = Types.Exact<{
+  orderId: Types.Scalars['String']['input'];
+}>;
+
+
+export type ArchiveOrderMutation = { __typename?: 'Mutation', archiveOrder: { __typename?: 'ArchiveOrder', success: boolean | null, message: string | null, error: string | null, order: { __typename?: 'OrderType', id: string, orderNumber: string, status: Types.WorkspaceStoreOrderStatusChoices, isArchived: boolean, archivedAt: string | null, canBeArchived: boolean | null, canBeUnarchived: boolean | null, updatedAt: string } | null } | null };
+
+
+export const ArchiveOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ArchiveOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"archiveOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"order"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"orderNumber"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isArchived"}},{"kind":"Field","name":{"kind":"Name","value":"archivedAt"}},{"kind":"Field","name":{"kind":"Name","value":"canBeArchived"}},{"kind":"Field","name":{"kind":"Name","value":"canBeUnarchived"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<ArchiveOrderMutation, ArchiveOrderMutationVariables>;

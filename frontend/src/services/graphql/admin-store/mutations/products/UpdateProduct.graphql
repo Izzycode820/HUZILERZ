@@ -1,0 +1,101 @@
+mutation UpdateProduct($productId: String!, $updateData: ProductUpdateInput!) {
+  updateProduct(productId: $productId, updateData: $updateData) {
+    success
+    product {
+      id
+      name
+      description
+      slug
+      price
+      costPrice
+      compareAtPrice
+      sku
+      barcode
+      brand
+      vendor
+      productType
+      status
+      publishedAt
+      category { id name }
+      tags
+      trackInventory
+      inventoryQuantity
+      allowBackorders
+      inventoryHealth
+      hasVariants
+      options
+      featuredMedia {
+        id
+        url
+        thumbnailUrl
+        optimizedUrl
+        width
+        height
+      }
+      mediaGallery {
+        id
+        url
+        thumbnailUrl
+        optimizedUrl
+        width
+        height
+      }
+      requiresShipping
+      weight
+      package {
+        id
+        name
+        regionFees
+        method
+      }
+      chargeTax
+      paymentCharges
+      chargesAmount
+      metaTitle
+      metaDescription
+      variants {
+        id
+        sku
+        option1
+        option2
+        option3
+        price
+        compareAtPrice
+        costPrice
+        barcode
+        trackInventory
+        isActive
+        position
+        featuredMedia {
+          id
+          url
+          thumbnailUrl
+          optimizedUrl
+          width
+          height
+        }
+        inventory {
+          id
+          quantity
+          onhand
+          available
+          condition
+          location { id name }
+        }
+      }
+      totalStock
+      isInStock
+      isLowStock
+      isOnSale
+      salePercentage
+      profitMargin
+      conversionRate
+      categoryName
+      hasDimensions
+      createdAt
+      updatedAt
+    }
+    message
+    error
+  }
+}

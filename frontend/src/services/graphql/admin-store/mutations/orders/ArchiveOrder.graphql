@@ -1,0 +1,17 @@
+mutation ArchiveOrder($orderId: String!) {
+  archiveOrder(orderId: $orderId) {
+    success
+    order {
+      id
+      orderNumber
+      status
+      isArchived
+      archivedAt
+      canBeArchived
+      canBeUnarchived
+      updatedAt
+    }
+    message
+    error
+  }
+}

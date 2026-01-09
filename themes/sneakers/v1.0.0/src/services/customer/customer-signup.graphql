@@ -1,0 +1,23 @@
+mutation CustomerSignup(
+  $phone: String!
+  $password: String!
+  $name: String!
+  $email: String
+  $city: String
+  $region: String
+) {
+  customerSignup(
+    phone: $phone
+    password: $password
+    name: $name
+    email: $email
+    city: $city
+    region: $region
+  ) {
+    success
+    customer
+    sessionToken
+    message
+    error
+  }
+}

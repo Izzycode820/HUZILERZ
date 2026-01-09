@@ -1,0 +1,26 @@
+mutation CreateLocation($input: LocationInput!) {
+  createLocation(input: $input) {
+    success
+    message
+    error
+    location {
+      id
+      name
+      region
+      addressLine1
+      addressLine2
+      city
+      phone
+      email
+      isActive
+      isPrimary
+      lowStockThreshold
+      managerName
+      totalProducts
+      totalStockValue
+      lowStockAlerts
+      createdAt
+      updatedAt
+    }
+  }
+}

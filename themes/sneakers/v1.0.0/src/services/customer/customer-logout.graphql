@@ -1,0 +1,6 @@
+mutation CustomerLogout($sessionToken: String!) {
+  customerLogout(sessionToken: $sessionToken) {
+    success
+    message
+  }
+}

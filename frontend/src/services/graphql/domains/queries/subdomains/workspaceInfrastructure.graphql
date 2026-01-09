@@ -1,0 +1,10 @@
+query WorkspaceInfrastructure($workspaceId: ID!) {
+  workspaceInfrastructure(workspaceId: $workspaceId) {
+    id
+    subdomain
+    previewUrl
+    status
+    createdAt
+    updatedAt
+  }
+}

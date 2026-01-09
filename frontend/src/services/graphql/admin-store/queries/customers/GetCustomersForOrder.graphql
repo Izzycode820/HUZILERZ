@@ -1,0 +1,22 @@
+query GetCustomersForOrder($first: Int, $after: String, $search: String) {
+  customers(first: $first, after: $after, name_Icontains: $search) {
+    edges {
+      node {
+        id
+        name
+        phone
+        email
+        city
+        region
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

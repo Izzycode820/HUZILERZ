@@ -1,0 +1,19 @@
+query StorefrontSettings($workspaceId: ID!) {
+  storefrontSettings(workspaceId: $workspaceId) {
+    # Password protection
+    password
+    passwordEnabled
+    passwordDescription
+    
+    # SEO fields
+    seoTitle
+    seoDescription
+    seoKeywords
+    seoImageUrl
+    
+    # Domain info
+    assignedDomain
+    previewUrl
+    siteName
+  }
+}

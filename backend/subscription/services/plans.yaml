@@ -1,0 +1,101 @@
+# Subscription Plan Definitions - Single Source of Truth
+# Intro pricing is a PRICING PHASE, not a plan variant
+# Features are identical between intro and regular phases
+# Synced to database via: python manage.py sync_plans
+
+tiers:
+  free:
+    pricing:
+      intro:
+        price: 0
+        duration_days: 0
+        eligible_once: false
+      regular:
+        monthly: 0
+        yearly: 0
+
+    capabilities:
+      product_limit: 20
+      staff_limit: 1
+      workspace_limit: 1
+      custom_domain: false
+      payment_methods: none
+      analytics: basic
+      storage_gb: 0.5
+      automation: none
+      theme_library_limit: 1
+      deployment_allowed: false
+      dedicated_support: false
+      api_access: none
+
+  beginning:
+    pricing:
+      intro:
+        price: 1000
+        duration_days: 1
+        eligible_once: true
+      regular:
+        monthly: 10000
+        yearly: 100000
+
+    capabilities:
+      product_limit: 50
+      staff_limit: 1
+      workspace_limit: 1
+      custom_domain: false
+      payment_processing: false
+      analytics: basic
+      storage_gb: 2
+      automation: none
+      theme_library_limit: 2
+      deployment_allowed: true
+      dedicated_support: false
+      api_access: read_only
+
+  pro:
+    pricing:
+      intro:
+        price: 2500
+        duration_days: 1
+        eligible_once: true
+      regular:
+        monthly: 25000
+        yearly: 250000
+
+    capabilities:
+      product_limit: 300
+      staff_limit: 5
+      workspace_limit: 3
+      custom_domain: true
+      payment_processing: true
+      analytics: pro
+      storage_gb: 10
+      automation: basic
+      theme_library_limit: 5
+      deployment_allowed: true
+      dedicated_support: false
+      api_access: full
+
+  enterprise:
+    pricing:
+      intro:
+        price: 5000
+        duration_days: 1
+        eligible_once: true
+      regular:
+        monthly: 50000
+        yearly: 500000
+
+    capabilities:
+      product_limit: unlimited
+      staff_limit: 10
+      workspace_limit: unlimited
+      custom_domain: true
+      payment_processing: true
+      analytics: advanced
+      storage_gb: 50
+      automation: advanced
+      theme_library_limit: 10
+      deployment_allowed: true
+      dedicated_support: true
+      api_access: full

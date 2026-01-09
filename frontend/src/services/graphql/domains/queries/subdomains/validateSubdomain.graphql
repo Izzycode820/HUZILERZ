@@ -1,0 +1,8 @@
+query ValidateSubdomain($subdomain: String!) {
+  validateSubdomain(subdomain: $subdomain) {
+    available
+    subdomain
+    fullDomain
+    errors
+  }
+}

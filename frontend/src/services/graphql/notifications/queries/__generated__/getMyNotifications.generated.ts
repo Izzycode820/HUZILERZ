@@ -1,0 +1,14 @@
+import * as Types from '../../../../../types/notifications/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type GetMyNotificationsQueryVariables = Types.Exact<{
+  unreadOnly?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
+  notificationType?: Types.InputMaybe<Types.NotificationTypeEnum>;
+  limit?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+}>;
+
+
+export type GetMyNotificationsQuery = { __typename?: 'Query', myNotifications: Array<{ __typename?: 'NotificationType', id: string, notificationType: Types.NotificationsNotificationNotificationTypeChoices, title: string, body: string, data: any, isRead: boolean | null, notificationTypeDisplay: string | null, workspaceName: string | null, readAt: string | null, createdAt: string } | null> | null };
+
+
+export const GetMyNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyNotifications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"unreadOnly"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"notificationType"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"NotificationTypeEnum"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myNotifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"unreadOnly"},"value":{"kind":"Variable","name":{"kind":"Name","value":"unreadOnly"}}},{"kind":"Argument","name":{"kind":"Name","value":"notificationType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"notificationType"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"notificationType"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}},{"kind":"Field","name":{"kind":"Name","value":"notificationTypeDisplay"}},{"kind":"Field","name":{"kind":"Name","value":"workspaceName"}},{"kind":"Field","name":{"kind":"Name","value":"readAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetMyNotificationsQuery, GetMyNotificationsQueryVariables>;

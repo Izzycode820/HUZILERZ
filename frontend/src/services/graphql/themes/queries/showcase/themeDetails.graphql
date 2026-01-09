@@ -1,0 +1,37 @@
+query ThemeDetails($slug: String!) {
+  themeDetails(slug: $slug) {
+    id
+    name
+    slug
+    description
+    author
+    version
+    templateType
+    workspaceTypes
+    priceTier
+    priceAmount
+    previewImage
+    demoUrl
+
+    showcaseSections {
+      title
+      description
+      image
+    }
+
+    features {
+      category
+      items
+    }
+
+    tags
+    compatibility
+
+    viewCount
+    downloadCount
+    activeUsageCount
+
+    createdAt
+    updatedAt
+  }
+}

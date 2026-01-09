@@ -1,0 +1,22 @@
+query DomainPurchaseStatus($purchaseId: ID!) {
+  domainPurchaseStatus(purchaseId: $purchaseId) {
+    id
+    domainName
+    registrar
+    registrarOrderId
+    priceFcfa
+    exchangeRate
+    paymentMethod
+    paymentProvider
+    paymentStatus
+    registrationPeriodYears
+    registeredAt
+    expiresAt
+    errorMessage
+    isPending
+    isCompleted
+    isFailed
+    createdAt
+    updatedAt
+  }
+}

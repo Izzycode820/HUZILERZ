@@ -1,0 +1,17 @@
+mutation ToggleCategoryVisibility(
+  $id: ID!
+) {
+  toggleCategoryVisibility(
+    id: $id
+  ) {
+    success
+    category {
+      id
+      name
+      isVisible
+    }
+    isVisible
+    message
+    error
+  }
+}

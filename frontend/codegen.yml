@@ -1,0 +1,76 @@
+# GraphQL Code Generation - TypedDocumentNode with Near-Operation-File
+# Apollo Client v4 compatible
+# Maintains clean folder structure with co-located generated files
+#
+# Structure:
+# src/types/themes/graphql-base.ts - Theme base types
+# src/services/graphql/themes/queries/showcase/
+#   ├── themes.graphql
+#   └── __generated__/
+#       └── themes.generated.ts - Typed document for this query
+#
+# Usage in components:
+# import { useMutation } from '@apollo/client/react'
+# import { AddThemeDocument } from './__generated__/addTheme.generated'
+# const [addTheme] = useMutation(AddThemeDocument)
+
+ignoreNoDocuments: true
+
+schema:
+  # Theme GraphQL endpoint (hybrid public/authenticated)
+  #- http://localhost:8000/api/workspaces/hosting/graphql/:
+   - http://localhost:8000/api/subscriptions/graphql/:
+  #- http://localhost:8000/api/themes/graphql/:
+
+      headers:
+        Authorization: "Bearer ${ADMIN_AUTH_TOKEN}"
+        X-Workspace-Id: "${WORKSPACE_ID}"
+
+
+documents:
+  # Domain operations (all queries and mutations)
+  # - "src/services/graphql/hosting/mutations/**/*.graphql"
+    - "src/services/graphql/subscription/queries/**/*.graphql"
+
+generates:
+  # Base types for subscription
+  src/types/subscription/graphql-base.ts:
+    plugins:
+      - "typescript"
+    config:
+      skipTypename: false
+      declarationKind: "interface"
+      scalars:
+        DateTime: string
+        UUID: string
+        JSON: "Record<string, any>"
+        Decimal: string
+
+  # Operation-specific types co-located with GraphQL files
+  src/services/graphql/subscription/:
+    preset: "near-operation-file"
+    presetConfig:
+      baseTypesPath: ../../../types/subscription/graphql-base.ts
+      extension: .generated.ts
+      folder: __generated__
+    plugins:
+      - "typescript-operations"
+      - "typed-document-node"
+    config:
+      skipTypename: false
+      preResolveTypes: true
+      declarationKind: "interface"
+      scalars:
+        DateTime: string
+        UUID: string
+        JSON: "Record<string, any>"
+        Decimal: string
+      avoidOptionals:
+        field: true
+        inputValue: false
+        object: false
+        defaultValue: false
+
+hooks:
+  afterAllFileWrite:
+    - prettier --write

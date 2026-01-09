@@ -1,0 +1,15 @@
+import * as Types from '../../../types/graphql/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type CreateWhatsappOrderMutationVariables = Types.Exact<{
+  sessionId: Types.Scalars['String']['input'];
+  whatsappNumber: Types.Scalars['String']['input'];
+  customerInfo: Types.CustomerInfoInput;
+  shippingRegion: Types.Scalars['String']['input'];
+}>;
+
+
+export type CreateWhatsappOrderMutation = { __typename: 'Mutation', createWhatsappOrder: { __typename: 'CreateWhatsAppOrder', success: boolean | null, orderId: string | null, orderNumber: string | null, whatsappLink: string | null, message: string | null, error: string | null } | null };
+
+
+export const CreateWhatsappOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateWhatsappOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"whatsappNumber"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customerInfo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CustomerInfoInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shippingRegion"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createWhatsappOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sessionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sessionId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"whatsappNumber"},"value":{"kind":"Variable","name":{"kind":"Name","value":"whatsappNumber"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"customerInfo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customerInfo"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"shippingRegion"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shippingRegion"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"orderNumber"}},{"kind":"Field","name":{"kind":"Name","value":"whatsappLink"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<CreateWhatsappOrderMutation, CreateWhatsappOrderMutationVariables>;

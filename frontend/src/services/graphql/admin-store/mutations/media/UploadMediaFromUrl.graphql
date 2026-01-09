@@ -1,0 +1,21 @@
+mutation UploadMediaFromUrl($url: String!, $filename: String) {
+  uploadMediaFromUrl(url: $url, filename: $filename) {
+    success
+    upload {
+      id
+      originalFilename
+      url
+      thumbnailUrl
+      optimizedUrl
+      fileSize
+      mimeType
+      mediaType
+      width
+      height
+      uploadedAt
+      status
+    }
+    message
+    error
+  }
+}

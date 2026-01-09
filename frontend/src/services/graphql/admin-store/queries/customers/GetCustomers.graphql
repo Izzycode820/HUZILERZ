@@ -1,0 +1,43 @@
+query GetCustomers(
+  $first: Int
+  $after: String
+  $name_Icontains: String
+  $phone_Icontains: String
+  $customerType: WorkspaceCoreCustomerCustomerTypeChoices
+  $region: WorkspaceCoreCustomerRegionChoices
+  $isActive: Boolean
+) {
+  customers(
+    first: $first
+    after: $after
+    name_Icontains: $name_Icontains
+    phone_Icontains: $phone_Icontains
+    customerType: $customerType
+    region: $region
+    isActive: $isActive
+  ) {
+    edges {
+      node {
+        id
+        name
+        phone
+        email
+        city
+        region
+        customerType
+        totalOrders
+        totalSpent
+        lastOrderAt
+        isActive
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

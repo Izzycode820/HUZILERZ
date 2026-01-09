@@ -1,0 +1,8 @@
+mutation ValidateCustomerSession($sessionToken: String!) {
+  validateCustomerSession(sessionToken: $sessionToken) {
+    success
+    customer
+    message
+    error
+  }
+}

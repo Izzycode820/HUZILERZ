@@ -1,0 +1,21 @@
+mutation UploadMedia($file: Upload!, $processVariations: Boolean) {
+  uploadMedia(file: $file, processVariations: $processVariations) {
+    success
+    upload {
+      id
+      originalFilename
+      url
+      thumbnailUrl
+      optimizedUrl
+      fileSize
+      mimeType
+      mediaType
+      width
+      height
+      uploadedAt
+      status
+    }
+    message
+    error
+  }
+}

@@ -1,0 +1,12 @@
+import * as Types from '../../../../../../types/subscription/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type PrepareIntentMutationVariables = Types.Exact<{
+  intentData: Types.PrepareIntentInput;
+}>;
+
+
+export type PrepareIntentMutation = { __typename?: 'Mutation', prepareIntent: { __typename?: 'PrepareIntent', success: boolean | null, action: string | null, pricingMode: string | null, amount: number | null, currency: string | null, planName: string | null, scheduleDate: string | null, currentPlanName: string | null, daysUntilRenewal: number | null, message: string | null, error: string | null, errorCode: string | null } | null };
+
+
+export const PrepareIntentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PrepareIntent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"intentData"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PrepareIntentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"prepareIntent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"intentData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"intentData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"pricingMode"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"planName"}},{"kind":"Field","name":{"kind":"Name","value":"scheduleDate"}},{"kind":"Field","name":{"kind":"Name","value":"currentPlanName"}},{"kind":"Field","name":{"kind":"Name","value":"daysUntilRenewal"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}},{"kind":"Field","name":{"kind":"Name","value":"errorCode"}}]}}]}}]} as unknown as DocumentNode<PrepareIntentMutation, PrepareIntentMutationVariables>;

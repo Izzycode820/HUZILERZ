@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    {# Primary SEO Meta Tags - Server-side injected (crawlers see this!) #}
+    <title>{{ meta.title }}</title>
+    <meta name="description" content="{{ meta.description }}">
+    {% if meta.keywords %}<meta name="keywords" content="{{ meta.keywords }}">{% endif %}
+    <link rel="canonical" href="{{ meta.url }}">
+
+    {# Open Graph Meta Tags - For Facebook, WhatsApp, LinkedIn #}
+    <meta property="og:type" content="{{ meta.og_type }}">
+    <meta property="og:title" content="{{ meta.title }}">
+    <meta property="og:description" content="{{ meta.description }}">
+    <meta property="og:image" content="{{ meta.image }}">
+    <meta property="og:url" content="{{ meta.url }}">
+    <meta property="og:site_name" content="{{ meta.site_name }}">
+
+    {# Twitter Card Meta Tags - For Twitter link previews #}
+    <meta name="twitter:card" content="{{ meta.twitter_card }}">
+    <meta name="twitter:title" content="{{ meta.title }}">
+    <meta name="twitter:description" content="{{ meta.description }}">
+    <meta name="twitter:image" content="{{ meta.image }}">
+
+    {# JSON-LD Structured Data - For Google Rich Results #}
+    {% if structured_data %}
+    <script type="application/ld+json">
+{{ structured_data|safe }}
+    </script>
+    {% endif %}
+
+    {# Favicon - Default HUZILERZ favicon (users can customize later) #}
+    <link rel="icon" type="image/x-icon" href="https://cdn.huzilerz.com/assets/favicon.ico">
+
+    {# Preconnect to CDN for faster theme loading #}
+    <link rel="preconnect" href="https://cdn.huzilerz.com">
+    <link rel="dns-prefetch" href="https://cdn.huzilerz.com">
+
+    {# Hidden H1 for SEO (positioned off-screen, not display:none to avoid Google penalty) #}
+    {# This ensures crawlers always find a primary heading even before React hydrates #}
+    <h1 style="position: absolute; left: -9999px; top: 0;">{{ meta.title }}</h1>
+
+    {# Basic CSS to prevent FOUC (Flash of Unstyled Content) #}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Loading state - shown until React hydrates */
+        #root:empty::before {
+            content: 'Loading...';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Prevent layout shift during hydration */
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Noscript fallback styling */
+        noscript {
+            display: block;
+            padding: 2rem;
+            text-align: center;
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            margin: 1rem;
+            border-radius: 4px;
+        }
+    </style>
+
+    {# Additional meta for security #}
+    <meta name="referrer" content="origin-when-cross-origin">
+
+    {# Robots meta - respect site status #}
+    {% if not site_active %}
+    <meta name="robots" content="noindex, nofollow">
+    {% else %}
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    {% endif %}
+</head>
+<body>
+    {# React mount point #}
+    <div id="root"></div>
+
+    {# Fallback for users with JavaScript disabled #}
+    <noscript>
+        <strong>JavaScript Required</strong>
+        <p>This store requires JavaScript to be enabled in your browser to function properly.</p>
+        <p>Please enable JavaScript and refresh the page.</p>
+    </noscript>
+
+    {# Inject store configuration for React app #}
+    <script>
+        // Global config available to React theme
+        window.__HUZILERZ_STORE_CONFIG__ = {
+            siteId: '{{ site_id }}',
+            siteName: {{ meta.site_name|safe }},  {# Already escaped in view #}
+            subdomain: '{{ subdomain }}',
+            customDomain: {% if custom_domain %}'{{ custom_domain }}'{% else %}null{% endif %},
+            apiEndpoint: '{{ api_endpoint }}',
+            graphqlEndpoint: '{{ graphql_endpoint }}',
+            cdnUrl: 'https://app.huzilerz.com',
+            version: '{{ theme_version }}'
+        };
+    </script>
+
+    {# Load React theme bundle from CDN (version-based cache busting) #}
+    <script src="{{ theme_cdn_url }}" defer></script>
+
+    {# Analytics placeholder - for future implementation #}
+    {% if analytics_enabled %}
+    {# Google Analytics, Facebook Pixel, etc. will go here #}
+    {% endif %}
+</body>
+</html>

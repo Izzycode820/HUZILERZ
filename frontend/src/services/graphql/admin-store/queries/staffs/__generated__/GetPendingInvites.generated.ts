@@ -1,0 +1,10 @@
+import * as Types from '../../../../../../types/workspace/store/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type GetPendingInvitesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetPendingInvitesQuery = { __typename?: 'Query', pendingInvites: Array<{ __typename?: 'WorkspaceInviteType', id: string, email: string, createdAt: string, expiresAt: string, role: { __typename?: 'RoleType', id: string, name: string, description: string } | null, invitedBy: { __typename?: 'UserType', id: string, email: string, firstName: string, lastName: string } | null } | null> | null };
+
+
+export const GetPendingInvitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPendingInvites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pendingInvites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"invitedBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"expiresAt"}}]}}]}}]} as unknown as DocumentNode<GetPendingInvitesQuery, GetPendingInvitesQueryVariables>;

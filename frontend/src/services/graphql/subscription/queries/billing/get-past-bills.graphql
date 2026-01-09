@@ -1,0 +1,21 @@
+query GetPastBills(
+  $limit: Int = 50
+  $offset: Int = 0
+  $status: String
+  $sortOrder: String = "newest_first"
+  $search: String
+) {
+  pastBills(
+    limit: $limit
+    offset: $offset
+    status: $status
+    sortOrder: $sortOrder
+    search: $search
+  ) {
+    billNumber
+    createdAt
+    action
+    amountPaid
+    status
+  }
+}

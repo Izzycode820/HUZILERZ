@@ -1,0 +1,8 @@
+mutation DeleteProduct($productId: String!) {
+  deleteProduct(productId: $productId) {
+    success
+    deletedId
+    message
+    error
+  }
+}

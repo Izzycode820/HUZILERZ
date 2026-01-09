@@ -1,0 +1,18 @@
+mutation PrepareRenewalCheckout {
+  prepareRenewalCheckout {
+    success
+    amount
+    currency
+    breakdown {
+      basePrice
+      discount
+      finalAmount
+      currency
+    }
+    planName
+    cycleDurationDays
+    message
+    error
+    errorCode
+  }
+}

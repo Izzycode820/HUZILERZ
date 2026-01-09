@@ -1,0 +1,22 @@
+mutation CreatePaymentOrder(
+  $sessionId: String!
+  $customerInfo: CustomerInfoInput!
+  $shippingRegion: String!
+  $paymentMethod: String!
+) {
+  createPaymentOrder(
+    input: {
+      sessionId: $sessionId
+      customerInfo: $customerInfo
+      shippingRegion: $shippingRegion
+      paymentMethod: $paymentMethod
+    }
+  ) {
+    success
+    orderId
+    orderNumber
+    paymentUrl
+    message
+    error
+  }
+}

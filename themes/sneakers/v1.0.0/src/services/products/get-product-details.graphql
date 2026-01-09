@@ -1,0 +1,42 @@
+query GetProductDetails($productSlug: String!) {
+  product(productSlug: $productSlug) {
+    id
+    name
+    slug
+    description
+    price
+    compareAtPrice
+    isOnSale
+    salePercentage
+    inStock
+    stockStatus
+    brand
+    vendor
+    hasVariants
+    variantOptions
+    mediaUploads {
+      url
+      optimizedWebp
+      thumbnailWebp
+      tinyWebp
+      width
+      height
+    }
+    variants {
+      id
+      sku
+      option1
+      option2
+      option3
+      price
+      compareAtPrice
+      inStock
+      totalStock
+    }
+    category {
+      id
+      name
+      slug
+    }
+  }
+}

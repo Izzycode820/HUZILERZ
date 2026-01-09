@@ -1,0 +1,27 @@
+# Public query to fetch puck data with RESOLVED section data for storefront rendering
+# No JWT required - uses X-Store-Hostname header for tenant identification
+#
+# This is the PRIMARY query for all storefront page rendering.
+# Returns puck.data structure with injected resolvedData for each section.
+#
+# Backend Flow:
+# 1. Extract hostname from X-Store-Hostname header
+# 2. Look up workspace by subdomain
+# 3. Get active theme customization
+# 4. Load puck_data JSON
+# 5. For each section with dataContract:
+#    - Call SectionResolverService to resolve data
+#    - Inject resolvedData into section
+# 6. Return enriched puck_data
+#
+# Example Usage:
+# GET /api/themes/storefront/graphql/
+# Headers: { 'X-Store-Hostname': 'johns-shop.huzilerz.com' }
+
+query GetPuckDataResolved {
+  publicPuckDataResolved {
+    success
+    message
+    data
+  }
+}

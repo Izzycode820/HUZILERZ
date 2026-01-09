@@ -1,0 +1,13 @@
+query GetCategory($categorySlug: String!) {
+  category(categorySlug: $categorySlug) {
+    id
+    name
+    slug
+    description
+    categoryImage {
+      optimizedUrl
+      thumbnailUrl
+    }
+    productCount
+  }
+}

@@ -1,0 +1,19 @@
+mutation UpdateStoreProfile($input: StoreProfileInput!) {
+  updateStoreProfile(input: $input) {
+    success
+    message
+    error
+    storeProfile {
+      id
+      storeName
+      storeDescription
+      storeEmail
+      supportEmail
+      phoneNumber
+      whatsappNumber
+      currency
+      timezone
+      updatedAt
+    }
+  }
+}

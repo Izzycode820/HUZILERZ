@@ -1,0 +1,77 @@
+# GraphQL Code Generation - TypedDocumentNode with Near-Operation-File
+# Apollo Client v4 compatible
+# Maintains clean folder structure with co-located generated files
+#
+# Structure:
+# src/types/workspace/store/graphql-base.ts - Base types
+# src/services/graphql/admin-store/queries/categories/
+#   ├── categories.graphql
+#   └── __generated__/
+#       └── categories.generated.ts - Typed document for this query
+#
+# Usage in components:
+# import { useMutation } from '@apollo/client/react'
+# import { CreateCategoryDocument } from './__generated__/createCategory.generated'
+# const [create] = useMutation(CreateCategoryDocument)
+#
+# Incremental Development:
+# - Change documents paths to target different domains (products, categories, etc.)
+# - Change schema URL to target different endpoints (store, storefront, platform)
+
+ignoreNoDocuments: true
+
+schema:
+  - http://localhost:8000/api/workspaces/store/graphql/:
+      headers:
+        Authorization: "Bearer ${ADMIN_AUTH_TOKEN}"
+        X-Workspace-Id: "${WORKSPACE_ID}"
+
+documents:
+  # Incremental development - change domain as needed
+  - "src/services/graphql/admin-store/queries/products/**/*.graphql"
+ # - "src/services/graphql/admin-store/mutations/analytics/**/*.graphql"
+
+generates:
+  # Base types for the store domain
+  src/types/workspace/store/graphql-base.ts:
+    plugins:
+      - "typescript"
+    config:
+      skipTypename: false
+      declarationKind: "interface"
+      scalars:
+        DateTime: string
+        UUID: string
+        JSON: "Record<string, any>"
+        Decimal: any
+        Upload: any
+
+  # Operation-specific types co-located with GraphQL files
+  src/services/graphql/admin-store/:
+    preset: "near-operation-file"
+    presetConfig:
+      baseTypesPath: ../../../types/workspace/store/graphql-base.ts
+      extension: .generated.ts
+      folder: __generated__
+    plugins:
+      - "typescript-operations"
+      - "typed-document-node"
+    config:
+      skipTypename: false
+      preResolveTypes: true
+      declarationKind: "interface"
+      scalars:
+        DateTime: string
+        UUID: string
+        JSON: "Record<string, any>"
+        Decimal: any
+        Upload: any
+      avoidOptionals:
+        field: true
+        inputValue: false
+        object: false
+        defaultValue: false
+
+hooks:
+  afterAllFileWrite:
+    - prettier --write

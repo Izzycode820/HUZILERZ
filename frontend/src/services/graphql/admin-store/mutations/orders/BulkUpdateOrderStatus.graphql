@@ -1,0 +1,10 @@
+mutation BulkUpdateOrderStatus($bulkData: BulkStatusUpdateInput!) {
+  bulkUpdateOrderStatus(bulkData: $bulkData) {
+    success
+    totalUpdates
+    successfulUpdates
+    failedUpdates
+    message
+    error
+  }
+}

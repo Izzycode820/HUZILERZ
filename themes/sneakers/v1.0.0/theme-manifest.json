@@ -1,0 +1,86 @@
+{
+  "id": "sneakers",
+  "name": "Sneakers",
+  "slug": "ecommerce-sneakers",
+  "description": "Clean Shoe e-commerce template with modern design",
+  "template_type": "ecommerce",
+  "category": "ecommerce",
+  "price_tier": "free",
+  "price_amount": 0,
+  "workspace_type": "store",
+  "version": "1.0.0",
+  "status": "published",
+
+  "preview_image": "screenshots/sneakers.jpg",
+
+  "showcase_sections": [
+    {
+      "title": "Modern product displays",
+      "description": "Beautiful product grids with hover effects and quick view functionality that makes shopping a breeze",
+      "image": "screenshots/sneakers.jpg"
+    },
+    {
+      "title": "Seamless checkout flow",
+      "description": "Optimized checkout process with guest checkout, saved addresses, and multiple payment options",
+      "image": "screenshots/sneakers.jpg"
+    },
+    {
+      "title": "Mobile-first responsive design",
+      "description": "Perfect shopping experience on any device, from smartphones to desktop displays",
+      "image": "screenshots/sneakers.jpg"
+    }
+  ],
+
+  "features": [
+    {
+      "category": "Cart and checkout",
+      "items": [
+        "Quick buy button",
+        "Guest checkout",
+        "Promo codes",
+        "Saved payment methods",
+        "Order tracking"
+      ]
+    },
+    {
+      "category": "Product discovery",
+      "items": [
+        "Enhanced search",
+        "Product filters",
+        "Wishlist",
+        "Recently viewed",
+        "Recommended products"
+      ]
+    },
+    {
+      "category": "Merchandising",
+      "items": [
+        "Image galleries",
+        "Product variants",
+        "Size guide",
+        "Stock counter",
+        "Product reviews"
+      ]
+    }
+  ],
+
+  "compatibility": {
+    "nextjs": "14+",
+    "react": "18+",
+    "typescript": "5+",
+    "tailwind": "3+"
+  },
+  "author": "Huzilaz Team",
+  "license": "free",
+
+  "puck_config": "./puck.config.json",
+  "puck_data": "./puck.data.json",
+
+  "preview": {
+    "type": "puck-editor-preview",
+    "mode": "embedded",
+    "demo_url": "https://sneakers-demo.huzilaz.com"
+  },
+
+  "tags": ["ecommerce", "shoe", "modern", "responsive"]
+}

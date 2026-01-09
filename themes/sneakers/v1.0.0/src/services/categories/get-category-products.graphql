@@ -1,0 +1,27 @@
+query GetCategoryProducts($categorySlug: String!, $limit: Int = 20) {
+  categoryProducts(
+    categorySlug: $categorySlug
+    limit: $limit
+  ) {
+    id
+    name
+    slug
+    price
+    compareAtPrice
+    isOnSale
+    salePercentage
+    inStock
+    mediaUploads {
+      thumbnailWebp
+      optimizedWebp
+    }
+    variants {
+      id
+      option1
+      option2
+      option3
+      price
+      inStock
+    }
+  }
+}

@@ -1,0 +1,16 @@
+# pnpm Workspace Configuration
+# This file defines the monorepo structure for HUZILERZ
+#
+# Structure:
+# - frontend: Next.js application (main app)
+# - backend: Django application
+# - themes/*: All theme packages (customer-facing storefronts)
+
+packages:
+  # Main applications
+  - 'frontend'
+  - 'backend'
+
+  # Theme packages (all versions)
+  - 'themes/*/*'
+

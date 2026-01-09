@@ -1,0 +1,10 @@
+query CategoryPicker {
+  categories {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}

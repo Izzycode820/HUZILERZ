@@ -1,0 +1,15 @@
+Login Verification - {{ site_name }}
+
+Hello!
+
+A login attempt was made to your {{ site_name }} account. Use the verification code below to complete your login:
+
+{{ code }}
+
+This code will expire in {{ expires_minutes }} minutes.
+
+SECURITY NOTICE: If you did not attempt to log in, someone may be trying to access your account. Please secure your account by changing your password.
+
+For support, contact us at {{ support_email }}
+
+{{ site_name }}

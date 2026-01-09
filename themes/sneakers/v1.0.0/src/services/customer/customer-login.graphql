@@ -1,0 +1,9 @@
+mutation CustomerLogin($phone: String!, $password: String!) {
+  customerLogin(phone: $phone, password: $password) {
+    success
+    customer
+    sessionToken
+    message
+    error
+  }
+}

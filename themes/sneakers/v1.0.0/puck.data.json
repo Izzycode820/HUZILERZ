@@ -1,0 +1,196 @@
+{
+  "content": [
+    {
+      "type": "NavBar",
+      "props": {
+        "id": "navbar-1",
+        "storeName": "Sneakers Store",
+        "logoUrl": "",
+        "links": [
+          {
+            "label": "Shop",
+            "href": "/products"
+          },
+          {
+            "label": "Collections",
+            "href": "/collections"
+          },
+          {
+            "label": "About",
+            "href": "/about"
+          }
+        ],
+        "alignment": "left",
+        "showSearch": true,
+        "showCart": true
+      }
+    },
+    {
+      "type": "HeroSection",
+      "props": {
+        "id": "hero-1",
+        "headline": "PREMIUM <br/> FOOTWEAR",
+        "description": "Experience the ultimate comfort and style with our new collection.",
+        "ctaText": "Shop Now",
+        "ctaLink": "/products",
+        "mediaType": "image",
+        "mediaUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1920",
+        "videoUrl": "",
+        "overlayOpacity": 50,
+        "textAlignment": "center"
+      }
+    },
+    {
+      "type": "CollectionSlider",
+      "props": {
+        "id": "collection-slider-1",
+        "title": "Shop by Collection",
+        "limit": 6,
+        "viewMoreText": "See all collections"
+      },
+      "dataContract": {
+        "type": "FEATURED_CATEGORIES",
+        "resolver": "featuredCategories"
+      }
+    },
+    {
+      "type": "SaleBannerSection",
+      "props": {
+        "id": "sale-banner-1",
+        "headline": "BIG SALE!",
+        "description": "Get up to 50% off on selected items. Limited time only.",
+        "offerText": "3 <span class=\"italic\">for</span> 169 XAF",
+        "ctaText": "Shop sale",
+        "ctaLink": "/collections/sale",
+        "backgroundImage": "https://images.unsplash.com/photo-1612902376491-7a8a99b424e8?w=1920",
+        "overlayOpacity": 70
+      }
+    },
+    {
+      "type": "FeaturedProducts",
+      "props": {
+        "id": "featured-products-1",
+        "title": "Featured Drops",
+        "categorySlug": "featured",
+        "limit": 10,
+        "viewMoreText": "View all"
+      },
+      "dataContract": {
+        "type": "CATEGORY_PRODUCTS",
+        "resolver": "categoryProducts"
+      }
+    },
+    {
+      "type": "TwoColumnCollections",
+      "props": {
+        "id": "two-col-collections-1",
+        "title": "More to Explore",
+        "collection1Slug": "",
+        "collection2Slug": ""
+      },
+      "dataContract": {
+        "type": "ALL_CATEGORIES",
+        "resolver": "allCategories"
+      }
+    },
+    {
+      "type": "NewArrivals",
+      "props": {
+        "title": "New Arrivals",
+        "categorySlug": "new-arrivals",
+        "limit": 10,
+        "viewMoreText": "View all",
+        "id": "NewArrivals-1"
+      },
+      "dataContract": {
+        "type": "CATEGORY_PRODUCTS",
+        "resolver": "categoryProducts"
+      }
+    },
+    {
+      "type": "Footer",
+      "props": {
+        "id": "footer-1",
+        "storeName": "SNEAKERS",
+        "description": "Premium footwear collection for style and comfort",
+        "columns": [
+          {
+            "title": "SHOP",
+            "links": [
+              {
+                "label": "All Products",
+                "href": "/products"
+              },
+              {
+                "label": "Collections",
+                "href": "/collections"
+              },
+              {
+                "label": "Sale",
+                "href": "/sale"
+              }
+            ]
+          },
+          {
+            "title": "COMPANY",
+            "links": [
+              {
+                "label": "About Us",
+                "href": "/about"
+              },
+              {
+                "label": "Contact",
+                "href": "/contact"
+              },
+              {
+                "label": "Blog",
+                "href": "/blog"
+              }
+            ]
+          },
+          {
+            "title": "SUPPORT",
+            "links": [
+              {
+                "label": "Shipping",
+                "href": "/shipping"
+              },
+              {
+                "label": "Returns",
+                "href": "/returns"
+              },
+              {
+                "label": "FAQ",
+                "href": "/faq"
+              }
+            ]
+          }
+        ],
+        "socialLinks": [
+          {
+            "platform": "Instagram",
+            "url": "https://instagram.com"
+          },
+          {
+            "platform": "Twitter",
+            "url": "https://twitter.com"
+          },
+          {
+            "platform": "Facebook",
+            "url": "https://facebook.com"
+          }
+        ],
+        "copyrightText": "",
+        "showPaymentMethods": true
+      }
+    }
+  ],
+  "root": {
+    "props": {
+      "pageTitle": "Sneakers Demo Store",
+      "pageDescription": "Premium footwear collection for style and comfort",
+      "backgroundColor": "bg-white"
+    }
+  },
+  "zones": {}
+}

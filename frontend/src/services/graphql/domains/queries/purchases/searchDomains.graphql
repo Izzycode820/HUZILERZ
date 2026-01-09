@@ -1,0 +1,17 @@
+query SearchDomains($query: String!, $page: Int, $pageSize: Int) {
+  searchDomains(query: $query, page: $page, pageSize: $pageSize) {
+    query
+    available
+    suggestions {
+      domain
+      available
+      priceUsd
+      pricePerYear
+      category
+    }
+    total
+    page
+    pageSize
+    hasNextPage
+  }
+}

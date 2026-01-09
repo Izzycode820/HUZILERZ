@@ -1,0 +1,14 @@
+mutation DuplicateProduct($productId: String!, $newName: String, $copyVariants: Boolean = true, $copyInventory: Boolean = false) {
+  duplicateProduct(productId: $productId, newName: $newName, copyVariants: $copyVariants, copyInventory: $copyInventory) {
+    success
+    product {
+      id
+      name
+      slug
+    }
+    variantsCreated
+    inventoryRecordsCreated
+    message
+    error
+  }
+}

@@ -1,0 +1,8 @@
+mutation RemoveStaff($memberId: ID!) {
+  removeStaff(memberId: $memberId) {
+    success
+    deletedId
+    message
+    error
+  }
+}

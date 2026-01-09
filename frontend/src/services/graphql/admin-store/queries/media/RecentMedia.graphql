@@ -1,0 +1,28 @@
+query RecentMedia(
+  $limit: Int
+  $mediaType: String
+  $search: String
+  $sortBy: String
+  $sortOrder: String
+) {
+  recentMedia(
+    limit: $limit
+    mediaType: $mediaType
+    search: $search
+    sortBy: $sortBy
+    sortOrder: $sortOrder
+  ) {
+    id
+    originalFilename
+    url
+    thumbnailUrl
+    optimizedUrl
+    fileSize
+    mimeType
+    mediaType
+    width
+    height
+    uploadedAt
+    status
+  }
+}

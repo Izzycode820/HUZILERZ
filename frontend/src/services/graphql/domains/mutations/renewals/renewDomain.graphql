@@ -1,0 +1,20 @@
+mutation RenewDomain($domainId: ID!, $renewalPeriodYears: Int) {
+  renewDomain(
+    input: { domainId: $domainId, renewalPeriodYears: $renewalPeriodYears }
+  ) {
+    success
+    message
+    error
+    renewal {
+      id
+      domainName
+      renewalPriceFcfa
+      renewalStatus
+      isPendingPayment
+      isCompleted
+      isFailed
+      createdAt
+    }
+    paymentInstructions
+  }
+}

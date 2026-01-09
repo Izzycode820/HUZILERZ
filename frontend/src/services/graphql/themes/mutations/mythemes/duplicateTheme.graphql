@@ -1,0 +1,22 @@
+mutation DuplicateTheme($id: ID!, $newName: String) {
+  duplicateTheme(id: $id, newName: $newName) {
+    success
+    message
+    error
+    customization {
+      id
+      themeName
+      themeSlug
+      isActive
+      puckConfig
+      puckData
+      createdAt
+      lastEditedAt
+      template {
+        id
+        name
+        slug
+      }
+    }
+  }
+}

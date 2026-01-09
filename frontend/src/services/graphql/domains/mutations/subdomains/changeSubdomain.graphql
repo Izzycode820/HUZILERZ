@@ -1,0 +1,10 @@
+mutation ChangeSubdomain($workspaceId: ID!, $subdomain: String!) {
+  changeSubdomain(input: { workspaceId: $workspaceId, subdomain: $subdomain }) {
+    success
+    message
+    error
+    newSubdomain
+    liveUrl
+    previewUrl
+  }
+}

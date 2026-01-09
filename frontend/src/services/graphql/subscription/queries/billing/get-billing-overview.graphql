@@ -1,0 +1,9 @@
+query GetBillingOverview {
+  billingOverview {
+    upcomingBillAmount
+    nextBillDate
+    daysUntilBill
+    lastPaymentMethod
+    lastPaymentPhoneNumber
+  }
+}

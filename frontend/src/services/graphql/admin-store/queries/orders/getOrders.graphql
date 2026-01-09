@@ -1,0 +1,57 @@
+# Get orders list with core essential columns for tabular display
+query GetOrders(
+  $first: Int
+  $after: String
+  $status: WorkspaceStoreOrderStatusChoices
+  $orderSource: WorkspaceStoreOrderOrderSourceChoices
+  $shippingRegion: WorkspaceStoreOrderShippingRegionChoices
+  $paymentStatus: WorkspaceStoreOrderPaymentStatusChoices
+  $paymentMethod: WorkspaceStoreOrderPaymentMethodChoices
+  $isArchived: Boolean
+) {
+  orders(
+    first: $first
+    after: $after
+    status: $status
+    orderSource: $orderSource
+    shippingRegion: $shippingRegion
+    paymentStatus: $paymentStatus
+    paymentMethod: $paymentMethod
+    isArchived: $isArchived
+  ) {
+    edges {
+      node {
+        # Core essential columns for table
+        id
+        orderNumber
+        createdAt
+        customerName
+        customerPhone
+        totalAmount
+        currency
+        paymentStatus
+        paymentMethod
+        orderSource
+        shippingRegion
+        status
+
+        # Quick computed stats for table & badges
+        itemCount
+        isPaid
+        canBeCancelled
+        canBeArchived
+        canBeUnarchived
+        isWhatsappOrder
+        isCashOnDelivery
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

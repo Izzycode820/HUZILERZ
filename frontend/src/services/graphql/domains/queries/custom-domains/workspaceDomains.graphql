@@ -1,0 +1,26 @@
+query WorkspaceDomains($workspaceId: ID!) {
+  workspaceDomains(workspaceId: $workspaceId) {
+    id
+    domain
+    status
+    verified
+    isActive
+    isPurchasedDomain
+    canRenew
+    purchasedViaPlatform
+    registrarName
+    purchasePriceFcfa
+    renewalPriceFcfa
+    expiresAt
+    nextRenewalDate
+    daysUntilExpiry
+    isExpiringSoon
+    renewalReminderSent
+    renewalWarningCount
+    sslEnabled
+    sslProvisionedAt
+    autoRenewEnabled
+    createdAt
+    verifiedAt
+  }
+}

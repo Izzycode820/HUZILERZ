@@ -1,0 +1,14 @@
+query GetMyNotifications($unreadOnly: Boolean, $notificationType: NotificationTypeEnum, $limit: Int) {
+  myNotifications(unreadOnly: $unreadOnly, notificationType: $notificationType, limit: $limit) {
+    id
+    notificationType
+    title
+    body
+    data
+    isRead
+    notificationTypeDisplay
+    workspaceName
+    readAt
+    createdAt
+  }
+}

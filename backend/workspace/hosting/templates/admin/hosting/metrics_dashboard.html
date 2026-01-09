@@ -1,0 +1,328 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<style>
+    .metrics-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+    .metric-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .metric-card h3 {
+        margin-top: 0;
+        color: #333;
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: 2px solid #417690;
+        padding-bottom: 10px;
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: bold;
+        color: #417690;
+        margin: 15px 0;
+    }
+
+    .metric-label {
+        color: #666;
+        font-size: 14px;
+        margin: 5px 0;
+    }
+
+    .success-rate {
+        color: #28a745;
+    }
+
+    .failure-rate {
+        color: #dc3545;
+    }
+
+    .alert-box {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    .alert-box.high {
+        background: #f8d7da;
+        border-color: #dc3545;
+    }
+
+    .alert-box h3 {
+        margin-top: 0;
+        color: #856404;
+    }
+
+    .alert-box.high h3 {
+        color: #721c24;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 16px;
+        color: #666;
+        border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+        color: #417690;
+        border-bottom-color: #417690;
+        font-weight: bold;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 30px;
+        background: #f0f0f0;
+        border-radius: 15px;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #28a745;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        transition: width 0.3s ease;
+    }
+
+    .progress-fill.warning {
+        background: #ffc107;
+    }
+
+    .progress-fill.danger {
+        background: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Infrastructure Metrics Dashboard</h1>
+
+<div class="tabs">
+    <button class="tab active" onclick="switchTab('minute')">Last Minute</button>
+    <button class="tab" onclick="switchTab('hour')">Last Hour</button>
+    <button class="tab" onclick="switchTab('day')">Last Day</button>
+</div>
+
+<!-- Alerts Section -->
+{% if alerts.alert_count > 0 %}
+<div class="alert-box {% if alerts.alerts.0.severity == 'high' %}high{% endif %}">
+    <h3>Active Alerts ({{ alerts.alert_count }})</h3>
+    {% for alert in alerts.alerts %}
+    <div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 4px;">
+        <strong>[{{ alert.severity|upper }}]</strong> {{ alert.message }}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div style="background: #d4edda; border: 1px solid #28a745; border-radius: 8px; padding: 15px; margin: 20px 0; color: #155724;">
+    <strong>No Active Alerts</strong> - All systems operating normally
+</div>
+{% endif %}
+
+<!-- Minute Metrics -->
+<div id="metrics-minute" class="tab-content active">
+    <h2>Last Minute</h2>
+
+    <div class="metrics-container">
+        <!-- Provisioning Metrics -->
+        <div class="metric-card">
+            <h3>Provisioning</h3>
+            <div class="metric-value success-rate">{{ metrics_minute.provisioning.success_rate_percent }}%</div>
+            <div class="metric-label">Success Rate</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill {% if metrics_minute.provisioning.success_rate_percent < 80 %}danger{% elif metrics_minute.provisioning.success_rate_percent < 95 %}warning{% endif %}"
+                     style="width: {{ metrics_minute.provisioning.success_rate_percent }}%;">
+                    {{ metrics_minute.provisioning.success_count }} / {{ metrics_minute.provisioning.total_count }}
+                </div>
+            </div>
+
+            <div class="metric-label">
+                Success: {{ metrics_minute.provisioning.success_count }}<br>
+                Failures: {{ metrics_minute.provisioning.failure_count }}<br>
+                Avg Duration: {{ metrics_minute.provisioning.avg_duration_seconds }}s
+            </div>
+        </div>
+
+        <!-- Deployment Metrics -->
+        <div class="metric-card">
+            <h3>Deployments</h3>
+            <div class="metric-value success-rate">{{ metrics_minute.deployment.success_rate_percent }}%</div>
+            <div class="metric-label">Success Rate</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill {% if metrics_minute.deployment.success_rate_percent < 90 %}danger{% elif metrics_minute.deployment.success_rate_percent < 98 %}warning{% endif %}"
+                     style="width: {{ metrics_minute.deployment.success_rate_percent }}%;">
+                    {{ metrics_minute.deployment.success_count }} / {{ metrics_minute.deployment.total_count }}
+                </div>
+            </div>
+
+            <div class="metric-label">
+                Success: {{ metrics_minute.deployment.success_count }}<br>
+                Failures: {{ metrics_minute.deployment.failure_count }}<br>
+                Rollbacks: {{ metrics_minute.deployment.rollback_count }}<br>
+                Avg Duration: {{ metrics_minute.deployment.avg_duration_seconds }}s
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hour Metrics -->
+<div id="metrics-hour" class="tab-content">
+    <h2>Last Hour</h2>
+
+    <div class="metrics-container">
+        <!-- Provisioning Metrics -->
+        <div class="metric-card">
+            <h3>Provisioning</h3>
+            <div class="metric-value success-rate">{{ metrics_hour.provisioning.success_rate_percent }}%</div>
+            <div class="metric-label">Success Rate</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill {% if metrics_hour.provisioning.success_rate_percent < 80 %}danger{% elif metrics_hour.provisioning.success_rate_percent < 95 %}warning{% endif %}"
+                     style="width: {{ metrics_hour.provisioning.success_rate_percent }}%;">
+                    {{ metrics_hour.provisioning.success_count }} / {{ metrics_hour.provisioning.total_count }}
+                </div>
+            </div>
+
+            <div class="metric-label">
+                Success: {{ metrics_hour.provisioning.success_count }}<br>
+                Failures: {{ metrics_hour.provisioning.failure_count }}<br>
+                Avg Duration: {{ metrics_hour.provisioning.avg_duration_seconds }}s
+            </div>
+        </div>
+
+        <!-- Deployment Metrics -->
+        <div class="metric-card">
+            <h3>Deployments</h3>
+            <div class="metric-value success-rate">{{ metrics_hour.deployment.success_rate_percent }}%</div>
+            <div class="metric-label">Success Rate</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill {% if metrics_hour.deployment.success_rate_percent < 90 %}danger{% elif metrics_hour.deployment.success_rate_percent < 98 %}warning{% endif %}"
+                     style="width: {{ metrics_hour.deployment.success_rate_percent }}%;">
+                    {{ metrics_hour.deployment.success_count }} / {{ metrics_hour.deployment.total_count }}
+                </div>
+            </div>
+
+            <div class="metric-label">
+                Success: {{ metrics_hour.deployment.success_count }}<br>
+                Failures: {{ metrics_hour.deployment.failure_count }}<br>
+                Rollbacks: {{ metrics_hour.deployment.rollback_count }}<br>
+                Avg Duration: {{ metrics_hour.deployment.avg_duration_seconds }}s
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Day Metrics -->
+<div id="metrics-day" class="tab-content">
+    <h2>Last 24 Hours</h2>
+
+    <div class="metrics-container">
+        <!-- Provisioning Metrics -->
+        <div class="metric-card">
+            <h3>Provisioning</h3>
+            <div class="metric-value success-rate">{{ metrics_day.provisioning.success_rate_percent }}%</div>
+            <div class="metric-label">Success Rate</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill {% if metrics_day.provisioning.success_rate_percent < 80 %}danger{% elif metrics_day.provisioning.success_rate_percent < 95 %}warning{% endif %}"
+                     style="width: {{ metrics_day.provisioning.success_rate_percent }}%;">
+                    {{ metrics_day.provisioning.success_count }} / {{ metrics_day.provisioning.total_count }}
+                </div>
+            </div>
+
+            <div class="metric-label">
+                Success: {{ metrics_day.provisioning.success_count }}<br>
+                Failures: {{ metrics_day.provisioning.failure_count }}<br>
+                Avg Duration: {{ metrics_day.provisioning.avg_duration_seconds }}s
+            </div>
+        </div>
+
+        <!-- Deployment Metrics -->
+        <div class="metric-card">
+            <h3>Deployments</h3>
+            <div class="metric-value success-rate">{{ metrics_day.deployment.success_rate_percent }}%</div>
+            <div class="metric-label">Success Rate</div>
+
+            <div class="progress-bar">
+                <div class="progress-fill {% if metrics_day.deployment.success_rate_percent < 90 %}danger{% elif metrics_day.deployment.success_rate_percent < 98 %}warning{% endif %}"
+                     style="width: {{ metrics_day.deployment.success_rate_percent }}%;">
+                    {{ metrics_day.deployment.success_count }} / {{ metrics_day.deployment.total_count }}
+                </div>
+            </div>
+
+            <div class="metric-label">
+                Success: {{ metrics_day.deployment.success_count }}<br>
+                Failures: {{ metrics_day.deployment.failure_count }}<br>
+                Rollbacks: {{ metrics_day.deployment.rollback_count }}<br>
+                Avg Duration: {{ metrics_day.deployment.avg_duration_seconds }}s
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+    <p><strong>Last Updated:</strong> {{ metrics_hour.timestamp }}</p>
+    <p><strong>Auto-refresh:</strong> This page auto-refreshes every 30 seconds</p>
+</div>
+
+<script>
+function switchTab(window) {
+    // Update tab buttons
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    // Update content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.getElementById('metrics-' + window).classList.add('active');
+}
+
+// Auto-refresh every 30 seconds
+setTimeout(function() {
+    location.reload();
+}, 30000);
+</script>
+{% endblock %}

@@ -1,0 +1,25 @@
+mutation ReactivateStaff($memberId: ID!) {
+  reactivateStaff(memberId: $memberId) {
+    success
+    member {
+      id
+      user {
+        id
+        email
+        firstName
+        lastName
+      }
+      role {
+        id
+        name
+        description
+        isSystem
+        permissionCount
+      }
+      status
+      joinedAt
+    }
+    message
+    error
+  }
+}

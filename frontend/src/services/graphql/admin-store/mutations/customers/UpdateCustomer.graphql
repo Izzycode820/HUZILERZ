@@ -1,0 +1,22 @@
+mutation UpdateCustomer($customerId: String!, $updateData: CustomerUpdateInput!) {
+  updateCustomer(customerId: $customerId, updateData: $updateData) {
+    success
+    customer {
+      id
+      name
+      phone
+      email
+      customerType
+      city
+      region
+      address
+      tags
+      smsNotifications
+      whatsappNotifications
+      isActive
+      updatedAt
+    }
+    message
+    error
+  }
+}

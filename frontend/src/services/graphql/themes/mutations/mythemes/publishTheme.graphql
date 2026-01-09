@@ -1,0 +1,12 @@
+mutation PublishTheme($id: ID!) {
+  publishTheme(id: $id) {
+    success
+    message
+    error
+    customization {
+      id
+      isActive
+      publishedAt
+    }
+  }
+}

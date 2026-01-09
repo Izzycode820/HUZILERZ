@@ -1,0 +1,21 @@
+mutation RemoveDiscountFromCart($input: RemoveDiscountFromCartInput!) {
+  removeDiscountFromCart(input: $input) {
+    success
+    error
+    message
+    cart {
+      id
+      subtotal
+      discountCode
+      discountAmount
+      total
+      hasDiscount
+      items {
+        id
+        quantity
+        totalPrice
+      }
+      itemCount
+    }
+  }
+}

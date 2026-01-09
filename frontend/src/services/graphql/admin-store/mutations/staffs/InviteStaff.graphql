@@ -1,0 +1,24 @@
+mutation InviteStaff($input: InviteStaffInput!) {
+  inviteStaff(input: $input) {
+    success
+    invite {
+      id
+      email
+      role {
+        id
+        name
+        description
+      }
+      invitedBy {
+        id
+        email
+        firstName
+        lastName
+      }
+      createdAt
+      expiresAt
+    }
+    message
+    error
+  }
+}

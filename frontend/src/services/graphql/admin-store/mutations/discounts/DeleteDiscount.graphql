@@ -1,0 +1,7 @@
+mutation DeleteDiscount($discountId: String!) {
+  deleteDiscount(discountId: $discountId) {
+    success
+    message
+    error
+  }
+}

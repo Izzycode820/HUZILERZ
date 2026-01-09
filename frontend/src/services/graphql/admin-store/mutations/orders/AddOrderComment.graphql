@@ -1,0 +1,19 @@
+mutation AddOrderComment($orderId: String!, $message: String!, $isInternal: Boolean) {
+  addOrderComment(orderId: $orderId, message: $message, isInternal: $isInternal) {
+    success
+    message
+    error
+    comment {
+      id
+      message
+      createdAt
+      isInternal
+      author {
+        id
+        email
+        firstName
+        lastName
+      }
+    }
+  }
+}

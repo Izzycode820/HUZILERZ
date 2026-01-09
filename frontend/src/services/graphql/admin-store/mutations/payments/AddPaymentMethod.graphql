@@ -1,0 +1,15 @@
+mutation AddPaymentMethod($input: AddPaymentMethodInput!) {
+  addPaymentMethod(input: $input) {
+    success
+    message
+    error
+    paymentMethod {
+      id
+      providerName
+      checkoutUrl
+      enabled
+      verified
+      displayName
+    }
+  }
+}

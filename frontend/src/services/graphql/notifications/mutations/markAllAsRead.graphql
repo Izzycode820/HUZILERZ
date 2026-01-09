@@ -1,0 +1,6 @@
+mutation MarkAllNotificationsAsRead($workspaceId: ID, $workspaceOnly: Boolean) {
+  markAllNotificationsAsRead(workspaceId: $workspaceId, workspaceOnly: $workspaceOnly) {
+    success
+    count
+  }
+}

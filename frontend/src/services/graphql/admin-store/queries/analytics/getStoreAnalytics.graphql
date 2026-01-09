@@ -1,0 +1,70 @@
+# Analytics Dashboard Query
+# Fetches complete analytics data for the workspace
+# Tier-gated: Returns data based on workspace analytics capability
+
+query GetStoreAnalytics($days: Int = 30) {
+  storeAnalytics(days: $days) {
+    analyticsLevel
+    generatedAt
+    hasAccess
+    
+    # BASIC tier data
+    cards {
+      title
+      value
+      trend
+      trendDirection
+    }
+    
+    chart {
+      data {
+        date
+        orders
+        revenue
+      }
+      config {
+        orders {
+          label
+          color
+        }
+        revenue {
+          label
+          color
+        }
+      }
+    }
+    
+    paymentBreakdown {
+      mobileMoney
+      cashOnDelivery
+      card
+      whatsapp
+      bankTransfer
+    }
+    
+    # PRO tier data (null if not available)
+    funnel {
+      stages {
+        name
+        count
+        rate
+      }
+      metrics {
+        conversionRate
+        abandonmentRate
+        cartAbandoned
+      }
+    }
+    
+    customers {
+      newCustomers
+      returningCustomers
+      total
+      newRate
+    }
+    
+    # Error handling
+    error
+    requiredPlan
+  }
+}

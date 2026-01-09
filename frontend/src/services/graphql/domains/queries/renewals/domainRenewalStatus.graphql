@@ -1,0 +1,23 @@
+query DomainRenewalStatus($renewalId: ID!) {
+  domainRenewalStatus(renewalId: $renewalId) {
+    id
+    domainName
+    registrar
+    registrarRenewalId
+    renewalPriceFcfa
+    exchangeRate
+    paymentMethod
+    paymentProvider
+    renewalStatus
+    previousExpiryDate
+    newExpiryDate
+    renewedAt
+    warningSentAt
+    daysBeforeExpiryWarned
+    isPendingPayment
+    isCompleted
+    isFailed
+    createdAt
+    updatedAt
+  }
+}

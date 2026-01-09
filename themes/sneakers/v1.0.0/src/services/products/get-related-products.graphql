@@ -1,0 +1,19 @@
+query GetRelatedProducts($productId: ID!, $limit: Int = 8) {
+  relatedProducts(
+    productId: $productId
+    limit: $limit
+  ) {
+    id
+    name
+    slug
+    price
+    compareAtPrice
+    isOnSale
+    salePercentage
+    inStock
+    mediaUploads {
+      thumbnailWebp
+      optimizedWebp
+    }
+  }
+}

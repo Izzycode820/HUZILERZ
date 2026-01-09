@@ -1,0 +1,15 @@
+query ThemeCustomization($id: ID!) {
+  themeCustomization(id: $id) {
+    id
+    themeName
+    themeSlug
+    isActive
+    puckConfig
+    puckData
+    template {
+      id
+      name
+      slug
+    }
+  }
+}

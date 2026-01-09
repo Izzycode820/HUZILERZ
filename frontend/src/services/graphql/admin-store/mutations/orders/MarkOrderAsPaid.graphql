@@ -1,0 +1,13 @@
+mutation MarkOrderAsPaid($orderId: String!) {
+  markOrderAsPaid(orderId: $orderId) {
+    success
+    message
+    error
+    order {
+      id
+      paymentStatus
+      status
+      canMarkAsPaid
+    }
+  }
+}

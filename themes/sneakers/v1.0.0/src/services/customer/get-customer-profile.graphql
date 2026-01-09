@@ -1,0 +1,7 @@
+mutation GetCustomerProfile($customerId: String!, $sessionToken: String!) {
+  getCustomerProfile(customerId: $customerId, sessionToken: $sessionToken) {
+    success
+    profile
+    error
+  }
+}

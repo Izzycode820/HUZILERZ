@@ -1,0 +1,17 @@
+query GetAllCategories($first: Int = 50) {
+  categories(first: $first) {
+    edges {
+      node {
+        id
+        name
+        slug
+        categoryImage {
+          thumbnailUrl
+          optimizedUrl
+        }
+        productCount
+        isFeatured
+      }
+    }
+  }
+}

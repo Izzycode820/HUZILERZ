@@ -1,0 +1,40 @@
+mutation CreateOrder($orderData: OrderCreateInput!) {
+  createOrder(orderData: $orderData) {
+    success
+    order {
+      id
+      orderNumber
+      orderSource
+      customerName
+      customerPhone
+      customerEmail
+      shippingRegion
+      shippingAddress
+      status
+      paymentStatus
+      paymentMethod
+      subtotal
+      shippingCost
+      taxAmount
+      discountAmount
+      totalAmount
+      currency
+      notes
+      createdAt
+      itemCount
+      isWhatsappOrder
+      isCashOnDelivery
+      items {
+        id
+        productName
+        productSku
+        quantity
+        unitPrice
+        totalPrice
+      }
+    }
+    message
+    error
+    unavailableItems
+  }
+}

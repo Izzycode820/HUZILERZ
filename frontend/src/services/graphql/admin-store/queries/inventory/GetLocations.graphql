@@ -1,0 +1,8 @@
+query GetLocations {
+  locations {
+    id
+    name
+    region
+    isActive
+  }
+}

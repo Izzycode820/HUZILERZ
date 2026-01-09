@@ -1,0 +1,12 @@
+import * as Types from '../../../../../../types/workspace/store/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type UpdateStoreProfileMutationVariables = Types.Exact<{
+  input: Types.StoreProfileInput;
+}>;
+
+
+export type UpdateStoreProfileMutation = { __typename?: 'Mutation', updateStoreProfile: { __typename?: 'UpdateStoreProfile', success: boolean | null, message: string | null, error: string | null, storeProfile: { __typename?: 'StoreProfileType', id: string, storeName: string, storeDescription: string, storeEmail: string, supportEmail: string, phoneNumber: string, whatsappNumber: string, currency: Types.WorkspaceStoreStoreProfileCurrencyChoices, timezone: Types.WorkspaceStoreStoreProfileTimezoneChoices, updatedAt: string } | null } | null };
+
+
+export const UpdateStoreProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateStoreProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"StoreProfileInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateStoreProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}},{"kind":"Field","name":{"kind":"Name","value":"storeProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"storeName"}},{"kind":"Field","name":{"kind":"Name","value":"storeDescription"}},{"kind":"Field","name":{"kind":"Name","value":"storeEmail"}},{"kind":"Field","name":{"kind":"Name","value":"supportEmail"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"whatsappNumber"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateStoreProfileMutation, UpdateStoreProfileMutationVariables>;

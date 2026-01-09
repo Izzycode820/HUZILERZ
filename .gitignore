@@ -1,0 +1,29 @@
+# Systems
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+.pnpm-store/
+venv/
+__pycache__/
+
+# Environment
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# IDEs
+.vscode/
+.idea/
+
+# Build Outputs
+.next/
+dist/
+build/
+staticfiles/
+
+# Legacy/Backup Folders
+frontend_whereiwork/

@@ -1,0 +1,19 @@
+mutation PrepareUpgradeCheckout($upgradeData: PrepareUpgradeInput!) {
+  prepareUpgradeCheckout(upgradeData: $upgradeData) {
+    success
+    amount
+    currency
+    breakdown {
+      basePrice
+      discount
+      finalAmount
+      currency
+    }
+    planName
+    currentPlanName
+    cycleDurationDays
+    message
+    error
+    errorCode
+  }
+}

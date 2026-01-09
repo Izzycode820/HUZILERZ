@@ -1,0 +1,28 @@
+query Category(
+  $id: ID!
+) {
+  category(
+    id: $id
+  ) {
+    id
+    name
+    description
+    slug
+    metaTitle
+    metaDescription
+    featuredMedia {
+      id
+      url
+      thumbnailUrl
+      optimizedUrl
+      width
+      height
+    }
+    isVisible
+    isFeatured
+    sortOrder
+    productCount
+    createdAt
+    updatedAt
+  }
+}

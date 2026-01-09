@@ -1,0 +1,22 @@
+mutation ApplyAutomaticDiscounts($input: ApplyAutomaticDiscountsInput!) {
+  applyAutomaticDiscounts(input: $input) {
+    success
+    error
+    message
+    discountApplied
+    cart {
+      id
+      subtotal
+      discountCode
+      discountAmount
+      total
+      hasDiscount
+      items {
+        id
+        quantity
+        totalPrice
+      }
+      itemCount
+    }
+  }
+}

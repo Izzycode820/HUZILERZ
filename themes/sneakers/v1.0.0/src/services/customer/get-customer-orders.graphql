@@ -1,0 +1,7 @@
+mutation GetCustomerOrders($customerId: String!, $sessionToken: String!) {
+  getCustomerOrders(customerId: $customerId, sessionToken: $sessionToken) {
+    success
+    orderSummary
+    error
+  }
+}

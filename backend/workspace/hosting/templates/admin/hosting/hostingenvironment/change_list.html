@@ -1,0 +1,172 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .dashboard-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .metric-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .metric-card h4 {
+        margin: 0;
+        color: #666;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .metric-card .value {
+        font-size: 28px;
+        font-weight: bold;
+        color: #417690;
+        margin: 8px 0;
+    }
+
+    .metric-card .value.active {
+        color: #28a745;
+    }
+
+    .metric-card .value.warning {
+        color: #ffc107;
+    }
+
+    .metric-card .value.danger {
+        color: #dc3545;
+    }
+
+    .metric-card .value.info {
+        color: #17a2b8;
+    }
+
+    .status-bar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .status-badge {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: white;
+        font-weight: 500;
+    }
+
+    .status-badge.active {
+        background: #28a745;
+    }
+
+    .status-badge.suspended {
+        background: #dc3545;
+    }
+
+    .status-badge.grace {
+        background: #fd7e14;
+    }
+
+    .status-badge.init {
+        background: #6c757d;
+    }
+
+    .status-badge.error {
+        background: #dc3545;
+    }
+
+    .tier-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .tier-badge {
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .tier-badge.free {
+        background: #e9ecef;
+        color: #6c757d;
+    }
+
+    .tier-badge.starter {
+        background: #cce5ff;
+        color: #004085;
+    }
+
+    .tier-badge.professional {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .tier-badge.business {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .tier-badge.enterprise {
+        background: #e2d5f1;
+        color: #6f42c1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if dashboard_metrics %}
+<div class="dashboard-metrics">
+    <div class="metric-card">
+        <h4>Total Environments</h4>
+        <div class="value">{{ dashboard_metrics.total_environments }}</div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Status Breakdown</h4>
+        <div class="status-bar">
+            <span class="status-badge active">{{ dashboard_metrics.status_breakdown.active }} Active</span>
+            <span class="status-badge suspended">{{ dashboard_metrics.status_breakdown.suspended }} Suspended</span>
+            <span class="status-badge grace">{{ dashboard_metrics.status_breakdown.grace_period }} Grace</span>
+            <span class="status-badge init">{{ dashboard_metrics.status_breakdown.initializing }} Init</span>
+            {% if dashboard_metrics.status_breakdown.error %}
+            <span class="status-badge error">{{ dashboard_metrics.status_breakdown.error }} Error</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Tier Distribution</h4>
+        <div class="tier-grid">
+            <span class="tier-badge free">Free: {{ dashboard_metrics.tier_breakdown.free }}</span>
+            <span class="tier-badge starter">Starter: {{ dashboard_metrics.tier_breakdown.starter }}</span>
+            <span class="tier-badge professional">Pro: {{ dashboard_metrics.tier_breakdown.professional }}</span>
+            <span class="tier-badge business">Business: {{ dashboard_metrics.tier_breakdown.business }}</span>
+            <span class="tier-badge enterprise">Enterprise: {{ dashboard_metrics.tier_breakdown.enterprise }}</span>
+        </div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Deployment Enabled</h4>
+        <div class="value info">{{ dashboard_metrics.deployment_enabled }}</div>
+    </div>
+</div>
+{% endif %}
+
+{{ block.super }}
+{% endblock %}

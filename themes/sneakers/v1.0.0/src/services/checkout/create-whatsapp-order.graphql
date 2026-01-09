@@ -1,0 +1,22 @@
+mutation CreateWhatsappOrder(
+  $sessionId: String!
+  $whatsappNumber: String!
+  $customerInfo: CustomerInfoInput!
+  $shippingRegion: String!
+) {
+  createWhatsappOrder(
+    input: {
+      sessionId: $sessionId
+      whatsappNumber: $whatsappNumber
+      customerInfo: $customerInfo
+      shippingRegion: $shippingRegion
+    }
+  ) {
+    success
+    orderId
+    orderNumber
+    whatsappLink
+    message
+    error
+  }
+}

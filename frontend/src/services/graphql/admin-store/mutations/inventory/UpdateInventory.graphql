@@ -1,0 +1,32 @@
+mutation UpdateInventory($updateData: UpdateInventoryInput!) {
+  updateInventory(updateData: $updateData) {
+    success
+    message
+    error
+    inventory {
+      id
+      quantity
+      onhand
+      available
+      condition
+      isAvailable
+      isLowStock
+      stockStatus
+      sku
+      variant {
+        id
+        sku
+        option1
+        option2
+        option3
+      }
+      location {
+        id
+        name
+        region
+      }
+      createdAt
+      updatedAt
+    }
+  }
+}

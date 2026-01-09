@@ -1,0 +1,43 @@
+query GetCustomer($id: ID!) {
+  customer(id: $id) {
+    id
+    name
+    phone
+    email
+    customerType
+    city
+    region
+    address
+    tags
+    totalOrders
+    totalSpent
+    firstOrderAt
+    lastOrderAt
+    smsNotifications
+    whatsappNotifications
+    isActive
+    verifiedAt
+    createdAt
+    updatedAt
+    isVerified
+    hasEmail
+    isFrequentBuyer
+    averageOrderValue
+    lifetimeValue
+    isHighValue
+
+    history {
+      id
+      action
+      displayMessage
+      details
+      createdAt
+      performedBy {
+        id
+        email
+        firstName
+        lastName
+      }
+    }
+  }
+}

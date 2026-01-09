@@ -1,0 +1,13 @@
+import * as Types from '../../../../../../types/hosting/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type ConnectCustomDomainMutationVariables = Types.Exact<{
+  workspaceId: Types.Scalars['ID']['input'];
+  domain: Types.Scalars['String']['input'];
+}>;
+
+
+export type ConnectCustomDomainMutation = { __typename?: 'Mutation', connectCustomDomain: { __typename?: 'ConnectCustomDomain', success: boolean | null, message: string | null, error: string | null, dnsRecords: any | null, verificationInstructions: string | null, domain: { __typename?: 'CustomDomainType', id: string, domain: string, status: Types.WorkspaceHostingCustomDomainStatusChoices, createdAt: string } | null } | null };
+
+
+export const ConnectCustomDomainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ConnectCustomDomain"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"workspaceId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"domain"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"connectCustomDomain"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"workspaceId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"workspaceId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"domain"},"value":{"kind":"Variable","name":{"kind":"Name","value":"domain"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}},{"kind":"Field","name":{"kind":"Name","value":"domain"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"domain"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dnsRecords"}},{"kind":"Field","name":{"kind":"Name","value":"verificationInstructions"}}]}}]}}]} as unknown as DocumentNode<ConnectCustomDomainMutation, ConnectCustomDomainMutationVariables>;

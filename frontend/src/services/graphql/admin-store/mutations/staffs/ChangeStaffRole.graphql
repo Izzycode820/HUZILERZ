@@ -1,0 +1,25 @@
+mutation ChangeStaffRole($input: ChangeStaffRoleInput!) {
+  changeStaffRole(input: $input) {
+    success
+    member {
+      id
+      user {
+        id
+        email
+        firstName
+        lastName
+      }
+      role {
+        id
+        name
+        description
+        isSystem
+        permissionCount
+      }
+      status
+      joinedAt
+    }
+    message
+    error
+  }
+}

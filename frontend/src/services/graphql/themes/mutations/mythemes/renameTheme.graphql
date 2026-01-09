@@ -1,0 +1,11 @@
+mutation RenameTheme($id: ID!, $name: String!) {
+  renameTheme(id: $id, name: $name) {
+    success
+    message
+    error
+    customization {
+      id
+      themeName
+    }
+  }
+}

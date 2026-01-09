@@ -1,0 +1,20 @@
+mutation UpdateCustomerProfile(
+  $customerId: String!
+  $sessionToken: String!
+  $profileData: ProfileDataInput
+  $addressesData: AddressOperationsInput
+  $preferencesData: PreferencesInput
+) {
+  updateCustomerProfile(
+    customerId: $customerId
+    sessionToken: $sessionToken
+    profileData: $profileData
+    addressesData: $addressesData
+    preferencesData: $preferencesData
+  ) {
+    success
+    profile
+    message
+    error
+  }
+}

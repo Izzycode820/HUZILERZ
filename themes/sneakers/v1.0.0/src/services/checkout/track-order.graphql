@@ -1,0 +1,15 @@
+query TrackOrder(
+  $orderNumber: String!
+  $phone: String!
+) {
+  trackOrder(
+    orderNumber: $orderNumber
+    phone: $phone
+  ) {
+    orderNumber
+    status
+    totalAmount
+    createdAt
+    trackingNumber
+  }
+}

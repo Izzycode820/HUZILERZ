@@ -1,0 +1,19 @@
+query GetPendingInvites {
+  pendingInvites {
+    id
+    email
+    role {
+      id
+      name
+      description
+    }
+    invitedBy {
+      id
+      email
+      firstName
+      lastName
+    }
+    createdAt
+    expiresAt
+  }
+}

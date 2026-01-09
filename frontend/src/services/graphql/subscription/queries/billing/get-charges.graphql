@@ -1,0 +1,22 @@
+query GetCharges(
+  $limit: Int = 50
+  $offset: Int = 0
+  $chargeType: String
+  $dateFrom: DateTime
+  $dateTo: DateTime
+  $search: String
+) {
+  charges(
+    limit: $limit
+    offset: $offset
+    chargeType: $chargeType
+    dateFrom: $dateFrom
+    dateTo: $dateTo
+    search: $search
+  ) {
+    reference
+    createdAt
+    chargeType
+    amount
+  }
+}

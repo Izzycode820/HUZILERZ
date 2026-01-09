@@ -1,0 +1,12 @@
+query GetFeaturedCategories($limit: Int = 6) {
+  featuredCategories(limit: $limit) {
+    id
+    name
+    slug
+    categoryImage {
+      thumbnailUrl
+      optimizedUrl
+    }
+    productCount
+  }
+}

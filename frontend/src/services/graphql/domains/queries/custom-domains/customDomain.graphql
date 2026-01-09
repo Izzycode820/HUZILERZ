@@ -1,0 +1,35 @@
+query CustomDomain($domainId: ID!) {
+  customDomain(domainId: $domainId) {
+    id
+    domain
+    status
+    dnsStatus
+    tlsStatus
+    registrarName
+    createdAt
+    verifiedAt
+    sslEnabled
+    sslProvisionedAt
+    dnsRecordsToRemove {
+      type
+      name
+      currentValue
+      updateTo
+      action
+    }
+    dnsRecordsToAdd {
+      type
+      name
+      currentValue
+      updateTo
+      action
+    }
+    dnsRecordsToUpdate {
+      type
+      name
+      currentValue
+      updateTo
+      action
+    }
+  }
+}

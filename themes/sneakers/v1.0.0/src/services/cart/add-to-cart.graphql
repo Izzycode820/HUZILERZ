@@ -1,0 +1,46 @@
+mutation AddToCart($input: AddToCartInput!) {
+  addToCart(input: $input) {
+    cart {
+      id
+      items {
+        id
+        product {
+          id
+          name
+          price
+          mediaUploads {
+            thumbnailWebp
+          }
+        }
+        variant {
+          id
+          option1
+          option2
+          option3
+        }
+        quantity
+        totalPrice
+      }
+      subtotal
+      discountCode
+      discountAmount
+      total
+      hasDiscount
+      appliedDiscount {
+        code
+        name
+        discountType
+        discountAmount
+        itemDiscounts {
+          productId
+          productName
+          quantity
+          quantityDiscounted
+          originalPrice
+          discountAmount
+        }
+      }
+      itemCount
+    }
+  }
+}

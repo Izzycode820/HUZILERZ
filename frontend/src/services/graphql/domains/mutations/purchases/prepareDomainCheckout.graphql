@@ -1,0 +1,13 @@
+mutation PrepareDomainCheckout($domain: String!, $workspaceId: ID!) {
+  prepareDomainCheckout(domain: $domain, workspaceId: $workspaceId) {
+    success
+    domainName
+    priceUsd
+    priceFcfa
+    exchangeRate
+    registrationPeriodYears
+    currency
+    available
+    error
+  }
+}

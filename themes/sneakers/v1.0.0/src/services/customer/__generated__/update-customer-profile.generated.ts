@@ -1,0 +1,16 @@
+import * as Types from '../../../types/graphql/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type UpdateCustomerProfileMutationVariables = Types.Exact<{
+  customerId: Types.Scalars['String']['input'];
+  sessionToken: Types.Scalars['String']['input'];
+  profileData?: Types.InputMaybe<Types.ProfileDataInput>;
+  addressesData?: Types.InputMaybe<Types.AddressOperationsInput>;
+  preferencesData?: Types.InputMaybe<Types.PreferencesInput>;
+}>;
+
+
+export type UpdateCustomerProfileMutation = { __typename: 'Mutation', updateCustomerProfile: { __typename: 'UpdateCustomerProfile', success: boolean | null, profile: unknown | null, message: string | null, error: string | null } | null };
+
+
+export const UpdateCustomerProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCustomerProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sessionToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"profileData"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ProfileDataInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"addressesData"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AddressOperationsInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"preferencesData"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PreferencesInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCustomerProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"customerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}}},{"kind":"Argument","name":{"kind":"Name","value":"sessionToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sessionToken"}}},{"kind":"Argument","name":{"kind":"Name","value":"profileData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"profileData"}}},{"kind":"Argument","name":{"kind":"Name","value":"addressesData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"addressesData"}}},{"kind":"Argument","name":{"kind":"Name","value":"preferencesData"},"value":{"kind":"Variable","name":{"kind":"Name","value":"preferencesData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"profile"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}}]}}]}}]} as unknown as DocumentNode<UpdateCustomerProfileMutation, UpdateCustomerProfileMutationVariables>;

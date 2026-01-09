@@ -1,0 +1,23 @@
+mutation AddTheme($workspaceId: ID!, $themeSlug: String!) {
+  addTheme(workspaceId: $workspaceId, themeSlug: $themeSlug) {
+    success
+    message
+    error
+    customization {
+      id
+      themeName
+      themeSlug
+      isActive
+      puckConfig
+      puckData
+      createdAt
+      lastEditedAt
+      publishedAt
+      template {
+        id
+        name
+        slug
+      }
+    }
+  }
+}

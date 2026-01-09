@@ -1,0 +1,20 @@
+mutation PrepareSubscriptionCheckout($checkoutData: PrepareCheckoutInput!) {
+  prepareSubscriptionCheckout(checkoutData: $checkoutData) {
+    success
+    effectiveMode
+    amount
+    currency
+    breakdown {
+      basePrice
+      discount
+      finalAmount
+      currency
+    }
+    planName
+    cycleDurationDays
+    introDurationDays
+    message
+    error
+    errorCode
+  }
+}

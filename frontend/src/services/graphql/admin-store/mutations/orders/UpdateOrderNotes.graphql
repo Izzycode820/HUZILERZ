@@ -1,0 +1,11 @@
+mutation UpdateOrderNotes($orderId: String!, $notes: String!) {
+  updateOrderNotes(orderId: $orderId, notes: $notes) {
+    success
+    message
+    error
+    order {
+      id
+      notes
+    }
+  }
+}

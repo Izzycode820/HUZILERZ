@@ -1,0 +1,4396 @@
+"""Root query combining all apps"""
+type Query {
+  """Get complete workspace dashboard analytics"""
+  workspaceDashboard(
+    """Workspace UUID"""
+    workspaceId: ID!
+
+    """Number of days for metrics (1-365)"""
+    days: Int = 30
+
+    """Number of recent activities (1-50)"""
+    activityLimit: Int = 10
+  ): WorkspaceAnalyticsUnion
+
+  """List all customers with pagination and filtering"""
+  customers(offset: Int, before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, phone: String, phone_Icontains: String, email: String, email_Icontains: String, customerType: WorkspaceCoreCustomerCustomerTypeChoices, region: WorkspaceCoreCustomerRegionChoices, isActive: Boolean): CustomerTypeConnection
+
+  """Get single customer by ID"""
+  customer(id: ID!): CustomerType
+
+  """Get customer by phone number"""
+  customerByPhone(phone: String!): CustomerType
+
+  """Get recent customers"""
+  recentCustomers(limit: Int = 50): [CustomerType]
+
+  """Get recent media uploads for current workspace (for media picker)"""
+  recentMedia(
+    limit: Int = 50
+
+    """Filter by media type: image, video, 3d_model"""
+    mediaType: String
+
+    """Search by filename"""
+    search: String
+
+    """Sort by: date, name, size (default: date)"""
+    sortBy: String
+
+    """Sort order: asc, desc (default: desc)"""
+    sortOrder: String
+  ): [MediaUploadType]
+
+  """Get variant by ID"""
+  variant(id: String!): ProductVariantType
+
+  """Get variant by SKU"""
+  variantBySku(sku: String!): ProductVariantType
+
+  """Get variants by product ID"""
+  variantsByProduct(productId: String!, onlyActive: Boolean = true): [ProductVariantType]
+
+  """Get paginated list of variants"""
+  variants(offset: Int, before: String, after: String, first: Int, last: Int, sku: String, sku_Icontains: String, isActive: Boolean, trackInventory: Boolean): ProductVariantTypeConnection
+
+  """Get bulk operation by ID"""
+  bulkOperation(id: String!): BulkOperationType
+
+  """Get paginated list of bulk operations"""
+  bulkOperations(offset: Int, before: String, after: String, first: Int, last: Int, operationType: WorkspaceStoreBulkOperationOperationTypeChoices, status: WorkspaceStoreBulkOperationStatusChoices): BulkOperationTypeConnection
+
+  """Get recent bulk operations"""
+  recentBulkOperations(limit: Int = 10): [BulkOperationType]
+
+  """List all sales channels with pagination and filtering"""
+  salesChannels(offset: Int, before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, channelType: WorkspaceStoreSalesChannelChannelTypeChoices, isActive: Boolean): SalesChannelTypeConnection
+
+  """Get single sales channel by ID"""
+  salesChannel(id: ID!): SalesChannelType
+
+  """List channel products with pagination and filtering"""
+  channelProducts(offset: Int, before: String, after: String, first: Int, last: Int, productId: String, isVisible: Boolean): ChannelProductTypeConnection
+
+  """Get single channel product by ID"""
+  channelProduct(id: ID!): ChannelProductType
+
+  """List channel orders with pagination and filtering"""
+  channelOrders(offset: Int, before: String, after: String, first: Int, last: Int, channelOrderId: String, isSynced: Boolean): ChannelOrderTypeConnection
+
+  """Get single channel order by ID"""
+  channelOrder(id: ID!): ChannelOrderType
+
+  """Get active sales channels"""
+  activeChannels: [SalesChannelType]
+
+  """
+  List all packages with pagination and filtering (for dropdown and settings)
+  """
+  packages(offset: Int, before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, method: String, method_Icontains: String, packageType: WorkspaceStorePackagePackageTypeChoices, size: WorkspaceStorePackageSizeChoices, isActive: Boolean, useAsDefault: Boolean): PackageTypeConnection
+
+  """Get single package by ID"""
+  package(id: ID!): PackageType
+
+  """Get active packages (for product dropdown)"""
+  activePackages: [PackageType]
+
+  """Get default fallback package"""
+  defaultPackage: PackageType
+
+  """List all discounts with pagination and filtering"""
+  discounts(offset: Int, before: String, after: String, first: Int, last: Int, code: String, code_Icontains: String, name_Icontains: String, discountType: WorkspaceStoreDiscountDiscountTypeChoices, status: WorkspaceStoreDiscountStatusChoices): DiscountTypeConnection
+
+  """Get single discount by ID"""
+  discount(id: ID!): DiscountType
+
+  """Get discount by code"""
+  discountByCode(code: String!): DiscountType
+
+  """Get active discounts"""
+  activeDiscounts(limit: Int = 50): [DiscountType]
+
+  """Browse categories with filtering and pagination"""
+  categories(storeSlug: String!, offset: Int, before: String, after: String, first: Int, last: Int, name: String, name_Icontains: String, slug: String, isVisible: Boolean, isFeatured: Boolean): CategoryTypeConnection
+
+  """Get single category details by slug"""
+  category(storeSlug: String!, categorySlug: String!): CategoryType
+
+  """Get category by slug"""
+  categoryBySlug(slug: String!): CategoryType
+
+  """Get featured categories for homepage"""
+  featuredCategories(storeSlug: String!, limit: Int = 6): [CategoryType]
+
+  """Get products from a specific category with filtering"""
+  categoryProducts(storeSlug: String!, categorySlug: String!, search: String, minPrice: Float, maxPrice: Float, inStock: Boolean, sortBy: String = "newest", limit: Int = 20): [ProductType]
+
+  """List all orders with pagination and filtering"""
+  orders(offset: Int, before: String, after: String, first: Int, last: Int, orderNumber: String, orderNumber_Icontains: String, status: WorkspaceStoreOrderStatusChoices, orderSource: WorkspaceStoreOrderOrderSourceChoices, paymentStatus: WorkspaceStoreOrderPaymentStatusChoices, paymentMethod: WorkspaceStoreOrderPaymentMethodChoices, shippingRegion: WorkspaceStoreOrderShippingRegionChoices, customerEmail: String, customerEmail_Icontains: String, customerName_Icontains: String, createdAt: DateTime, createdAt_Gte: DateTime, createdAt_Lte: DateTime, totalAmount: Decimal, totalAmount_Gte: Decimal, totalAmount_Lte: Decimal): OrderTypeConnection
+
+  """Get single order by ID"""
+  order(id: ID!): OrderType
+
+  """Get orders by status"""
+  ordersByStatus(status: String!): [OrderType]
+
+  """Get orders by shipping region"""
+  ordersByRegion(region: String!): [OrderType]
+
+  """Get orders by source (whatsapp, payment, manual)"""
+  ordersBySource(source: String!): [OrderType]
+
+  """Get recent orders"""
+  recentOrders(limit: Int = 10): [OrderType]
+
+  """List all inventory with pagination and filtering"""
+  inventory(offset: Int, before: String, after: String, first: Int, last: Int, variant: ID, location: ID, quantity: Int, quantity_Gte: Int, quantity_Lte: Int, isAvailable: Boolean): InventoryTypeConnection
+
+  """Get all locations for authenticated workspace"""
+  locations: [LocationType]
+
+  """Get inventory for specific variant across all regions"""
+  inventoryByVariant(variantId: ID!): [InventoryType]
+
+  """Get inventory for specific location"""
+  inventoryByLocation(locationId: ID!): [InventoryType]
+
+  """Get low stock items across all regions"""
+  lowStockItems(threshold: Int = 5): [InventoryType]
+
+  """Browse published products with filtering and pagination"""
+  products(
+    storeSlug: String!
+
+    """Search products by name, description, or brand"""
+    search: String
+
+    """Filter by category slug"""
+    categorySlug: String
+
+    """Minimum price filter"""
+    minPrice: Float
+
+    """Maximum price filter"""
+    maxPrice: Float
+
+    """Filter by stock availability"""
+    inStock: Boolean
+
+    """Filter by brand name"""
+    brand: String
+
+    """
+    Sort order: 'price_asc', 'price_desc', 'name_asc', 'name_desc', 'newest', 'oldest'
+    """
+    sortBy: String
+    offset: Int
+    before: String
+    after: String
+    first: Int
+    last: Int
+    name: String
+    name_Icontains: String
+    sku: String
+    sku_Icontains: String
+    status: WorkspaceStoreProductStatusChoices
+    category: ID
+    brand_Icontains: String
+    vendor_Icontains: String
+    productType: WorkspaceStoreProductProductTypeChoices
+    price: Decimal
+    price_Gte: Decimal
+    price_Lte: Decimal
+    inventoryQuantity: Int
+    inventoryQuantity_Gte: Int
+    inventoryQuantity_Lte: Int
+    inventoryHealth: WorkspaceStoreProductInventoryHealthChoices
+    requiresShipping: Boolean
+    createdAt: DateTime
+    createdAt_Gte: DateTime
+    createdAt_Lte: DateTime
+  ): ProductTypeConnection
+
+  """Get single product details by slug with variants"""
+  product(storeSlug: String!, productSlug: String!): ProductType
+
+  """Get products by category"""
+  productsByCategory(categoryId: ID!): [ProductType]
+
+  """Get featured products"""
+  featuredProducts(limit: Int = 10): [ProductType]
+
+  """Track order status (public, no authentication required)"""
+  trackOrder(storeSlug: String!, orderNumber: String!): OrderTrackingType
+
+  """Get cart by session ID"""
+  cart(storeSlug: String!, sessionId: String!): CartType
+
+  """Get single category details by ID"""
+  categoryById(storeSlug: String!, categoryId: ID!): CategoryType
+
+  """Get specific categories by their slugs"""
+  categoriesBySlugs(storeSlug: String!, slugs: [String]!): [CategoryType]
+
+  """Get count of categories matching criteria"""
+  categoryCount(storeSlug: String!, isVisible: Boolean = true): Int
+
+  """Get single product details by ID"""
+  productById(storeSlug: String!, productId: ID!): ProductType
+
+  """Get products currently on sale"""
+  productsOnSale(storeSlug: String!, limit: Int = 12): [ProductType]
+
+  """Get newest products"""
+  newProducts(storeSlug: String!, limit: Int = 12): [ProductType]
+
+  """Get products related to a specific product"""
+  relatedProducts(storeSlug: String!, productId: ID!, limit: Int = 8): [ProductType]
+
+  """Search products by query string"""
+  searchProducts(storeSlug: String!, query: String!, categorySlug: String, limit: Int = 20): [ProductType]
+
+  """Get count of products matching criteria"""
+  productCount(storeSlug: String!, categorySlug: String, inStock: Boolean): Int
+}
+
+"""
+Union type for workspace analytics
+Returns different analytics types based on workspace type
+"""
+union WorkspaceAnalyticsUnion = StoreAnalytics
+
+"""
+Complete store analytics dashboard data
+Contains all data needed for store dashboard rendering
+"""
+type StoreAnalytics {
+  """4 metric cards"""
+  cards: [DashboardCard]!
+
+  """Visitors vs Orders chart"""
+  chart: StoreChart!
+
+  """Recent activity events"""
+  activities: [ActivityItem]!
+
+  """Workspace UUID"""
+  workspaceId: String!
+
+  """Workspace type (always 'store')"""
+  workspaceType: String!
+
+  """Timestamp when data was generated"""
+  generatedAt: String!
+}
+
+"""
+Metric card displayed on dashboard
+Represents a single KPI with trend information
+"""
+type DashboardCard {
+  """Card title (e.g., 'Total Revenue')"""
+  title: String!
+
+  """Formatted display value (e.g., '$1,234.56')"""
+  value: String!
+
+  """Trend percentage (e.g., '+12.5%')"""
+  trend: String!
+
+  """Trend direction: 'up' or 'down'"""
+  trendDirection: String!
+}
+
+"""Store chart data with configuration"""
+type StoreChart {
+  """Time-series data points"""
+  data: [StoreChartDataPoint]!
+
+  """Chart visualization config"""
+  config: StoreChartConfig!
+}
+
+"""
+Store-specific chart data point
+Extends base ChartDataPoint with store metrics
+"""
+type StoreChartDataPoint {
+  """ISO date string (YYYY-MM-DD)"""
+  date: String!
+
+  """Estimated visitor count"""
+  visitors: Int!
+
+  """Actual order count"""
+  orders: Int!
+}
+
+"""
+Store chart configuration
+Defines visualization config for Visitors vs Orders chart
+"""
+type StoreChartConfig {
+  visitors: ChartConfig!
+  orders: ChartConfig!
+}
+
+"""
+Chart visualization configuration
+Defines labels and colors for chart series
+"""
+type ChartConfig {
+  """Display label for series"""
+  label: String!
+
+  """CSS color value"""
+  color: String!
+}
+
+"""
+Activity event for dashboard activity table
+Workspace-agnostic (same structure for all workspace types)
+"""
+type ActivityItem {
+  """Event type identifier"""
+  type: String!
+
+  """Activity title"""
+  title: String!
+
+  """Activity description"""
+  description: String!
+
+  """ISO timestamp"""
+  timestamp: String!
+
+  """Priority level: 'high', 'medium', or 'low'"""
+  priority: String!
+
+  """Additional event metadata"""
+  metadata: JSONString
+}
+
+"""
+Allows use of a JSON String for input / output from the GraphQL schema.
+
+Use of this type is *not recommended* as you lose the benefits of having a defined, static
+schema (one of the key benefits of GraphQL).
+"""
+scalar JSONString
+
+type CustomerTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [CustomerTypeEdge]!
+  totalCount: Int
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""A Relay edge containing a `CustomerType` and its cursor."""
+type CustomerTypeEdge {
+  """The item at the end of the edge"""
+  node: CustomerType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for Customer model
+
+Features:
+- All customer fields with proper typing
+- Cameroon region support
+- Order tracking
+- Address management for order creation
+"""
+type CustomerType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Primary customer identifier (MTN/Orange Mobile Money)"""
+  phone: String!
+
+  """Customer full name"""
+  name: String!
+
+  """Customer email (optional)"""
+  email: String!
+
+  """Customer type for segmentation"""
+  customerType: WorkspaceCoreCustomerCustomerTypeChoices!
+
+  """Customer city"""
+  city: String!
+
+  """Cameroon region"""
+  region: WorkspaceCoreCustomerRegionChoices
+
+  """Customer street/physical address"""
+  address: String!
+
+  """Total orders across all workspaces"""
+  totalOrders: Int!
+
+  """Total amount spent across all workspaces"""
+  totalSpent: Decimal!
+
+  """First order date"""
+  firstOrderAt: DateTime
+
+  """Last order date"""
+  lastOrderAt: DateTime
+
+  """
+  Customer tags for segmentation ['vip', 'wholesale', 'frequent', 'student']
+  """
+  tags: JSONString!
+
+  """Opt-in for SMS notifications"""
+  smsNotifications: Boolean!
+
+  """Opt-in for WhatsApp notifications"""
+  whatsappNotifications: Boolean!
+
+  """Whether customer is active"""
+  isActive: Boolean!
+
+  """When customer was verified"""
+  verifiedAt: DateTime
+  isVerified: Boolean
+  hasEmail: Boolean
+  isFrequentBuyer: Boolean
+  averageOrderValue: Decimal
+  lifetimeValue: Decimal
+  isHighValue: Boolean
+}
+
+"""An object with an ID"""
+interface Node {
+  """The ID of the object"""
+  id: ID!
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""An enumeration."""
+enum WorkspaceCoreCustomerCustomerTypeChoices {
+  """Student"""
+  STUDENT
+
+  """Small Business"""
+  BUSINESS
+
+  """Individual"""
+  INDIVIDUAL
+
+  """Corporate"""
+  CORPORATE
+}
+
+"""An enumeration."""
+enum WorkspaceCoreCustomerRegionChoices {
+  """Littoral"""
+  LITTORAL
+
+  """Centre"""
+  CENTRE
+
+  """South"""
+  SUD
+
+  """North"""
+  NORD
+
+  """Extreme North"""
+  EXTREME_NORD
+
+  """East"""
+  EST
+
+  """West"""
+  OUEST
+
+  """North West"""
+  NORD_OUEST
+
+  """South West"""
+  SUD_OUEST
+
+  """Adamawa"""
+  ADAMAWA
+}
+
+"""The `Decimal` scalar type represents a python Decimal."""
+scalar Decimal
+
+"""
+Media Upload GraphQL Type - URL-focused design
+
+Returns:
+- Direct URLs (not nested objects)
+- Minimal metadata
+- Optimized for frontend consumption
+"""
+type MediaUploadType {
+  id: UUID!
+
+  """Type of media (image, video, 3D model)"""
+  mediaType: MedialibMediaUploadMediaTypeChoices!
+
+  """Original filename from upload"""
+  originalFilename: String!
+
+  """File size in bytes"""
+  fileSize: BigInt!
+
+  """MIME type (e.g., image/jpeg, video/mp4)"""
+  mimeType: String!
+
+  """Image/video width in pixels"""
+  width: Int
+
+  """Image/video height in pixels"""
+  height: Int
+
+  """Processing status"""
+  status: MedialibMediaUploadStatusChoices!
+
+  """Additional metadata (format, duration for videos, etc.)"""
+  metadata: JSONString!
+  uploadedAt: DateTime!
+
+  """Primary media URL (CDN)"""
+  url: String
+
+  """Thumbnail URL (for images/videos)"""
+  thumbnailUrl: String
+
+  """Optimized version URL (for images)"""
+  optimizedUrl: String
+}
+
+"""
+Leverages the internal Python implementation of UUID (uuid.UUID) to provide native UUID objects
+in fields, resolvers and input.
+"""
+scalar UUID
+
+"""An enumeration."""
+enum MedialibMediaUploadMediaTypeChoices {
+  """Image"""
+  IMAGE
+
+  """Video"""
+  VIDEO
+
+  """3D Model"""
+  A_3D_MODEL
+
+  """Document"""
+  DOCUMENT
+}
+
+"""
+The `BigInt` scalar type represents non-fractional whole numeric values.
+`BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
+compatible type.
+"""
+scalar BigInt
+
+"""An enumeration."""
+enum MedialibMediaUploadStatusChoices {
+  """Pending"""
+  PENDING
+
+  """Processing"""
+  PROCESSING
+
+  """Completed"""
+  COMPLETED
+
+  """Failed"""
+  FAILED
+
+  """Orphaned"""
+  ORPHANED
+}
+
+"""GraphQL type for ProductVariant model"""
+type ProductVariantType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Stock Keeping Unit"""
+  sku: String!
+
+  """Barcode (ISBN, UPC, GTIN, etc.)"""
+  barcode: String
+
+  """Option (e.g., Size, Color)"""
+  option1: String
+
+  """Additional option"""
+  option2: String
+
+  """Third option (if needed)"""
+  option3: String
+
+  """Price (overrides product price)"""
+  price: Decimal
+
+  """Compare at price (overrides product compare_at_price)"""
+  compareAtPrice: Decimal
+
+  """Cost per item (overrides product cost_price)"""
+  costPrice: Decimal
+
+  """Track inventory for this variant"""
+  trackInventory: Boolean!
+
+  """Available for purchase"""
+  isActive: Boolean!
+
+  """Display position"""
+  position: Int!
+
+  """Parent product"""
+  product: ProductType!
+
+  """Featured image for this variant"""
+  featuredMedia: MediaUploadType
+  displayName: String
+  effectivePrice: Float
+  inventory: [InventoryType]
+  totalStock: Int
+  isAvailable: Boolean
+
+  """Featured image URL from featured_media FK"""
+  featuredImageUrl: String
+}
+
+"""
+Comprehensive Product type matching admin model structure
+
+Themes can query only the fields they need
+All fields match admin model exactly
+"""
+type ProductType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Product name"""
+  name: String!
+
+  """Product description"""
+  description: String!
+
+  """URL-friendly identifier"""
+  slug: String!
+
+  """Selling price (required)"""
+  price: Decimal!
+
+  """Original price for discounts"""
+  compareAtPrice: Decimal
+
+  """Cost/wholesale price"""
+  costPrice: Decimal
+
+  """Stock Keeping Unit"""
+  sku: String!
+
+  """Product barcode"""
+  barcode: String!
+
+  """Product brand"""
+  brand: String!
+
+  """Product vendor"""
+  vendor: String!
+
+  """Type of product"""
+  productType: WorkspaceStoreProductProductTypeChoices!
+
+  """Product status"""
+  status: WorkspaceStoreProductStatusChoices!
+
+  """When product was published"""
+  publishedAt: DateTime
+
+  """Primary product category"""
+  category: CategoryType
+
+  """Product tags for search"""
+  tags: JSONString!
+
+  """Whether to track inventory"""
+  trackInventory: Boolean!
+
+  """Available stock quantity"""
+  inventoryQuantity: Int!
+
+  """Allow orders when out of stock"""
+  allowBackorders: Boolean!
+
+  """Inventory health status"""
+  inventoryHealth: WorkspaceStoreProductInventoryHealthChoices!
+
+  """Whether product has variants"""
+  hasVariants: Boolean!
+
+  """
+  Product options for variants (e.g., [{'name': 'Size', 'values': ['S', 'M', 'L']}])
+  """
+  options: JSONString!
+
+  """Needs shipping"""
+  requiresShipping: Boolean!
+
+  """
+  Shipping package for this product (optional - falls back to default if not set)
+  """
+  package: PackageType
+
+  """Product weight (kg)"""
+  weight: Decimal
+
+  """SEO meta title"""
+  metaTitle: String!
+
+  """SEO meta description"""
+  metaDescription: String!
+  isOnSale: Boolean
+  salePercentage: Float
+  inStock: Boolean
+  stockStatus: String
+  variants: [ProductVariantType]
+  variantOptions: JSONString
+
+  """Uploaded images for this product in upload order"""
+  mediaUploads: [ImageType]
+}
+
+"""An enumeration."""
+enum WorkspaceStoreProductProductTypeChoices {
+  """Physical Product"""
+  PHYSICAL
+
+  """Digital Product"""
+  DIGITAL
+
+  """Service"""
+  SERVICE
+}
+
+"""An enumeration."""
+enum WorkspaceStoreProductStatusChoices {
+  """Published"""
+  PUBLISHED
+
+  """Draft"""
+  DRAFT
+}
+
+"""
+GraphQL type for Category model - Collections in storefront
+
+Matches admin model structure exactly
+Themes can query only the fields they need
+"""
+type CategoryType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Collection name"""
+  name: String!
+
+  """Collection description"""
+  description: String!
+
+  """URL-friendly identifier"""
+  slug: String!
+
+  """Whether collection is visible to customers"""
+  isVisible: Boolean!
+
+  """Whether collection is featured on homepage"""
+  isFeatured: Boolean!
+
+  """Manual sort order for admin drag-drop"""
+  sortOrder: Int!
+
+  """SEO meta title"""
+  metaTitle: String!
+
+  """SEO meta description"""
+  metaDescription: String!
+  productCount: Int
+
+  """Category banner image"""
+  categoryImage: MediaUploadType
+}
+
+"""An enumeration."""
+enum WorkspaceStoreProductInventoryHealthChoices {
+  """Healthy"""
+  HEALTHY
+
+  """Low Stock"""
+  LOW
+
+  """Critical"""
+  CRITICAL
+
+  """Out of Stock"""
+  OUT_OF_STOCK
+}
+
+"""
+GraphQL type for Package model
+
+Features:
+- Simple shipping package configuration
+- Region-based fees stored in JSON (multiple regions per package)
+- Cameroon-specific flexibility
+"""
+type PackageType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Package name (e.g., 'Buea Car Shipping')"""
+  name: String!
+
+  """Type of package"""
+  packageType: WorkspaceStorePackagePackageTypeChoices!
+
+  """Package size"""
+  size: WorkspaceStorePackageSizeChoices!
+
+  """Weight capacity in kg"""
+  weight: Decimal
+
+  """Shipping method (e.g., 'Car', 'Bike', 'Moto-taxi')"""
+  method: String!
+
+  """
+  Shipping fees by region in XAF format: {'yaounde': 1500, 'douala': 1200, 'buea': 1000}
+  """
+  regionFees: JSONString!
+
+  """Estimated delivery time (e.g., '1-2', '3-5 days')"""
+  estimatedDays: String!
+
+  """Use this package as default fallback for products without shipping"""
+  useAsDefault: Boolean!
+
+  """Whether this package is active"""
+  isActive: Boolean!
+  productCount: Int
+  fullDescription: String
+}
+
+"""An enumeration."""
+enum WorkspaceStorePackagePackageTypeChoices {
+  """Box"""
+  BOX
+
+  """Envelope"""
+  ENVELOPE
+
+  """Soft Package"""
+  SOFT_PACKAGE
+}
+
+"""An enumeration."""
+enum WorkspaceStorePackageSizeChoices {
+  """Small"""
+  SMALL
+
+  """Medium"""
+  MEDIUM
+
+  """Large"""
+  LARGE
+}
+
+"""
+Image type with WebP support and multiple variations
+
+Provides optimized images for different use cases:
+- url: Original uploaded image
+- optimized/optimized_webp: 1200px for product pages
+- thumbnail/thumbnail_webp: 300px for product cards
+- tiny/tiny_webp: 150px for list views
+
+Frontend usage:
+- Storefront: Use optimized_webp (best performance)
+- Product cards: Use thumbnail_webp
+- List views: Use tiny_webp
+"""
+type ImageType {
+  """Upload ID"""
+  id: ID
+
+  """Original image URL"""
+  url: String
+
+  """Optimized JPEG (1200px, fallback)"""
+  optimized: String
+
+  """Optimized WebP (1200px, 25-34% smaller)"""
+  optimizedWebp: String
+
+  """Thumbnail JPEG (300px, fallback)"""
+  thumbnail: String
+
+  """Thumbnail WebP (300px, 25-34% smaller)"""
+  thumbnailWebp: String
+
+  """Tiny JPEG (150px, fallback)"""
+  tiny: String
+
+  """Tiny WebP (150px, 25-34% smaller)"""
+  tinyWebp: String
+
+  """Original image width in pixels"""
+  width: Int
+
+  """Original image height in pixels"""
+  height: Int
+}
+
+"""
+GraphQL type for Inventory model
+
+Features:
+- All inventory fields with proper typing
+- Variant and location relationships
+- Stock status properties
+- Atomic operations support
+- Shopify-style inventory tracking
+"""
+type InventoryType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Product variant for this inventory entry"""
+  variant: ProductVariantType
+
+  """Location where inventory is stored"""
+  location: LocationType
+
+  """
+  Available stock quantity at this location (deprecated, use onhand/available)
+  """
+  quantity: Int!
+
+  """Total stock on hand (committed inventory)"""
+  onhand: Int
+
+  """Stock available for sale"""
+  available: Int
+
+  """Condition of inventory items"""
+  condition: WorkspaceStoreInventoryConditionChoices
+
+  """Whether inventory is available for sale"""
+  isAvailable: Boolean!
+
+  """Whether inventory is below location's low stock threshold"""
+  isLowStock: Boolean
+
+  """
+  Human-readable stock status: 'in_stock', 'low_stock', or 'out_of_stock'
+  """
+  stockStatus: String
+
+  """Product name derived from variant"""
+  productName: String
+
+  """Product primary image with all variations (thumbnail, WebP, etc.)"""
+  productImage: MediaUploadType
+
+  """SKU (Stock Keeping Unit) from variant"""
+  sku: String
+}
+
+"""
+GraphQL type for Location model
+
+Features:
+- All location fields with proper typing
+- Inventory relationship with DataLoader
+- Regional analytics properties
+- Cameroon region-specific data
+"""
+type LocationType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Location name (e.g., Douala Main Store)"""
+  name: String!
+
+  """Cameroon region"""
+  region: WorkspaceStoreLocationRegionChoices!
+
+  """Street address"""
+  addressLine1: String!
+
+  """Additional address info"""
+  addressLine2: String!
+
+  """City name"""
+  city: String!
+
+  """Contact phone"""
+  phone: String!
+
+  """Contact email"""
+  email: String!
+
+  """Active and operational"""
+  isActive: Boolean!
+
+  """Primary/default location"""
+  isPrimary: Boolean!
+
+  """Low stock alert threshold"""
+  lowStockThreshold: Int!
+
+  """Location manager"""
+  managerName: String!
+
+  """Total products at location"""
+  totalProducts: Int!
+
+  """Total inventory value"""
+  totalStockValue: Decimal!
+
+  """Number of low stock alerts"""
+  lowStockAlerts: Int!
+
+  """Total stock quantity at this location"""
+  totalStock: Int
+
+  """Total inventory value at this location"""
+  totalValue: Float
+
+  """Number of low stock items at this location"""
+  lowStockItems: Int
+
+  """Number of out-of-stock items at this location"""
+  outOfStockItems: Int
+
+  """Formatted full address including city and region"""
+  fullAddress: String
+
+  """Whether this location can be deactivated (no inventory)"""
+  canDeactivate: Boolean
+}
+
+"""An enumeration."""
+enum WorkspaceStoreLocationRegionChoices {
+  """Centre"""
+  CENTRE
+
+  """Littoral"""
+  LITTORAL
+
+  """West"""
+  WEST
+
+  """Northwest"""
+  NORTHWEST
+
+  """Southwest"""
+  SOUTHWEST
+
+  """Adamawa"""
+  ADAMAWA
+
+  """East"""
+  EAST
+
+  """Far North"""
+  FAR_NORTH
+
+  """North"""
+  NORTH
+
+  """South"""
+  SOUTH
+}
+
+"""An enumeration."""
+enum WorkspaceStoreInventoryConditionChoices {
+  """New"""
+  NEW
+
+  """Refurbished"""
+  REFURBISHED
+
+  """Second Hand"""
+  SECOND_HAND
+
+  """Used - Like New"""
+  USED_LIKE_NEW
+
+  """Used - Good"""
+  USED_GOOD
+
+  """Used - Acceptable"""
+  USED_ACCEPTABLE
+}
+
+type ProductVariantTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [ProductVariantTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `ProductVariantType` and its cursor."""
+type ProductVariantTypeEdge {
+  """The item at the end of the edge"""
+  node: ProductVariantType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for BulkOperation model
+
+Features:
+- All bulk operation fields with proper typing
+- Shopify-style operation types
+- Progress tracking and analytics
+- Custom computed fields
+"""
+type BulkOperationType implements Node {
+  id: ID!
+  operationType: WorkspaceStoreBulkOperationOperationTypeChoices!
+  status: WorkspaceStoreBulkOperationStatusChoices!
+  totalItems: Int!
+  processedItems: Int!
+  errorMessage: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  successRate: Float
+  operationTypeDisplay: String
+  isCompleted: Boolean
+  isFailed: Boolean
+  isProcessing: Boolean
+}
+
+"""An enumeration."""
+enum WorkspaceStoreBulkOperationOperationTypeChoices {
+  """Bulk Publish Products"""
+  BULK_PUBLISH
+
+  """Bulk Unpublish Products"""
+  BULK_UNPUBLISH
+
+  """Bulk Price Update"""
+  BULK_PRICE_UPDATE
+
+  """Bulk Delete Products"""
+  BULK_DELETE
+
+  """Bulk Inventory Update"""
+  BULK_INVENTORY_UPDATE
+}
+
+"""An enumeration."""
+enum WorkspaceStoreBulkOperationStatusChoices {
+  """Success"""
+  SUCCESS
+
+  """Failed"""
+  FAILED
+
+  """Processing"""
+  PROCESSING
+}
+
+type BulkOperationTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [BulkOperationTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `BulkOperationType` and its cursor."""
+type BulkOperationTypeEdge {
+  """The item at the end of the edge"""
+  node: BulkOperationType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type SalesChannelTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [SalesChannelTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `SalesChannelType` and its cursor."""
+type SalesChannelTypeEdge {
+  """The item at the end of the edge"""
+  node: SalesChannelType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for SalesChannel model
+
+Features:
+- All sales channel fields with proper typing
+- Multi-platform support
+- Sync status tracking
+"""
+type SalesChannelType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Sales channel name (e.g., 'Main Website', 'Mobile App', 'Store POS')"""
+  name: String!
+  channelType: WorkspaceStoreSalesChannelChannelTypeChoices!
+
+  """Whether this sales channel is active"""
+  isActive: Boolean!
+
+  """Base URL for this channel (for web/mobile)"""
+  baseUrl: String
+
+  """Whether this channel supports inventory synchronization"""
+  supportsInventorySync: Boolean!
+
+  """Whether this channel supports order synchronization"""
+  supportsOrderSync: Boolean!
+
+  """Whether this channel supports customer synchronization"""
+  supportsCustomerSync: Boolean!
+
+  """Total orders from this channel"""
+  totalOrders: Int!
+
+  """Total revenue from this channel"""
+  totalRevenue: Decimal!
+
+  """Last synchronization timestamp"""
+  lastSyncAt: DateTime
+  activeProducts: Int
+  pendingOrders: Int
+}
+
+"""An enumeration."""
+enum WorkspaceStoreSalesChannelChannelTypeChoices {
+  """Web Store"""
+  WEB
+
+  """Mobile App"""
+  MOBILE
+
+  """On-site POS"""
+  ONSITE
+
+  """Marketplace"""
+  MARKETPLACE
+
+  """Social Media"""
+  SOCIAL
+}
+
+type ChannelProductTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [ChannelProductTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `ChannelProductType` and its cursor."""
+type ChannelProductTypeEdge {
+  """The item at the end of the edge"""
+  node: ChannelProductType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for ChannelProduct model
+
+Features:
+- Product visibility per channel
+- Channel-specific pricing
+- Sync tracking
+"""
+type ChannelProductType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Product ID in the sales channel"""
+  productId: String!
+
+  """Whether product is visible on this channel"""
+  isVisible: Boolean!
+
+  """Channel-specific price (overrides base price)"""
+  channelPrice: Decimal
+
+  """Channel-specific inventory quantity"""
+  channelInventory: Int!
+
+  """Whether to sync inventory with this channel"""
+  syncInventory: Boolean!
+
+  """Whether to sync pricing with this channel"""
+  syncPricing: Boolean!
+
+  """Last synchronization timestamp"""
+  lastSyncedAt: DateTime
+  salesChannel: SalesChannelType
+}
+
+type ChannelOrderTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [ChannelOrderTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `ChannelOrderType` and its cursor."""
+type ChannelOrderTypeEdge {
+  """The item at the end of the edge"""
+  node: ChannelOrderType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for ChannelOrder model
+
+Features:
+- Cross-platform order tracking
+- Sync status monitoring
+"""
+type ChannelOrderType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Order ID in the sales channel"""
+  channelOrderId: String!
+
+  """Local order ID (if synchronized)"""
+  localOrderId: String
+
+  """Order status in the sales channel"""
+  channelStatus: String!
+
+  """Order status in local system"""
+  localStatus: String
+
+  """Order amount in the sales channel"""
+  orderAmount: Decimal!
+
+  """Order currency"""
+  currency: String!
+
+  """Customer email from sales channel"""
+  customerEmail: String
+
+  """Whether order is synchronized with local system"""
+  isSynced: Boolean!
+
+  """Number of synchronization attempts"""
+  syncAttempts: Int!
+
+  """Last synchronization attempt timestamp"""
+  lastSyncAttempt: DateTime
+
+  """Last synchronization error message"""
+  syncError: String
+  salesChannel: SalesChannelType
+}
+
+type PackageTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [PackageTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `PackageType` and its cursor."""
+type PackageTypeEdge {
+  """The item at the end of the edge"""
+  node: PackageType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type DiscountTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [DiscountTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `DiscountType` and its cursor."""
+type DiscountTypeEdge {
+  """The item at the end of the edge"""
+  node: DiscountType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for Discount model
+
+Features:
+- All discount fields with proper typing
+- Computed status properties
+- Usage tracking
+"""
+type DiscountType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Discount code (e.g., SUMMER20, WELCOME10)"""
+  code: String!
+
+  """Discount name for admin reference"""
+  name: String!
+  discountType: WorkspaceStoreDiscountDiscountTypeChoices!
+
+  """Discount value (percentage or fixed amount)"""
+  value: Decimal!
+
+  """Maximum number of times this discount can be used"""
+  usageLimit: Int
+
+  """Number of times this discount has been used"""
+  usageCount: Int!
+
+  """Maximum usage per customer"""
+  usageLimitPerCustomer: Int
+
+  """When the discount becomes active"""
+  startsAt: DateTime!
+
+  """When the discount expires"""
+  endsAt: DateTime
+
+  """Minimum order amount to apply discount"""
+  minimumOrderAmount: Decimal
+
+  """Minimum quantity of items required"""
+  minimumQuantity: Int
+
+  """Whether discount applies to all customers"""
+  appliesToAllCustomers: Boolean!
+
+  """Whether discount applies to all products"""
+  appliesToAllProducts: Boolean!
+
+  """Specific product IDs this discount applies to"""
+  productIds: JSONString!
+
+  """Specific category IDs this discount applies to"""
+  categoryIds: JSONString!
+
+  """Cameroon regions this discount applies to"""
+  appliesToRegions: JSONString!
+
+  """Customer types this discount applies to"""
+  appliesToCustomerTypes: JSONString!
+  status: WorkspaceStoreDiscountStatusChoices!
+
+  """Whether discount is applied automatically"""
+  isAutomatic: Boolean!
+
+  """Whether this discount can be combined with others"""
+  combineWithOtherDiscounts: Boolean!
+
+  """Total amount discounted across all orders"""
+  totalDiscountAmount: Decimal!
+
+  """Total orders that used this discount"""
+  totalOrders: Int!
+  isActive: Boolean
+  isExpired: Boolean
+  remainingUsage: Int
+}
+
+"""An enumeration."""
+enum WorkspaceStoreDiscountDiscountTypeChoices {
+  """Percentage Discount"""
+  PERCENTAGE
+
+  """Fixed Amount Discount"""
+  FIXED_AMOUNT
+
+  """Free Shipping"""
+  FREE_SHIPPING
+
+  """Buy X Get Y"""
+  BUY_X_GET_Y
+}
+
+"""An enumeration."""
+enum WorkspaceStoreDiscountStatusChoices {
+  """Active"""
+  ACTIVE
+
+  """Inactive"""
+  INACTIVE
+
+  """Expired"""
+  EXPIRED
+
+  """Scheduled"""
+  SCHEDULED
+}
+
+type CategoryTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [CategoryTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `CategoryType` and its cursor."""
+type CategoryTypeEdge {
+  """The item at the end of the edge"""
+  node: CategoryType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type OrderTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [OrderTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `OrderType` and its cursor."""
+type OrderTypeEdge {
+  """The item at the end of the edge"""
+  node: OrderType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+GraphQL type for Order model
+
+Features:
+- All order fields with proper typing
+- Order items relationship with DataLoader
+- Status tracking and analytics
+- Cameroon-specific fields (order_source, shipping_region)
+"""
+type OrderType implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  """Unique order identifier"""
+  orderNumber: String!
+
+  """Source of the order"""
+  orderSource: WorkspaceStoreOrderOrderSourceChoices!
+  status: WorkspaceStoreOrderStatusChoices!
+
+  """Final order total"""
+  totalAmount: Decimal!
+
+  """Reference to customer (for relationships and queries)"""
+  customer: CustomerType
+
+  """Customer email at time of order"""
+  customerEmail: String!
+
+  """Customer full name at time of order"""
+  customerName: String!
+
+  """Customer phone number at time of order"""
+  customerPhone: String!
+
+  """Shipping destination region"""
+  shippingRegion: WorkspaceStoreOrderShippingRegionChoices!
+
+  """Complete shipping address"""
+  shippingAddress: JSONString!
+
+  """Billing address if different from shipping"""
+  billingAddress: JSONString!
+
+  """Order subtotal"""
+  subtotal: Decimal!
+
+  """Shipping cost"""
+  shippingCost: Decimal!
+
+  """Tax amount"""
+  taxAmount: Decimal!
+
+  """Discount applied"""
+  discountAmount: Decimal!
+
+  """Payment method used"""
+  paymentMethod: WorkspaceStoreOrderPaymentMethodChoices!
+  paymentStatus: WorkspaceStoreOrderPaymentStatusChoices!
+
+  """Order currency"""
+  currency: String!
+
+  """Order notes"""
+  notes: String!
+
+  """Shipping tracking number"""
+  trackingNumber: String!
+
+  """When order was confirmed"""
+  confirmedAt: DateTime
+
+  """When order was shipped"""
+  shippedAt: DateTime
+
+  """When order was delivered"""
+  deliveredAt: DateTime
+  items: [OrderItemType]
+  itemCount: Int
+  isPaid: Boolean
+  canBeCancelled: Boolean
+  canBeRefunded: Boolean
+  requiresPaymentProcessing: Boolean
+  isWhatsappOrder: Boolean
+  isCashOnDelivery: Boolean
+  canMarkAsPaid: Boolean
+}
+
+"""An enumeration."""
+enum WorkspaceStoreOrderOrderSourceChoices {
+  """WhatsApp Order"""
+  WHATSAPP
+
+  """Payment Gateway"""
+  PAYMENT
+
+  """Manual Entry"""
+  MANUAL
+}
+
+"""An enumeration."""
+enum WorkspaceStoreOrderStatusChoices {
+  """Pending"""
+  PENDING
+
+  """Confirmed"""
+  CONFIRMED
+
+  """Processing"""
+  PROCESSING
+
+  """Shipped"""
+  SHIPPED
+
+  """Delivered"""
+  DELIVERED
+
+  """Cancelled"""
+  CANCELLED
+
+  """Refunded"""
+  REFUNDED
+}
+
+"""An enumeration."""
+enum WorkspaceStoreOrderShippingRegionChoices {
+  """Centre Region"""
+  CENTRE
+
+  """Littoral Region"""
+  LITTORAL
+
+  """West Region"""
+  WEST
+
+  """Northwest Region"""
+  NORTHWEST
+
+  """Southwest Region"""
+  SOUTHWEST
+
+  """Adamawa Region"""
+  ADAMAWA
+
+  """East Region"""
+  EAST
+
+  """Far North Region"""
+  FAR_NORTH
+
+  """North Region"""
+  NORTH
+
+  """South Region"""
+  SOUTH
+}
+
+"""An enumeration."""
+enum WorkspaceStoreOrderPaymentMethodChoices {
+  """Cash on Delivery"""
+  CASH_ON_DELIVERY
+
+  """WhatsApp Order"""
+  WHATSAPP
+
+  """Mobile Money"""
+  MOBILE_MONEY
+
+  """Credit/Debit Card"""
+  CARD
+
+  """Bank Transfer"""
+  BANK_TRANSFER
+}
+
+"""An enumeration."""
+enum WorkspaceStoreOrderPaymentStatusChoices {
+  """Pending"""
+  PENDING
+
+  """Paid"""
+  PAID
+
+  """Failed"""
+  FAILED
+
+  """Refunded"""
+  REFUNDED
+}
+
+"""
+GraphQL type for OrderItem model
+
+Features:
+- All order item fields with proper typing
+- Product and variant relationships
+- Price calculations
+"""
+type OrderItemType implements Node {
+  id: ID!
+
+  """Product name at time of order"""
+  productName: String!
+
+  """Product SKU at time of order"""
+  productSku: String!
+
+  """Quantity ordered"""
+  quantity: Int!
+
+  """Price per unit at time of order"""
+  unitPrice: Decimal!
+
+  """Product details at time of order"""
+  productData: JSONString!
+  product: ProductType
+  variant: ProductVariantType
+  totalPrice: Float
+}
+
+type InventoryTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [InventoryTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `InventoryType` and its cursor."""
+type InventoryTypeEdge {
+  """The item at the end of the edge"""
+  node: InventoryType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type ProductTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [ProductTypeEdge]!
+  totalCount: Int
+}
+
+"""A Relay edge containing a `ProductType` and its cursor."""
+type ProductTypeEdge {
+  """The item at the end of the edge"""
+  node: ProductType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""
+Limited order info for public tracking
+Used for order tracking without authentication
+"""
+type OrderTrackingType {
+  orderNumber: String
+  status: String
+  totalAmount: Decimal
+  createdAt: DateTime
+  estimatedDelivery: DateTime
+  trackingNumber: String
+}
+
+"""
+GraphQL type for Cart model
+
+Performance: Uses prefetch_related for items optimization
+"""
+type CartType implements Node {
+  id: ID!
+
+  """Unique session identifier for guest carts"""
+  sessionId: String!
+
+  """Cart currency"""
+  currency: String!
+
+  """Whether cart is active"""
+  isActive: Boolean!
+
+  """When cart was abandoned"""
+  abandonedAt: DateTime
+
+  """Cart subtotal (sum of item totals)"""
+  subtotal: Decimal!
+  items: [CartItemType]
+  itemCount: Int
+  isEmpty: Boolean
+  isGuestCart: Boolean
+}
+
+"""
+GraphQL type for CartItem model
+
+Performance: Uses select_related for product optimization
+"""
+type CartItemType implements Node {
+  id: ID!
+
+  """Quantity of product in cart"""
+  quantity: Int!
+
+  """Price at time of adding to cart"""
+  priceSnapshot: Decimal!
+  addedAt: DateTime!
+  updatedAt: DateTime!
+  product: ProductType
+  variant: ProductVariantType
+  totalPrice: Decimal
+}
+
+"""Root mutation combining all apps"""
+type Mutation {
+  """
+  Upload media file with automatic processing (NEW FK-based system)
+  
+  Flow:
+  1. Upload media → Get upload_id
+  2. Attach to entity → entity.featured_media_id = upload_id
+  
+  Process:
+  1. User selects file in UI
+  2. Immediately upload to backend (entity-agnostic)
+  3. Return upload_id and preview URL
+  4. User can attach to product/category later via FK
+  
+  Benefits:
+  - Images persist even if user cancels entity creation
+  - Immediately available in "Recent uploads"
+  - Real upload progress feedback
+  - Can reuse across multiple entities (just set FK)
+  """
+  uploadMedia(
+    """File to upload (image, video, 3D model)"""
+    file: Upload!
+
+    """Generate optimized/thumbnail versions"""
+    processVariations: Boolean = true
+  ): UploadMedia
+
+  """
+  Upload media from URL (download and store)
+  
+  Process:
+  1. Download file from URL
+  2. Validate and process
+  3. Store in MediaUpload table
+  """
+  uploadMediaFromUrl(
+    """Optional filename override"""
+    filename: String
+
+    """URL of the media file"""
+    url: String!
+  ): UploadMediaFromUrl
+
+  """
+  Delete media upload (soft delete)
+  
+  User can manually manage their storage
+  """
+  deleteMedia(
+    """Upload ID to delete"""
+    uploadId: String!
+  ): DeleteMedia
+
+  """Create variant with validation and atomic transaction"""
+  createVariant(variantData: VariantCreateInput!): CreateVariant
+
+  """Update variant with atomic transaction"""
+  updateVariant(updateData: VariantUpdateInput!, variantId: String!): UpdateVariant
+
+  """Bulk create variants from option matrix"""
+  bulkCreateVariants(productId: String!, variantsData: [VariantCreateInput]!): BulkCreateVariants
+
+  """
+  Unified mutation for bulk product imports from ANY file type
+  
+  CONSOLIDATES: CSV uploads, document uploads, image uploads
+  USES: ProductImportService for ALL business logic
+  PARSERS: Only extract data, no validation/creation
+  
+  Flow:
+  1. Detect file type (CSV vs Document)
+  2. Route to appropriate parser for extraction
+  3. ProductImportService validates & imports
+  4. Return job_id for progress tracking
+  
+  Performance: Async processing, returns immediately with job_id
+  Scalability: Handles 10,000+ products via chunked processing
+  Reliability: Atomic transactions, continues on errors
+  Security: File size limits, workspace scoping, input validation
+  """
+  bulkImportProducts(importData: BulkProductImportInput!): BulkImportProducts
+
+  """
+  Get real-time progress of import operation
+  
+  Performance: Fast cache lookup (< 5ms)
+  Scalability: Handles concurrent progress queries
+  Reliability: Graceful handling of expired/missing jobs
+  """
+  getImportProgress(jobId: String!): GetImportProgress
+
+  """
+  Clear import progress from cache (cleanup)
+  
+  Use after: Import completed and user acknowledged results
+  """
+  clearImportProgress(jobId: String!): ClearImportProgress
+
+  """
+  Upload and parse CSV file for bulk product creation
+  
+  Performance: Async processing with progress tracking
+  Scalability: Background job processing for large files
+  Reliability: Comprehensive error handling with retry mechanisms
+  Security: File validation and workspace scoping
+  """
+  uploadAndParseCsv(uploadData: CSVUploadInput!): UploadAndParseCSV
+
+  """
+  Get progress of CSV upload and parsing job
+  
+  Performance: Fast cache lookup for progress information
+  Scalability: Handles multiple concurrent progress queries
+  Reliability: Graceful handling of missing job IDs
+  """
+  getCsvUploadProgress(jobId: String!): GetCSVUploadProgress
+
+  """
+  Process multiple CSV files in bulk with background jobs
+  
+  Performance: Async processing with progress tracking
+  Scalability: Background job processing for large batches
+  Reliability: Job queuing with retry mechanisms
+  """
+  bulkCsvProcessing(csvFiles: [CSVUploadInput]!): BulkCSVProcessing
+
+  """
+  Upload and process document for product extraction
+  
+  Performance: Async processing for large documents
+  Scalability: Background job processing with progress tracking
+  Reliability: Retry mechanisms and comprehensive error handling
+  Security: File validation and workspace scoping
+  """
+  uploadAndProcessDocument(uploadData: DocumentUploadInput!): UploadAndProcessDocument
+
+  """
+  Extract products from previously uploaded document
+  
+  Performance: Optimized for re-processing existing documents
+  Scalability: Handles multiple document formats and sizes
+  Reliability: Comprehensive error handling and validation
+  """
+  extractProductsFromDocument(documentId: ID!, extractionOptions: JSONString): ExtractProductsFromDocument
+
+  """
+  Process multiple documents in bulk with background jobs
+  
+  Performance: Async processing with progress tracking
+  Scalability: Handles large batches with background workers
+  Reliability: Job queuing with retry mechanisms
+  """
+  bulkDocumentProcessing(documents: [DocumentUploadInput]!): BulkDocumentProcessing
+
+  """
+  Publish multiple products in background
+  
+  Follows GraphQL architecture standards:
+  - Service layer integration
+  - Proper typed response
+  - Input validation
+  - Workspace scoping
+  """
+  bulkPublishProducts(productIds: [ID]!): BulkPublishResponse
+
+  """
+  Unpublish multiple products in background
+  
+  Follows GraphQL architecture standards:
+  - Service layer integration
+  - Proper typed response
+  - Input validation
+  - Workspace scoping
+  """
+  bulkUnpublishProducts(productIds: [ID]!): BulkPublishResponse
+
+  """
+  Update prices for multiple products in background
+  
+  Follows GraphQL architecture standards:
+  - Service layer integration
+  - Proper typed response
+  - Input validation
+  - Workspace scoping
+  """
+  bulkUpdatePrices(priceUpdates: [PriceUpdateInput!]!): BulkUpdateResponse
+
+  """
+  Delete multiple products in background
+  
+  Follows GraphQL architecture standards:
+  - Service layer integration
+  - Proper typed response
+  - Input validation
+  - Workspace scoping
+  """
+  bulkDeleteProducts(productIds: [ID]!): BulkDeleteResponse
+
+  """
+  Update inventory for multiple variants across regions
+  
+  Follows GraphQL architecture standards:
+  - Service layer integration
+  - Proper typed response
+  - Input validation
+  - Workspace scoping
+  """
+  bulkUpdateInventory(inventoryUpdates: [InventoryUpdateInput!]!): BulkUpdateResponse
+
+  """
+  Create customer with atomic transaction using CustomerMutationService
+  
+  Performance: Atomic creation with validation
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive validation and rollback
+  """
+  createCustomer(customerData: CustomerCreateInput!): CreateCustomer
+
+  """
+  Update customer with atomic transaction using CustomerMutationService
+  
+  Performance: Atomic update with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive error handling with rollback
+  """
+  updateCustomer(customerId: String!, updateData: CustomerUpdateInput!): UpdateCustomer
+
+  """
+  Delete customer with validation and atomic transaction using CustomerMutationService
+  
+  Performance: Atomic deletion with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive validation and rollback
+  """
+  deleteCustomer(customerId: String!): DeleteCustomer
+
+  """
+  Toggle customer active status with validation using CustomerMutationService
+  
+  Performance: Atomic status update
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive status validation
+  """
+  toggleCustomerStatus(customerId: String!, newStatus: Boolean!): ToggleCustomerStatus
+
+  """
+  Update customer tags with atomic transaction using CustomerMutationService
+  
+  Performance: Atomic tag operations
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive tag validation
+  """
+  updateCustomerTags(customerId: String!, tagOperations: CustomerTagUpdateInput!): UpdateCustomerTags
+
+  """Create sales channel with atomic transaction"""
+  createSalesChannel(input: SalesChannelInput!): CreateSalesChannel
+
+  """Update sales channel with atomic transaction"""
+  updateSalesChannel(id: ID!, input: SalesChannelInput!): UpdateSalesChannel
+
+  """Delete sales channel with atomic transaction"""
+  deleteSalesChannel(id: ID!): DeleteSalesChannel
+
+  """Sync inventory using SalesChannelService"""
+  syncInventory(channelId: ID!, productId: String!, quantity: Int!): SyncInventory
+
+  """Create location (warehouse/store)"""
+  createLocation(input: LocationInput!): CreateLocation
+
+  """Update location"""
+  updateLocation(id: ID!, input: LocationInput!): UpdateLocation
+
+  """Delete location"""
+  deleteLocation(id: ID!): DeleteLocation
+
+  """Create shipping package"""
+  createPackage(input: PackageInput!): CreatePackage
+
+  """Update shipping package"""
+  updatePackage(id: ID!, input: PackageInput!): UpdatePackage
+
+  """Delete shipping package"""
+  deletePackage(id: ID!): DeletePackage
+
+  """Create discount with service layer orchestration"""
+  createDiscount(input: DiscountInput!): CreateDiscount
+
+  """Update discount with service layer orchestration"""
+  updateDiscount(discountId: String!, updateData: DiscountInput!): UpdateDiscount
+
+  """Delete discount with service layer orchestration"""
+  deleteDiscount(discountId: String!): DeleteDiscount
+
+  """
+  Update category with atomic transaction (Shopify-style)
+  
+  Security: Validates workspace ownership
+  Integrity: Uses @transaction.atomic for rollback
+  Hierarchical: Validates parent relationships
+  Images: Replace category banner image
+  """
+  updateCategory(
+    description: String
+
+    """Featured image ID (from media upload)"""
+    featuredMediaId: String
+    id: ID!
+    isFeatured: Boolean
+    isVisible: Boolean
+
+    """SEO meta description (max 160 chars)"""
+    metaDescription: String
+
+    """SEO meta title (max 60 chars)"""
+    metaTitle: String
+    name: String
+    parentId: ID
+
+    """Remove existing featured image"""
+    removeFeaturedMedia: Boolean
+
+    """URL-friendly slug (must be unique within workspace)"""
+    slug: String
+    sortOrder: Int
+  ): UpdateCategory
+
+  """
+  Delete category with atomic transaction
+  
+  Security: Validates workspace ownership
+  Integrity: Uses @transaction.atomic for rollback
+  Safety: Prevents deletion of categories with products
+  Hierarchical: Handles orphaned children
+  """
+  deleteCategory(id: ID!): DeleteCategory
+
+  """
+  Create new category with atomic transaction (Shopify-style)
+  
+  Security: Validates workspace ownership
+  Integrity: Uses @transaction.atomic for rollback
+  Hierarchical: Validates parent relationships
+  Images: Accepts single image file upload
+  """
+  createCategory(
+    description: String
+
+    """Featured image ID (from media upload)"""
+    featuredMediaId: String
+    isFeatured: Boolean = false
+    isVisible: Boolean = true
+
+    """SEO meta description (max 160 chars, defaults to description if empty)"""
+    metaDescription: String
+
+    """SEO meta title (max 60 chars, defaults to name if empty)"""
+    metaTitle: String
+    name: String!
+
+    """URL-friendly slug (auto-generated from name if not provided)"""
+    slug: String
+    sortOrder: Int = 0
+  ): CreateCategory
+
+  """
+  Reorder categories with atomic transaction
+  
+  Security: Validates workspace ownership
+  Integrity: Uses @transaction.atomic for rollback
+  Performance: Bulk update for efficiency
+  """
+  reorderCategories(reorderData: [CategoryReorderInput!]!): ReorderCategories
+
+  """
+  Toggle category visibility with atomic transaction
+  
+  Security: Validates workspace ownership
+  Integrity: Uses @transaction.atomic for rollback
+  """
+  toggleCategoryVisibility(id: ID!): ToggleCategoryVisibility
+
+  """
+  Add products to category with atomic transaction
+  
+  Security: Validates workspace ownership for both category and products
+  Integrity: Uses @transaction.atomic for rollback
+  Performance: Bulk operation for multiple products
+  """
+  addProductsToCategory(categoryId: ID!, productIds: [ID!]!): AddProductsToCategory
+
+  """
+  Remove products from category with atomic transaction
+  
+  Security: Validates workspace ownership for both category and products
+  Integrity: Uses @transaction.atomic for rollback
+  Performance: Bulk operation for multiple products
+  """
+  removeProductsFromCategory(categoryId: ID!, productIds: [ID!]!): RemoveProductsFromCategory
+
+  """
+  Create a new order with validation and inventory checks
+  
+  Performance: Atomic creation with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive error handling with rollback
+  """
+  createOrder(orderData: OrderCreateInput!): CreateOrder
+
+  """
+  Create a cash on delivery order
+  
+  Payment status remains 'pending' until marked as paid on delivery
+  """
+  createCashOnDeliveryOrder(orderData: OrderCreateInput!): CreateCashOnDeliveryOrder
+
+  """
+  Create a WhatsApp order
+  
+  Creates order and sends WhatsApp DM to admin
+  """
+  createWhatsappOrder(orderData: OrderCreateInput!): CreateWhatsAppOrder
+
+  """
+  Update order status with validation and side effects
+  
+  Performance: Atomic update with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive status transition validation
+  """
+  updateOrderStatus(newStatus: String!, orderId: String!): UpdateOrderStatus
+
+  """
+  Cancel an order with validation and inventory restoration
+  
+  Performance: Atomic cancellation with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive validation and rollback
+  """
+  cancelOrder(orderId: String!, reason: String): CancelOrder
+
+  """
+  Mark order as paid (for COD and WhatsApp orders)
+  
+  Performance: Atomic update with proper validation
+  Security: Workspace scoping and permission validation
+  Use Case: Admin marks COD/WhatsApp orders as paid upon delivery/confirmation
+  """
+  markOrderAsPaid(orderId: String!): MarkOrderAsPaid
+
+  """
+  Process bulk order status updates
+  
+  Performance: Optimized bulk operations with transaction
+  Scalability: Handles up to 500 updates per batch
+  Reliability: Atomic transaction with rollback on failure
+  """
+  bulkUpdateOrderStatus(bulkData: BulkStatusUpdateInput!): BulkUpdateOrderStatus
+
+  """
+  Get order analytics for workspace
+  
+  Performance: Optimized aggregations with proper indexing
+  Scalability: Efficient queries for large datasets
+  Security: Workspace scoping and permission validation
+  """
+  getOrderAnalytics(periodDays: Int): GetOrderAnalytics
+
+  """
+  Update inventory for a variant at a specific location
+  
+  Performance: Atomic update with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive error handling with rollback
+  """
+  updateInventory(updateData: UpdateInventoryInput!): UpdateInventory
+
+  """
+  Transfer inventory between locations
+  
+  Performance: Atomic transaction with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Rollback on failure
+  """
+  transferInventory(transferData: TransferInventoryInput!): TransferInventory
+
+  """
+  Bulk update stock quantities for multiple inventory items
+  
+  Performance: Optimized bulk operations with transaction
+  Scalability: Handles up to 1000 updates per batch
+  Reliability: Atomic transaction with rollback on failure
+  """
+  bulkUpdateStock(bulkData: BulkStockUpdateInput!): BulkUpdateStock
+
+  """
+  Get comprehensive inventory summary for workspace
+  
+  Performance: Optimized aggregations with proper indexing
+  Scalability: Efficient queries for large datasets
+  Security: Workspace scoping and permission validation
+  """
+  getInventorySummary: GetInventorySummary
+
+  """
+  Get low stock alerts for workspace
+  
+  Performance: Optimized queries for alert detection
+  Scalability: Handles large inventory catalogs
+  Reliability: Comprehensive error handling
+  """
+  getLowStockAlerts: GetLowStockAlerts
+
+  """
+  Create inventory entries for a new variant across multiple locations
+  
+  Performance: Bulk creation with transaction
+  Scalability: Handles multiple location assignments
+  Reliability: Atomic operation with rollback
+  """
+  createInventoryForVariant(locationsData: [JSONString]!, variantId: String!): CreateInventoryForVariant
+
+  """
+  Create product using ProductService
+  
+  Core required: name, price
+  Optional: All other fields including variants, shipping, SEO
+  Performance: Atomic creation with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive validation and rollback
+  """
+  createProduct(productData: ProductCreateInput!): CreateProduct
+
+  """
+  Update product with atomic transaction using ProductService
+  
+  Performance: Atomic update with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive error handling with rollback
+  """
+  updateProduct(productId: String!, updateData: ProductUpdateInput!): UpdateProduct
+
+  """
+  Delete product with validation and atomic transaction using ProductService
+  
+  Performance: Atomic deletion with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive validation and rollback
+  """
+  deleteProduct(productId: String!): DeleteProduct
+
+  """
+  Toggle product status with validation using ProductService
+  
+  Performance: Atomic status update
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive status validation
+  """
+  toggleProductStatus(newStatus: String!, productId: String!): ToggleProductStatus
+
+  """
+  Update product stock quantity with atomic transaction using ProductService
+  
+  Performance: Atomic stock update with proper locking
+  Security: Workspace scoping and permission validation
+  Reliability: Comprehensive validation and rollback
+  """
+  updateProductStock(productId: String!, stockQuantity: Int!): UpdateProductStock
+
+  """
+  Duplicate existing product with variants and inventory using ProductService
+  
+  Performance: Bulk operations with transaction
+  Scalability: Handles complex product structures
+  Reliability: Atomic operation with rollback
+  """
+  duplicateProduct(copyInventory: Boolean = false, copyVariants: Boolean = true, newName: String!, productId: String!): DuplicateProduct
+
+  """
+  Consolidated profile update mutation
+  
+  Updates profile, addresses, and preferences in ONE operation
+  All parameters are optional - update only what you need
+  
+  Cameroon Market: Phone-first, mobile-optimized, single atomic operation
+  """
+  updateCustomerProfile(
+    """Optional address operations"""
+    addressesData: AddressOperationsInput
+
+    """Customer ID"""
+    customerId: String!
+
+    """Optional communication preferences"""
+    preferencesData: PreferencesInput
+
+    """Optional profile data to update"""
+    profileData: ProfileDataInput
+
+    """Customer session token"""
+    sessionToken: String!
+  ): UpdateCustomerProfile
+
+  """
+  Get customer profile data
+  
+  Returns complete profile with addresses, preferences, and order stats
+  """
+  getCustomerProfile(
+    """Customer ID"""
+    customerId: String!
+
+    """Customer session token"""
+    sessionToken: String!
+  ): GetCustomerProfile
+
+  """
+  Get customer order summary
+  
+  Returns order statistics (total orders, total spent, etc.)
+  """
+  getCustomerOrders(
+    """Customer ID"""
+    customerId: String!
+
+    """Customer session token"""
+    sessionToken: String!
+  ): GetCustomerOrders
+
+  """
+  Customer signup with password - Phone-first approach
+  
+  Security: Password is hashed using Django's make_password
+  Creates customer account and returns session token
+  """
+  customerSignup(
+    """Customer city"""
+    city: String
+
+    """Customer email (optional)"""
+    email: String
+
+    """Customer full name"""
+    name: String!
+
+    """Customer password (min 6 characters)"""
+    password: String!
+
+    """Customer phone number (E.164 format)"""
+    phone: String!
+
+    """Cameroon region"""
+    region: String
+  ): CustomerSignup
+
+  """
+  Customer login with password - Phone-first authentication
+  
+  Security: Password verification with check_password
+  Validates customer credentials and returns session token
+  """
+  customerLogin(
+    """Customer password"""
+    password: String!
+
+    """Customer phone number"""
+    phone: String!
+  ): CustomerLogin
+
+  """Customer logout - Invalidate session"""
+  customerLogout(
+    """Customer session token"""
+    sessionToken: String!
+  ): CustomerLogout
+
+  """
+  Validate customer session token
+  
+  Used to check if session is still valid and get customer data
+  """
+  validateCustomerSession(
+    """Customer session token"""
+    sessionToken: String!
+  ): ValidateCustomerSession
+
+  """
+  Create WhatsApp order mutation
+  
+  Uses CustomerInfoInput from core for consistency
+  """
+  requestWhatsappOrder(customerInfo: CustomerInfoInput!, sessionId: String!, storeSlug: String!, whatsappNumber: String!): RequestWhatsAppOrder
+
+  """
+  Checkout with payment mutation
+  
+  For paid themes with payment integration
+  """
+  checkoutWithPayment(customerInfo: CustomerInfoInput!, paymentMethod: String!, sessionId: String!, shippingAddress: JSONString, storeSlug: String!): CheckoutWithPayment
+
+  """
+  Create new guest cart and session
+  
+  Security: Rate limited to prevent abuse
+  Performance: Atomic transaction
+  """
+  createCart(storeSlug: String!): CreateCart
+
+  """
+  Add product to cart with variant support
+  
+  Performance: Uses select_for_update to prevent race conditions
+  Security: Validates stock availability
+  """
+  addToCart(input: AddToCartInput!): AddToCart
+
+  """Update cart item quantity with variant support"""
+  updateCartItem(input: UpdateCartItemInput!): UpdateCartItem
+
+  """Remove item from cart with variant support"""
+  removeFromCart(input: RemoveFromCartInput!): RemoveFromCart
+
+  """Clear all items from cart"""
+  clearCart(input: ClearCartInput!): ClearCart
+}
+
+"""
+Upload media file with automatic processing (NEW FK-based system)
+
+Flow:
+1. Upload media → Get upload_id
+2. Attach to entity → entity.featured_media_id = upload_id
+
+Process:
+1. User selects file in UI
+2. Immediately upload to backend (entity-agnostic)
+3. Return upload_id and preview URL
+4. User can attach to product/category later via FK
+
+Benefits:
+- Images persist even if user cancels entity creation
+- Immediately available in "Recent uploads"
+- Real upload progress feedback
+- Can reuse across multiple entities (just set FK)
+"""
+type UploadMedia {
+  success: Boolean
+  upload: MediaUploadType
+  message: String
+  error: String
+}
+
+"""
+Create scalar that ignores normal serialization/deserialization, since
+that will be handled by the multipart request spec
+"""
+scalar Upload
+
+"""
+Upload media from URL (download and store)
+
+Process:
+1. Download file from URL
+2. Validate and process
+3. Store in MediaUpload table
+"""
+type UploadMediaFromUrl {
+  success: Boolean
+  upload: MediaUploadType
+  message: String
+  error: String
+}
+
+"""
+Delete media upload (soft delete)
+
+User can manually manage their storage
+"""
+type DeleteMedia {
+  success: Boolean
+  message: String
+  error: String
+}
+
+"""Create variant with validation and atomic transaction"""
+type CreateVariant {
+  success: Boolean
+  variant: ProductVariantType
+  message: String
+  error: String
+}
+
+"""Input for variant creation"""
+input VariantCreateInput {
+  productId: String!
+  sku: String!
+  option1: String
+  option2: String
+  option3: String
+  price: Float
+  trackInventory: Boolean = true
+  isActive: Boolean = true
+  position: Int = 0
+}
+
+"""Update variant with atomic transaction"""
+type UpdateVariant {
+  success: Boolean
+  variant: ProductVariantType
+  message: String
+  error: String
+}
+
+"""Input for variant updates"""
+input VariantUpdateInput {
+  sku: String
+  option1: String
+  option2: String
+  option3: String
+  price: Float
+  trackInventory: Boolean
+  isActive: Boolean
+  position: Int
+}
+
+"""Bulk create variants from option matrix"""
+type BulkCreateVariants {
+  success: Boolean
+  variants: [ProductVariantType]
+  message: String
+  error: String
+}
+
+"""
+Unified mutation for bulk product imports from ANY file type
+
+CONSOLIDATES: CSV uploads, document uploads, image uploads
+USES: ProductImportService for ALL business logic
+PARSERS: Only extract data, no validation/creation
+
+Flow:
+1. Detect file type (CSV vs Document)
+2. Route to appropriate parser for extraction
+3. ProductImportService validates & imports
+4. Return job_id for progress tracking
+
+Performance: Async processing, returns immediately with job_id
+Scalability: Handles 10,000+ products via chunked processing
+Reliability: Atomic transactions, continues on errors
+Security: File size limits, workspace scoping, input validation
+"""
+type BulkImportProducts {
+  result: ImportResultType
+  progress: ImportProgressType
+  success: Boolean
+  errors: [String]
+}
+
+"""Final result of bulk import operation"""
+type ImportResultType {
+  success: Boolean
+  jobId: String
+  totalItems: Int
+  successfulImports: Int
+  failedImports: Int
+  errors: [JSONString]
+  warnings: [String]
+  processingTime: Float
+  bulkOperationId: String
+  createdProductIds: [String]
+}
+
+"""Real-time import progress tracking"""
+type ImportProgressType {
+  jobId: String
+  status: String
+  stage: String
+  currentItem: Int
+  totalItems: Int
+  percentComplete: Int
+  successfulImports: Int
+  failedImports: Int
+  errors: [JSONString]
+  warnings: [String]
+}
+
+"""
+Unified input for bulk product imports (CSV, PDF, Images, Excel)
+
+Validation: File type, size limits (50MB), format validation
+Security: File upload restrictions and workspace scoping
+"""
+input BulkProductImportInput {
+  """Base64 encoded file content"""
+  file: String!
+
+  """Original filename with extension"""
+  filename: String!
+
+  """Auto-create categories if not found in workspace"""
+  createMissingCategories: Boolean = true
+}
+
+"""
+Get real-time progress of import operation
+
+Performance: Fast cache lookup (< 5ms)
+Scalability: Handles concurrent progress queries
+Reliability: Graceful handling of expired/missing jobs
+"""
+type GetImportProgress {
+  progress: ImportProgressType
+  success: Boolean
+  message: String
+}
+
+"""
+Clear import progress from cache (cleanup)
+
+Use after: Import completed and user acknowledged results
+"""
+type ClearImportProgress {
+  success: Boolean
+  message: String
+}
+
+"""
+Upload and parse CSV file for bulk product creation
+
+Performance: Async processing with progress tracking
+Scalability: Background job processing for large files
+Reliability: Comprehensive error handling with retry mechanisms
+Security: File validation and workspace scoping
+"""
+type UploadAndParseCSV {
+  parseResult: CSVParseResultType
+  progress: CSVParseProgressType
+  success: Boolean
+  errors: [String]
+}
+
+"""GraphQL type for CSV parsing result"""
+type CSVParseResultType {
+  success: Boolean
+  products: [JSONString]
+  errors: [JSONString]
+  warnings: [String]
+  totalRows: Int
+  validProducts: Int
+  processingTime: Float
+  jobId: String
+}
+
+"""GraphQL type for CSV parsing progress"""
+type CSVParseProgressType {
+  jobId: String
+  status: String
+  currentRow: Int
+  totalRows: Int
+  percentComplete: Int
+  errorsCount: Int
+  validProductsCount: Int
+}
+
+"""
+Input for CSV upload operation
+
+Validation: File type, size limits, and format validation
+Security: File upload restrictions and workspace scoping
+"""
+input CSVUploadInput {
+  file: String!
+  filename: String!
+}
+
+"""
+Get progress of CSV upload and parsing job
+
+Performance: Fast cache lookup for progress information
+Scalability: Handles multiple concurrent progress queries
+Reliability: Graceful handling of missing job IDs
+"""
+type GetCSVUploadProgress {
+  progress: CSVParseProgressType
+  success: Boolean
+}
+
+"""
+Process multiple CSV files in bulk with background jobs
+
+Performance: Async processing with progress tracking
+Scalability: Background job processing for large batches
+Reliability: Job queuing with retry mechanisms
+"""
+type BulkCSVProcessing {
+  jobIds: [String]
+  totalFiles: Int
+  success: Boolean
+}
+
+"""
+Upload and process document for product extraction
+
+Performance: Async processing for large documents
+Scalability: Background job processing with progress tracking
+Reliability: Retry mechanisms and comprehensive error handling
+Security: File validation and workspace scoping
+"""
+type UploadAndProcessDocument {
+  analysisResult: DocumentAnalysisResult
+  job: DocumentProcessingJob
+  success: Boolean
+  errors: [String]
+}
+
+"""Document analysis result with extracted products"""
+type DocumentAnalysisResult {
+  products: [ExtractedProductType]
+  documentType: String
+  totalPages: Int
+  confidenceScore: Float
+  processingTime: Float
+  errors: [String]
+  metadata: JSONString
+}
+
+"""GraphQL type for extracted products from documents"""
+type ExtractedProductType {
+  name: String
+  price: String
+  costPrice: String
+  compareAtPrice: String
+  category: String
+  subCategory: String
+  brand: String
+  sku: String
+  description: String
+  stockQuantity: Int
+  images: [String]
+  confidence: Float
+  sourceLocation: String
+  sellingType: String
+  status: String
+  condition: String
+}
+
+"""Background job for document processing"""
+type DocumentProcessingJob {
+  jobId: String
+  status: String
+  progress: Int
+  totalSteps: Int
+  estimatedCompletion: String
+}
+
+"""
+Input for document upload operation
+
+Validation: File type, size limits, and format validation
+Security: File upload restrictions and workspace scoping
+"""
+input DocumentUploadInput {
+  file: String!
+  filename: String!
+  processImages: Boolean = true
+  extractProducts: Boolean = true
+}
+
+"""
+Extract products from previously uploaded document
+
+Performance: Optimized for re-processing existing documents
+Scalability: Handles multiple document formats and sizes
+Reliability: Comprehensive error handling and validation
+"""
+type ExtractProductsFromDocument {
+  extractedProducts: [ExtractedProductType]
+  confidenceScore: Float
+  processingTime: Float
+  success: Boolean
+  errors: [String]
+}
+
+"""
+Process multiple documents in bulk with background jobs
+
+Performance: Async processing with progress tracking
+Scalability: Handles large batches with background workers
+Reliability: Job queuing with retry mechanisms
+"""
+type BulkDocumentProcessing {
+  job: DocumentProcessingJob
+  totalDocuments: Int
+  success: Boolean
+}
+
+"""Response type for bulk publish operations"""
+type BulkPublishResponse {
+  success: Boolean
+  operationId: String
+  processedCount: Int
+  message: String
+  error: String
+}
+
+"""Response type for bulk update operations"""
+type BulkUpdateResponse {
+  success: Boolean
+  operationId: String
+  processedCount: Int
+  message: String
+  error: String
+}
+
+input PriceUpdateInput {
+  productId: ID!
+  newPrice: Float!
+}
+
+"""Response type for bulk delete operations"""
+type BulkDeleteResponse {
+  success: Boolean
+  operationId: String
+  processedCount: Int
+  message: String
+  error: String
+}
+
+input InventoryUpdateInput {
+  variantId: ID!
+  locationId: ID!
+  quantity: Int!
+}
+
+"""
+Create customer with atomic transaction using CustomerMutationService
+
+Performance: Atomic creation with validation
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive validation and rollback
+"""
+type CreateCustomer {
+  success: Boolean
+  customer: CustomerType
+  message: String
+  error: String
+}
+
+"""
+Input for customer creation
+
+Validation: Required fields and data structure
+Security: Workspace scoping via JWT middleware
+"""
+input CustomerCreateInput {
+  phone: String!
+  name: String!
+  email: String
+  customerType: String = "individual"
+  city: String
+  region: String
+  address: String
+  tags: JSONString
+  smsNotifications: Boolean = true
+  whatsappNotifications: Boolean = true
+}
+
+"""
+Update customer with atomic transaction using CustomerMutationService
+
+Performance: Atomic update with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive error handling with rollback
+"""
+type UpdateCustomer {
+  success: Boolean
+  customer: CustomerType
+  message: String
+  error: String
+}
+
+"""
+Input for customer updates
+
+Validation: Field validation and data integrity
+Security: Workspace scoping via JWT middleware
+"""
+input CustomerUpdateInput {
+  name: String
+  email: String
+  customerType: String
+  city: String
+  region: String
+  address: String
+  tags: JSONString
+  smsNotifications: Boolean
+  whatsappNotifications: Boolean
+  isActive: Boolean
+}
+
+"""
+Delete customer with validation and atomic transaction using CustomerMutationService
+
+Performance: Atomic deletion with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive validation and rollback
+"""
+type DeleteCustomer {
+  success: Boolean
+  deletedId: String
+  message: String
+  error: String
+}
+
+"""
+Toggle customer active status with validation using CustomerMutationService
+
+Performance: Atomic status update
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive status validation
+"""
+type ToggleCustomerStatus {
+  success: Boolean
+  customer: CustomerType
+  message: String
+  error: String
+}
+
+"""
+Update customer tags with atomic transaction using CustomerMutationService
+
+Performance: Atomic tag operations
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive tag validation
+"""
+type UpdateCustomerTags {
+  success: Boolean
+  customer: CustomerType
+  message: String
+  error: String
+}
+
+"""Input for customer tag operations"""
+input CustomerTagUpdateInput {
+  addTags: [String]
+  removeTags: [String]
+}
+
+"""Create sales channel with atomic transaction"""
+type CreateSalesChannel {
+  success: Boolean
+  salesChannel: SalesChannelType
+  message: String
+}
+
+"""Input for creating/updating sales channels"""
+input SalesChannelInput {
+  name: String!
+  channelType: String!
+  isActive: Boolean = true
+  baseUrl: String
+  supportsInventorySync: Boolean = true
+  supportsOrderSync: Boolean = true
+  supportsCustomerSync: Boolean = false
+}
+
+"""Update sales channel with atomic transaction"""
+type UpdateSalesChannel {
+  success: Boolean
+  salesChannel: SalesChannelType
+  message: String
+}
+
+"""Delete sales channel with atomic transaction"""
+type DeleteSalesChannel {
+  success: Boolean
+  message: String
+}
+
+"""Sync inventory using SalesChannelService"""
+type SyncInventory {
+  success: Boolean
+  channelProduct: ChannelProductType
+  message: String
+}
+
+"""Create location (warehouse/store)"""
+type CreateLocation {
+  success: Boolean
+  location: LocationType
+  message: String
+  error: String
+}
+
+"""Input for creating/updating locations"""
+input LocationInput {
+  name: String!
+  region: String!
+  addressLine1: String!
+  addressLine2: String
+  city: String!
+  phone: String
+  email: String
+  isActive: Boolean = true
+  isPrimary: Boolean = false
+  lowStockThreshold: Int = 5
+  managerName: String
+}
+
+"""Update location"""
+type UpdateLocation {
+  success: Boolean
+  location: LocationType
+  message: String
+  error: String
+}
+
+"""Delete location"""
+type DeleteLocation {
+  success: Boolean
+  message: String
+  error: String
+}
+
+"""Create shipping package"""
+type CreatePackage {
+  success: Boolean
+  package: PackageType
+  message: String
+  error: String
+}
+
+"""Input for creating/updating shipping packages"""
+input PackageInput {
+  name: String!
+  packageType: String = "box"
+  size: String = "medium"
+  weight: Decimal
+  method: String!
+  regionFees: JSONString!
+  estimatedDays: String = "3-5"
+  useAsDefault: Boolean = false
+  isActive: Boolean = true
+}
+
+"""Update shipping package"""
+type UpdatePackage {
+  success: Boolean
+  package: PackageType
+  message: String
+  error: String
+}
+
+"""Delete shipping package"""
+type DeletePackage {
+  success: Boolean
+  message: String
+  error: String
+}
+
+"""Create discount with service layer orchestration"""
+type CreateDiscount {
+  success: Boolean
+  discount: DiscountType
+  message: String
+  error: String
+}
+
+"""Input for creating/updating discounts"""
+input DiscountInput {
+  code: String!
+  name: String!
+  discountType: String!
+  value: Decimal!
+  usageLimit: Int
+  usageLimitPerCustomer: Int
+  startsAt: DateTime
+  endsAt: DateTime
+  minimumOrderAmount: Decimal
+  minimumQuantity: Int
+  appliesToAllCustomers: Boolean = true
+  appliesToAllProducts: Boolean = true
+  productIds: [ID]
+  categoryIds: [ID]
+  appliesToRegions: [String]
+  appliesToCustomerTypes: [String]
+  status: String = "active"
+  isAutomatic: Boolean = false
+  combineWithOtherDiscounts: Boolean = false
+}
+
+"""Update discount with service layer orchestration"""
+type UpdateDiscount {
+  success: Boolean
+  discount: DiscountType
+  message: String
+  error: String
+}
+
+"""Delete discount with service layer orchestration"""
+type DeleteDiscount {
+  success: Boolean
+  message: String
+  error: String
+}
+
+"""
+Update category with atomic transaction (Shopify-style)
+
+Security: Validates workspace ownership
+Integrity: Uses @transaction.atomic for rollback
+Hierarchical: Validates parent relationships
+Images: Replace category banner image
+"""
+type UpdateCategory {
+  success: Boolean
+  category: CategoryType
+  message: String
+  error: String
+}
+
+"""
+Delete category with atomic transaction
+
+Security: Validates workspace ownership
+Integrity: Uses @transaction.atomic for rollback
+Safety: Prevents deletion of categories with products
+Hierarchical: Handles orphaned children
+"""
+type DeleteCategory {
+  success: Boolean
+  deletedId: ID
+  message: String
+  error: String
+}
+
+"""
+Create new category with atomic transaction (Shopify-style)
+
+Security: Validates workspace ownership
+Integrity: Uses @transaction.atomic for rollback
+Hierarchical: Validates parent relationships
+Images: Accepts single image file upload
+"""
+type CreateCategory {
+  success: Boolean
+  category: CategoryType
+  message: String
+  error: String
+}
+
+"""
+Reorder categories with atomic transaction
+
+Security: Validates workspace ownership
+Integrity: Uses @transaction.atomic for rollback
+Performance: Bulk update for efficiency
+"""
+type ReorderCategories {
+  success: Boolean
+  updatedCount: Int
+  message: String
+  error: String
+}
+
+input CategoryReorderInput {
+  id: ID!
+  sortOrder: Int!
+}
+
+"""
+Toggle category visibility with atomic transaction
+
+Security: Validates workspace ownership
+Integrity: Uses @transaction.atomic for rollback
+"""
+type ToggleCategoryVisibility {
+  success: Boolean
+  category: CategoryType
+  isVisible: Boolean
+  message: String
+  error: String
+}
+
+"""
+Add products to category with atomic transaction
+
+Security: Validates workspace ownership for both category and products
+Integrity: Uses @transaction.atomic for rollback
+Performance: Bulk operation for multiple products
+"""
+type AddProductsToCategory {
+  success: Boolean
+  category: CategoryType
+  addedCount: Int
+  message: String
+  error: String
+}
+
+"""
+Remove products from category with atomic transaction
+
+Security: Validates workspace ownership for both category and products
+Integrity: Uses @transaction.atomic for rollback
+Performance: Bulk operation for multiple products
+"""
+type RemoveProductsFromCategory {
+  success: Boolean
+  category: CategoryType
+  removedCount: Int
+  message: String
+  error: String
+}
+
+"""
+Create a new order with validation and inventory checks
+
+Performance: Atomic creation with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive error handling with rollback
+"""
+type CreateOrder {
+  success: Boolean
+  order: OrderType
+  message: String
+  error: String
+  unavailableItems: [JSONString]
+}
+
+"""
+Input for order creation
+
+Validation: Required fields and data structure
+Security: Workspace scoping via JWT middleware
+Regional: Cameroon-specific validation for phone and regions
+Phone-first: customer_id required, customer data fetched from Customer table
+"""
+input OrderCreateInput {
+  """Customer ID (fetches customer data automatically)"""
+  customerId: String!
+
+  """Order source: whatsapp, payment, manual"""
+  orderSource: String
+
+  """
+  Cameroon region: centre, littoral, west, northwest, southwest, adamawa, east, far_north, north, south
+  """
+  shippingRegion: String
+
+  """Shipping address details"""
+  shippingAddress: AddressInput!
+
+  """Billing address details"""
+  billingAddress: AddressInput
+
+  """Shipping cost in XAF"""
+  shippingCost: Decimal
+
+  """Tax amount in XAF"""
+  taxAmount: Decimal
+
+  """Discount amount in XAF"""
+  discountAmount: Decimal
+
+  """
+  Payment method: cash_on_delivery, whatsapp, mobile_money, card, bank_transfer
+  """
+  paymentMethod: String
+
+  """Currency: XAF (default)"""
+  currency: String
+
+  """Order notes"""
+  notes: String
+
+  """Order items"""
+  items: [OrderItemInput]!
+}
+
+"""
+Simple address input for Cameroon context
+Used for shipping and billing addresses in orders
+"""
+input AddressInput {
+  """Street/physical address"""
+  address: String
+
+  """City"""
+  city: String
+
+  """Cameroon region"""
+  region: String
+}
+
+"""
+Input for order item
+
+Validation: Quantity must be positive, unit_price must be valid
+Security: Product ID validation and workspace scoping
+"""
+input OrderItemInput {
+  """Product ID"""
+  productId: String!
+
+  """Variant ID (if applicable)"""
+  variantId: String
+
+  """Quantity (must be positive)"""
+  quantity: Int!
+
+  """Unit price in XAF"""
+  unitPrice: Decimal!
+}
+
+"""
+Create a cash on delivery order
+
+Payment status remains 'pending' until marked as paid on delivery
+"""
+type CreateCashOnDeliveryOrder {
+  success: Boolean
+  order: OrderType
+  message: String
+  error: String
+  unavailableItems: [JSONString]
+}
+
+"""
+Create a WhatsApp order
+
+Creates order and sends WhatsApp DM to admin
+"""
+type CreateWhatsAppOrder {
+  success: Boolean
+  order: OrderType
+  message: String
+  error: String
+  unavailableItems: [JSONString]
+}
+
+"""
+Update order status with validation and side effects
+
+Performance: Atomic update with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive status transition validation
+"""
+type UpdateOrderStatus {
+  success: Boolean
+  order: OrderType
+  message: String
+  error: String
+}
+
+"""
+Cancel an order with validation and inventory restoration
+
+Performance: Atomic cancellation with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive validation and rollback
+"""
+type CancelOrder {
+  success: Boolean
+  order: OrderType
+  message: String
+  error: String
+}
+
+"""
+Mark order as paid (for COD and WhatsApp orders)
+
+Performance: Atomic update with proper validation
+Security: Workspace scoping and permission validation
+Use Case: Admin marks COD/WhatsApp orders as paid upon delivery/confirmation
+"""
+type MarkOrderAsPaid {
+  success: Boolean
+  order: OrderType
+  message: String
+  error: String
+}
+
+"""
+Process bulk order status updates
+
+Performance: Optimized bulk operations with transaction
+Scalability: Handles up to 500 updates per batch
+Reliability: Atomic transaction with rollback on failure
+"""
+type BulkUpdateOrderStatus {
+  success: Boolean
+  totalUpdates: Int
+  successfulUpdates: Int
+  failedUpdates: [JSONString]
+  message: String
+  error: String
+}
+
+"""
+Input for bulk status updates
+
+Validation: Batch size limits and status validation
+Security: Workspace scoping for all updates
+"""
+input BulkStatusUpdateInput {
+  updates: [StatusUpdateInput]!
+}
+
+"""
+Input for order status update
+
+Validation: Valid status transitions
+Security: Workspace scoping and permission validation
+"""
+input StatusUpdateInput {
+  orderId: String!
+  newStatus: String!
+}
+
+"""
+Get order analytics for workspace
+
+Performance: Optimized aggregations with proper indexing
+Scalability: Efficient queries for large datasets
+Security: Workspace scoping and permission validation
+"""
+type GetOrderAnalytics {
+  analytics: OrderAnalyticsType
+  sourceBreakdown: [SourceBreakdownType]
+  regionalBreakdown: [RegionalBreakdownType]
+  success: Boolean
+  error: String
+}
+
+"""GraphQL type for order analytics"""
+type OrderAnalyticsType {
+  periodDays: Int
+  totalOrders: Int
+  totalRevenue: Float
+  averageOrderValue: Float
+  pendingOrders: Int
+  completedOrders: Int
+  cancelledOrders: Int
+}
+
+"""GraphQL type for order source breakdown"""
+type SourceBreakdownType {
+  orderSource: String
+  count: Int
+  revenue: Float
+}
+
+"""GraphQL type for regional breakdown"""
+type RegionalBreakdownType {
+  shippingRegion: String
+  count: Int
+  revenue: Float
+}
+
+"""
+Update inventory for a variant at a specific location
+
+Performance: Atomic update with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive error handling with rollback
+"""
+type UpdateInventory {
+  success: Boolean
+  message: String
+  inventory: InventoryType
+  error: String
+}
+
+"""
+Input for comprehensive inventory update
+
+All fields are optional - update only what's provided
+Security: Workspace scoping via JWT middleware
+"""
+input UpdateInventoryInput {
+  variantId: String!
+  locationId: String!
+  onhand: Int
+  available: Int
+  condition: String
+}
+
+"""
+Transfer inventory between locations
+
+Performance: Atomic transaction with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Rollback on failure
+"""
+type TransferInventory {
+  success: Boolean
+  message: String
+  fromInventory: InventoryType
+  toInventory: InventoryType
+  error: String
+}
+
+"""Input for transferring inventory between locations"""
+input TransferInventoryInput {
+  variantId: String!
+  fromLocationId: String!
+  toLocationId: String!
+  quantity: Int!
+}
+
+"""
+Bulk update stock quantities for multiple inventory items
+
+Performance: Optimized bulk operations with transaction
+Scalability: Handles up to 1000 updates per batch
+Reliability: Atomic transaction with rollback on failure
+"""
+type BulkUpdateStock {
+  success: Boolean
+  totalUpdates: Int
+  successfulUpdates: Int
+  failedUpdates: [JSONString]
+  message: String
+  error: String
+}
+
+"""
+Input for bulk inventory updates
+
+Validation: Batch size limits and quantity validation
+Security: Workspace scoping for all updates
+"""
+input BulkStockUpdateInput {
+  updates: [UpdateInventoryInput]!
+}
+
+"""
+Get comprehensive inventory summary for workspace
+
+Performance: Optimized aggregations with proper indexing
+Scalability: Efficient queries for large datasets
+Security: Workspace scoping and permission validation
+"""
+type GetInventorySummary {
+  summary: InventorySummaryType
+  recentActivity: RecentActivityType
+  success: Boolean
+  error: String
+}
+
+"""GraphQL type for inventory summary"""
+type InventorySummaryType {
+  totalItems: Int
+  totalStock: Int
+  totalValue: Float
+  lowStockItems: Int
+  outOfStockItems: Int
+  averageStock: Float
+}
+
+"""GraphQL type for recent inventory activity"""
+type RecentActivityType {
+  recentRestocks: Int
+  recentSales: Int
+  periodDays: Int
+}
+
+"""
+Get low stock alerts for workspace
+
+Performance: Optimized queries for alert detection
+Scalability: Handles large inventory catalogs
+Reliability: Comprehensive error handling
+"""
+type GetLowStockAlerts {
+  alerts: [LowStockAlertType]
+  totalAlerts: Int
+  success: Boolean
+  error: String
+}
+
+"""GraphQL type for low stock alerts"""
+type LowStockAlertType {
+  variantId: String
+  variantName: String
+  locationId: String
+  locationName: String
+  currentQuantity: Int
+  lowStockThreshold: Int
+  stockStatus: String
+  needsReorder: Boolean
+}
+
+"""
+Create inventory entries for a new variant across multiple locations
+
+Performance: Bulk creation with transaction
+Scalability: Handles multiple location assignments
+Reliability: Atomic operation with rollback
+"""
+type CreateInventoryForVariant {
+  success: Boolean
+  createdCount: Int
+  inventoryItems: [InventoryItemType]
+  message: String
+  error: String
+}
+
+"""
+GraphQL type for inventory item in mutation responses
+
+Used instead of JSONString for proper type safety
+"""
+type InventoryItemType {
+  id: String
+  locationId: String
+  locationName: String
+  quantity: Int
+}
+
+"""
+Create product using ProductService
+
+Core required: name, price
+Optional: All other fields including variants, shipping, SEO
+Performance: Atomic creation with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive validation and rollback
+"""
+type CreateProduct {
+  success: Boolean
+  product: ProductType
+  message: String
+  error: String
+}
+
+"""
+Input for product creation (Shopify-style)
+
+Core required: name, price
+Optional: All other fields including variants, shipping, SEO, images
+Security: Workspace scoping via JWT middleware
+
+Images: Accepts array of Upload scalars for direct file uploads
+"""
+input ProductCreateInput {
+  name: String!
+  price: Decimal!
+  description: String
+  status: String = "published"
+  costPrice: Decimal
+  compareAtPrice: Decimal
+  chargeTax: Boolean = true
+  paymentCharges: Boolean = false
+  chargesAmount: Decimal
+
+  """Inventory-related fields"""
+  inventory: InventoryInput = null
+
+  """Shipping-related fields"""
+  shipping: ShippingInput = null
+
+  """SEO-related fields"""
+  seo: SEOInput = null
+
+  """Organization-related fields"""
+  organization: OrganizationInput = null
+
+  """
+  Option definitions (e.g., [{'option_name':'Color', 'option_values': ['Blue', 'Black']}])
+  """
+  options: [ProductVariantOptionInput]
+  hasVariants: Boolean = false
+
+  """Explicit variants with featured images and inventory"""
+  variants: [VariantInput]
+
+  """Featured image ID (product thumbnail)"""
+  featuredMediaId: String
+
+  """Array of media IDs for gallery (images/videos/3D models)"""
+  mediaIds: [String]
+}
+
+"""Input for inventory-related fields (Shopify-style)"""
+input InventoryInput {
+  trackInventory: Boolean = true
+  allowBackorders: Boolean = false
+  inventoryQuantity: Int = 0
+
+  """Total stock on hand"""
+  onhand: Int
+
+  """Stock available for sale"""
+  available: Int
+
+  """Condition: new, refurbished, second_hand, etc."""
+  condition: String
+
+  """Location ID for inventory"""
+  locationId: ID
+  sku: String
+  barcode: String
+}
+
+"""Input for shipping-related fields"""
+input ShippingInput {
+  requiresShipping: Boolean = true
+
+  """Shipping package ID (optional - falls back to default)"""
+  packageId: ID
+  weight: Decimal
+  shippingConfig: JSONString
+}
+
+"""Input for SEO-related fields (Shopify-style)"""
+input SEOInput {
+  """URL-friendly slug (auto-generated from name if not provided)"""
+  slug: String
+
+  """SEO meta title (max 60 chars, defaults to name if empty)"""
+  metaTitle: String
+
+  """SEO meta description (max 160 chars, defaults to description if empty)"""
+  metaDescription: String
+}
+
+"""Input for organization-related fields"""
+input OrganizationInput {
+  productType: String = "physical"
+  vendor: String
+  brand: String
+  categoryId: String
+  tags: JSONString
+}
+
+"""Input for variant options"""
+input ProductVariantOptionInput {
+  optionName: String!
+  optionValues: [String]!
+}
+
+"""
+Input for variant creation/update with featured image
+
+Supports inline variant creation with single featured image
+All fields optional except options (option1/option2)
+"""
+input VariantInput {
+  """First option (e.g., Color: Red)"""
+  option1: String
+
+  """Second option (e.g., Size: Large)"""
+  option2: String
+
+  """Third option (if needed)"""
+  option3: String
+
+  """Variant price"""
+  price: Decimal
+
+  """Compare at price"""
+  compareAtPrice: Decimal
+
+  """Cost per item"""
+  costPrice: Decimal
+
+  """Featured image ID (single image per variant)"""
+  featuredMediaId: String
+
+  """Variant inventory data"""
+  inventory: InventoryInput = null
+  isActive: Boolean = true
+
+  """Display position"""
+  position: Int
+}
+
+"""
+Update product with atomic transaction using ProductService
+
+Performance: Atomic update with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive error handling with rollback
+"""
+type UpdateProduct {
+  success: Boolean
+  product: ProductType
+  message: String
+  error: String
+}
+
+"""
+Input for product updates (Shopify-style)
+
+Validation: Field validation and data integrity
+Security: Workspace scoping via JWT middleware
+Images: Accepts array of Upload scalars for adding new images
+"""
+input ProductUpdateInput {
+  name: String
+  description: String
+  price: Decimal
+  status: String
+  costPrice: Decimal
+  compareAtPrice: Decimal
+  chargeTax: Boolean
+  paymentCharges: Boolean
+  chargesAmount: Decimal
+
+  """Inventory-related fields"""
+  inventory: InventoryInput = null
+
+  """Shipping-related fields"""
+  shipping: ShippingInput = null
+
+  """SEO-related fields"""
+  seo: SEOInput = null
+
+  """Organization-related fields"""
+  organization: OrganizationInput = null
+
+  """
+  Option definitions (e.g., [{'option_name':'Color', 'option_values': ['Blue', 'Black']}])
+  """
+  options: [ProductVariantOptionInput]
+
+  """Featured image ID (product thumbnail)"""
+  featuredMediaId: String
+
+  """Array of media IDs for gallery (images/videos/3D models)"""
+  mediaIds: [String]
+
+  """Update or add variants with featured images"""
+  variants: [VariantInput]
+}
+
+"""
+Delete product with validation and atomic transaction using ProductService
+
+Performance: Atomic deletion with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive validation and rollback
+"""
+type DeleteProduct {
+  success: Boolean
+  deletedId: String
+  message: String
+  error: String
+}
+
+"""
+Toggle product status with validation using ProductService
+
+Performance: Atomic status update
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive status validation
+"""
+type ToggleProductStatus {
+  success: Boolean
+  product: ProductType
+  message: String
+  error: String
+}
+
+"""
+Update product stock quantity with atomic transaction using ProductService
+
+Performance: Atomic stock update with proper locking
+Security: Workspace scoping and permission validation
+Reliability: Comprehensive validation and rollback
+"""
+type UpdateProductStock {
+  success: Boolean
+  product: ProductType
+  message: String
+  error: String
+}
+
+"""
+Duplicate existing product with variants and inventory using ProductService
+
+Performance: Bulk operations with transaction
+Scalability: Handles complex product structures
+Reliability: Atomic operation with rollback
+"""
+type DuplicateProduct {
+  success: Boolean
+  product: ProductType
+  variantsCreated: Int
+  inventoryRecordsCreated: Int
+  message: String
+  error: String
+}
+
+"""
+Consolidated profile update mutation
+
+Updates profile, addresses, and preferences in ONE operation
+All parameters are optional - update only what you need
+
+Cameroon Market: Phone-first, mobile-optimized, single atomic operation
+"""
+type UpdateCustomerProfile {
+  success: Boolean
+  profile: JSONString
+  message: String
+  error: String
+}
+
+"""
+Input for address operations
+
+All fields are optional - provide only the operations you need
+"""
+input AddressOperationsInput {
+  """Add new address(es)"""
+  add: [AddressInput]
+
+  """Update existing address (requires id)"""
+  update: AddressInput = null
+
+  """Remove address by ID"""
+  remove: Int
+
+  """Set default address by ID"""
+  setDefault: Int
+}
+
+"""Input for communication preferences"""
+input PreferencesInput {
+  """Receive SMS notifications"""
+  smsNotifications: Boolean
+
+  """Receive email notifications"""
+  emailNotifications: Boolean
+
+  """Receive WhatsApp notifications"""
+  whatsappNotifications: Boolean
+}
+
+"""Input for basic profile data"""
+input ProfileDataInput {
+  """Customer name"""
+  name: String
+
+  """Customer email (optional)"""
+  email: String
+
+  """Customer type (individual, business, etc.)"""
+  customerType: String
+
+  """Customer city"""
+  city: String
+
+  """Cameroon region"""
+  region: String
+}
+
+"""
+Get customer profile data
+
+Returns complete profile with addresses, preferences, and order stats
+"""
+type GetCustomerProfile {
+  success: Boolean
+  profile: JSONString
+  error: String
+}
+
+"""
+Get customer order summary
+
+Returns order statistics (total orders, total spent, etc.)
+"""
+type GetCustomerOrders {
+  success: Boolean
+  orderSummary: JSONString
+  error: String
+}
+
+"""
+Customer signup with password - Phone-first approach
+
+Security: Password is hashed using Django's make_password
+Creates customer account and returns session token
+"""
+type CustomerSignup {
+  success: Boolean
+  customer: JSONString
+  sessionToken: String
+  message: String
+  error: String
+}
+
+"""
+Customer login with password - Phone-first authentication
+
+Security: Password verification with check_password
+Validates customer credentials and returns session token
+"""
+type CustomerLogin {
+  success: Boolean
+  customer: JSONString
+  sessionToken: String
+  message: String
+  error: String
+}
+
+"""Customer logout - Invalidate session"""
+type CustomerLogout {
+  success: Boolean
+  message: String
+}
+
+"""
+Validate customer session token
+
+Used to check if session is still valid and get customer data
+"""
+type ValidateCustomerSession {
+  success: Boolean
+  customer: JSONString
+  message: String
+  error: String
+}
+
+"""
+Create WhatsApp order mutation
+
+Uses CustomerInfoInput from core for consistency
+"""
+type RequestWhatsAppOrder {
+  success: Boolean
+  orderId: ID
+  whatsappLink: String
+  message: String
+}
+
+"""
+Input type for customer information
+Simplified for Cameroon context
+"""
+input CustomerInfoInput {
+  name: String
+  phone: String
+  email: String
+  city: String
+  region: String
+  address: String
+}
+
+"""
+Checkout with payment mutation
+
+For paid themes with payment integration
+"""
+type CheckoutWithPayment {
+  success: Boolean
+  orderId: ID
+  paymentUrl: String
+  message: String
+}
+
+"""
+Create new guest cart and session
+
+Security: Rate limited to prevent abuse
+Performance: Atomic transaction
+"""
+type CreateCart {
+  sessionId: String
+  expiresAt: DateTime
+  cart: CartType
+}
+
+"""
+Add product to cart with variant support
+
+Performance: Uses select_for_update to prevent race conditions
+Security: Validates stock availability
+"""
+type AddToCart {
+  cart: CartType
+}
+
+"""Input type for adding items to cart with variant support"""
+input AddToCartInput {
+  storeSlug: String!
+  sessionId: String!
+  productId: ID!
+  variantId: ID
+  quantity: Int!
+}
+
+"""Update cart item quantity with variant support"""
+type UpdateCartItem {
+  cart: CartType
+}
+
+"""Input type for updating cart item quantities with variant support"""
+input UpdateCartItemInput {
+  storeSlug: String!
+  sessionId: String!
+  productId: ID!
+  variantId: ID
+  quantity: Int!
+}
+
+"""Remove item from cart with variant support"""
+type RemoveFromCart {
+  cart: CartType
+}
+
+"""Input type for removing items from cart with variant support"""
+input RemoveFromCartInput {
+  storeSlug: String!
+  sessionId: String!
+  productId: ID!
+  variantId: ID
+}
+
+"""Clear all items from cart"""
+type ClearCart {
+  cart: CartType
+}
+
+"""Input type for clearing cart"""
+input ClearCartInput {
+  storeSlug: String!
+  sessionId: String!
+}

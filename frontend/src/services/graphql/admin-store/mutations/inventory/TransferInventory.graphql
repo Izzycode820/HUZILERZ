@@ -1,0 +1,39 @@
+mutation TransferInventory($transferData: TransferInventoryInput!) {
+  transferInventory(transferData: $transferData) {
+    success
+    message
+    error
+    fromInventory {
+      id
+      quantity
+      onhand
+      available
+      condition
+      isAvailable
+      stockStatus
+      location {
+        id
+        name
+        region
+      }
+      createdAt
+      updatedAt
+    }
+    toInventory {
+      id
+      quantity
+      onhand
+      available
+      condition
+      isAvailable
+      stockStatus
+      location {
+        id
+        name
+        region
+      }
+      createdAt
+      updatedAt
+    }
+  }
+}

@@ -1,0 +1,10 @@
+query GetStoreSettings {
+  storeSettings {
+    storeName
+    storeDescription
+    whatsappNumber
+    phoneNumber
+    supportEmail
+    currency
+  }
+}

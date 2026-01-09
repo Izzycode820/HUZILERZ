@@ -1,0 +1,42 @@
+query GetProductsList(
+  $first: Int
+  $after: String
+  $status: WorkspaceStoreProductStatusChoices
+  $category: ID
+  $search: String
+) {
+  products(
+    first: $first
+    after: $after
+    status: $status
+    category: $category
+    name_Icontains: $search
+  ) {
+    edges {
+      node {
+        id
+        name
+        mediaGallery {
+          id
+          url
+          thumbnailUrl
+          optimizedUrl
+          width
+          height
+        }
+        price
+        inventoryQuantity
+        status
+        category { id name }
+        productType
+        vendor
+        createdAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    totalCount
+  }
+}

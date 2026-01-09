@@ -1,0 +1,10 @@
+import * as Types from '../../../../../../types/subscription/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type GetCurrentPlanQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentPlanQuery = { __typename?: 'Query', currentPlan: { __typename?: 'SubscriptionType', id: string, status: Types.SubscriptionSubscriptionStatusChoices, expiresAt: string | null, billingCycle: string | null, isOnIntroPricing: boolean | null, introEndsAt: string | null, plan: { __typename?: 'SubscriptionPlanType', name: string, introPrice: number | null, introDurationDays: number | null, regularPriceMonthly: number | null, regularPriceYearly: number | null } | null } | null };
+
+
+export const GetCurrentPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCurrentPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"plan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"introPrice"}},{"kind":"Field","name":{"kind":"Name","value":"introDurationDays"}},{"kind":"Field","name":{"kind":"Name","value":"regularPriceMonthly"}},{"kind":"Field","name":{"kind":"Name","value":"regularPriceYearly"}}]}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"expiresAt"}},{"kind":"Field","name":{"kind":"Name","value":"billingCycle"}},{"kind":"Field","name":{"kind":"Name","value":"isOnIntroPricing"}},{"kind":"Field","name":{"kind":"Name","value":"introEndsAt"}}]}}]}}]} as unknown as DocumentNode<GetCurrentPlanQuery, GetCurrentPlanQueryVariables>;

@@ -1,0 +1,11 @@
+query PurchaseStatus($purchaseId: ID!) {
+  purchaseStatus(purchaseId: $purchaseId) {
+    id
+    domainName
+    status
+    priceFcfa
+    paymentStatus
+    errorMessage
+    createdAt
+  }
+}

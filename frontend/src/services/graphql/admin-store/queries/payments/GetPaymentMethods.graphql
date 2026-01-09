@@ -1,0 +1,30 @@
+query GetPaymentMethods {
+  paymentMethods {
+    id
+    providerName
+    checkoutUrl
+    enabled
+    verified
+    successRate
+    displayName
+    totalTransactions
+    successfulTransactions
+    lastUsedAt
+    createdAt
+    updatedAt
+    capabilities {
+      paymentModes
+      supportedCurrencies
+      supportsRefunds
+      supportsWebhooks
+      displayName
+    }
+  }
+  availableProviders {
+    provider
+    displayName
+    description
+    requiresUrl
+    alreadyAdded
+  }
+}

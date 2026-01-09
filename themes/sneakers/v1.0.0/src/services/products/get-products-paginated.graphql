@@ -1,0 +1,46 @@
+query GetProductsPaginated(
+  $search: String
+  $categorySlug: String
+  $minPrice: Float
+  $maxPrice: Float
+  $inStock: Boolean
+  $brand: String
+  $sortBy: String
+  $first: Int = 20
+) {
+  products(
+    search: $search
+    categorySlug: $categorySlug
+    minPrice: $minPrice
+    maxPrice: $maxPrice
+    inStock: $inStock
+    brand: $brand
+    sortBy: $sortBy
+    first: $first
+  ) {
+    edges {
+      node {
+        id
+        name
+        slug
+        price
+        compareAtPrice
+        isOnSale
+        salePercentage
+        inStock
+        mediaUploads {
+          thumbnailWebp
+          optimizedWebp
+        }
+        variants {
+          id
+          option1
+          option2
+          option3
+          price
+          inStock
+        }
+      }
+    }
+  }
+}

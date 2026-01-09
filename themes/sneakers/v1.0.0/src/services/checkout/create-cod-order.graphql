@@ -1,0 +1,19 @@
+mutation CreateCodOrder(
+  $sessionId: String!
+  $customerInfo: CustomerInfoInput!
+  $shippingRegion: String!
+) {
+  createCodOrder(
+    input: {
+      sessionId: $sessionId
+      customerInfo: $customerInfo
+      shippingRegion: $shippingRegion
+    }
+  ) {
+    success
+    orderId
+    orderNumber
+    message
+    error
+  }
+}

@@ -1,0 +1,13 @@
+mutation ToggleCustomerStatus($customerId: String!, $newStatus: Boolean!) {
+  toggleCustomerStatus(customerId: $customerId, newStatus: $newStatus) {
+    success
+    customer {
+      id
+      name
+      phone
+      isActive
+    }
+    message
+    error
+  }
+}

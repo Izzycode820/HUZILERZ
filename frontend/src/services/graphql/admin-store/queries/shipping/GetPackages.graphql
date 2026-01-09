@@ -1,0 +1,29 @@
+query GetPackages($first: Int, $after: String) {
+  packages(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        name
+        packageType
+        size
+        weight
+        method
+        regionFees
+        estimatedDays
+        useAsDefault
+        isActive
+        productCount
+        fullDescription
+        createdAt
+        updatedAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

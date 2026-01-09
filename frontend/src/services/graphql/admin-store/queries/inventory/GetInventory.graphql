@@ -1,0 +1,62 @@
+query GetInventory($first: Int, $after: String, $variant: ID, $location: ID) {
+  inventory(first: $first, after: $after, variant: $variant, location: $location) {
+    edges {
+      node {
+        id
+        quantity
+        onhand
+        available
+        condition
+        isAvailable
+        isLowStock
+        stockStatus
+        productName
+        productImage {
+          id
+          url
+          thumbnailUrl
+          optimizedUrl
+          width
+          height
+        }
+        sku
+        variant {
+          id
+          sku
+          option1
+          option2
+          option3
+          price
+          trackInventory
+          product {
+            id
+          }
+          featuredMedia {
+            id
+            url
+            thumbnailUrl
+            optimizedUrl
+            width
+            height
+          }
+        }
+        location {
+          id
+          name
+          region
+          isActive
+          isPrimary
+        }
+        createdAt
+        updatedAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

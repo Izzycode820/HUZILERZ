@@ -1,0 +1,38 @@
+query GetProductsPicker(
+  $first: Int
+  $after: String
+  $search: String
+  $status: WorkspaceStoreProductStatusChoices = PUBLISHED
+) {
+  products(
+    first: $first
+    after: $after
+    name_Icontains: $search
+    status: $status
+  ) {
+    edges {
+      node {
+        id
+        name
+        mediaGallery {
+          id
+          url
+          thumbnailUrl
+          width
+          height
+        }
+        price
+        sku
+        inventoryQuantity
+        status
+        isInStock
+        isLowStock
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    totalCount
+  }
+}

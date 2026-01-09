@@ -1,0 +1,18 @@
+query SearchProductsForOrder($search: String, $first: Int) {
+  products(name_Icontains: $search, first: $first, status: PUBLISHED) {
+    edges {
+      node {
+        id
+        name
+        price
+        inventoryQuantity
+        sku
+        mediaGallery {
+          id
+          url
+          thumbnailUrl
+        }
+      }
+    }
+  }
+}

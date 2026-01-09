@@ -1,0 +1,12 @@
+mutation DeleteCategory(
+  $id: ID!
+) {
+  deleteCategory(
+    id: $id
+  ) {
+    success
+    deletedId
+    message
+    error
+  }
+}

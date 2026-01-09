@@ -1,0 +1,35 @@
+query GetPlans {
+  plans {
+    id
+    tier
+    name
+    description
+    introPrice
+    introDurationDays
+    regularPriceMonthly
+    regularPriceYearly
+    showcase {
+      order
+      nameOverride
+      tagline
+      badge {
+        text
+        tone
+      }
+      pricingDisplay {
+        mode
+        introLabel
+        introSuffix
+        startingLabel
+        hasIntroDiscount
+        supportsYearlyBilling
+      }
+      cta {
+        default
+        currentPlan
+      }
+      highlightedFeatures
+    }
+  }
+  isIntroPricingEligible
+}

@@ -1,0 +1,10 @@
+import * as Types from '../../../../../../types/subscription/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type PrepareRenewalCheckoutMutationVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type PrepareRenewalCheckoutMutation = { __typename?: 'Mutation', prepareRenewalCheckout: { __typename?: 'PrepareRenewalCheckout', success: boolean | null, amount: number | null, currency: string | null, planName: string | null, cycleDurationDays: number | null, message: string | null, error: string | null, errorCode: string | null, breakdown: { __typename?: 'CheckoutBreakdown', basePrice: number | null, discount: number | null, finalAmount: number | null, currency: string | null } | null } | null };
+
+
+export const PrepareRenewalCheckoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PrepareRenewalCheckout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"prepareRenewalCheckout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"breakdown"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"basePrice"}},{"kind":"Field","name":{"kind":"Name","value":"discount"}},{"kind":"Field","name":{"kind":"Name","value":"finalAmount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planName"}},{"kind":"Field","name":{"kind":"Name","value":"cycleDurationDays"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"error"}},{"kind":"Field","name":{"kind":"Name","value":"errorCode"}}]}}]}}]} as unknown as DocumentNode<PrepareRenewalCheckoutMutation, PrepareRenewalCheckoutMutationVariables>;

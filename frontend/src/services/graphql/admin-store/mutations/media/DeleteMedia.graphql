@@ -1,0 +1,7 @@
+mutation DeleteMedia($uploadId: String!) {
+  deleteMedia(uploadId: $uploadId) {
+    success
+    message
+    error
+  }
+}

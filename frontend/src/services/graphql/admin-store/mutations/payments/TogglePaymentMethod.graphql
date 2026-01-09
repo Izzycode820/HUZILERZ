@@ -1,0 +1,11 @@
+mutation TogglePaymentMethod($methodId: ID!, $enabled: Boolean!) {
+  togglePaymentMethod(methodId: $methodId, enabled: $enabled) {
+    success
+    message
+    error
+    paymentMethod {
+      id
+      enabled
+    }
+  }
+}

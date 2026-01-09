@@ -1,0 +1,10 @@
+query ValidateDiscountCode($sessionId: String!, $discountCode: String!) {
+  validateDiscountCode(sessionId: $sessionId, discountCode: $discountCode) {
+    valid
+    error
+    discountCode
+    discountName
+    discountType
+    message
+  }
+}

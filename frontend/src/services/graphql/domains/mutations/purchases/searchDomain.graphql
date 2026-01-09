@@ -1,0 +1,23 @@
+mutation SearchDomain($domain: String!) {
+  searchDomain(input: { domain: $domain }) {
+    success
+    message
+    error
+    availability {
+      domain
+      available
+      priceUsd
+      priceFcfa
+      registrar
+      premium
+      error
+    }
+    suggestions {
+      domain
+      available
+      priceUsd
+      priceFcfa
+      registrar
+    }
+  }
+}

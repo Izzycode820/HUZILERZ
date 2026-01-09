@@ -1,0 +1,22 @@
+mutation CreateCustomer($customerData: CustomerCreateInput!) {
+  createCustomer(customerData: $customerData) {
+    success
+    customer {
+      id
+      name
+      phone
+      email
+      customerType
+      city
+      region
+      address
+      tags
+      smsNotifications
+      whatsappNotifications
+      isActive
+      createdAt
+    }
+    message
+    error
+  }
+}

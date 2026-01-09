@@ -1,0 +1,15 @@
+query GetStoreProfile {
+  storeProfile {
+    id
+    storeName
+    storeDescription
+    storeEmail
+    supportEmail
+    phoneNumber
+    whatsappNumber
+    currency
+    timezone
+    createdAt
+    updatedAt
+  }
+}

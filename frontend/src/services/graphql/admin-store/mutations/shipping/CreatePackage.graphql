@@ -1,0 +1,23 @@
+mutation CreatePackage($input: PackageInput!) {
+  createPackage(input: $input) {
+    success
+    message
+    error
+    package {
+      id
+      name
+      packageType
+      size
+      weight
+      method
+      regionFees
+      estimatedDays
+      useAsDefault
+      isActive
+      productCount
+      fullDescription
+      createdAt
+      updatedAt
+    }
+  }
+}

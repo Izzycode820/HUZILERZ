@@ -1,0 +1,13 @@
+import * as Types from '../../../types/graphql/graphql-base';
+
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type GetRelatedProductsQueryVariables = Types.Exact<{
+  productId: Types.Scalars['ID']['input'];
+  limit?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+}>;
+
+
+export type GetRelatedProductsQuery = { __typename: 'Query', relatedProducts: Array<{ __typename: 'ProductType', id: string, name: string, slug: string, price: number, compareAtPrice: number | null, isOnSale: boolean | null, salePercentage: number | null, inStock: boolean | null, mediaUploads: Array<{ __typename: 'ImageType', thumbnailWebp: string | null, optimizedWebp: string | null } | null> | null } | null> | null };
+
+
+export const GetRelatedProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRelatedProducts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"productId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"8"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"relatedProducts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"productId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"productId"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"compareAtPrice"}},{"kind":"Field","name":{"kind":"Name","value":"isOnSale"}},{"kind":"Field","name":{"kind":"Name","value":"salePercentage"}},{"kind":"Field","name":{"kind":"Name","value":"inStock"}},{"kind":"Field","name":{"kind":"Name","value":"mediaUploads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"thumbnailWebp"}},{"kind":"Field","name":{"kind":"Name","value":"optimizedWebp"}}]}}]}}]}}]} as unknown as DocumentNode<GetRelatedProductsQuery, GetRelatedProductsQueryVariables>;

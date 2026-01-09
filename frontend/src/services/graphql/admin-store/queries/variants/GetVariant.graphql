@@ -1,0 +1,50 @@
+query GetVariant($id: String!) {
+  variant(id: $id) {
+    id
+    sku
+    barcode
+    option1
+    option2
+    option3
+    price
+    compareAtPrice
+    costPrice
+    trackInventory
+    isActive
+    position
+    displayName
+    effectivePrice
+    featuredMedia {
+      id
+      url
+      thumbnailUrl
+      optimizedUrl
+      width
+      height
+    }
+    inventory {
+      id
+      quantity
+      onhand
+      available
+      condition
+      isAvailable
+      location {
+        id
+        name
+      }
+      isLowStock
+      stockStatus
+    }
+    totalStock
+    isAvailable
+    product {
+      id
+      name
+      hasVariants
+      options
+    }
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,45 @@
+query GetWorkspaceMember($id: ID!) {
+  workspaceMember(id: $id) {
+    id
+    user {
+      id
+      email
+      firstName
+      lastName
+    }
+    role {
+      id
+      name
+      description
+      isSystem
+      permissionCount
+    }
+    workspace {
+      id
+      name
+    }
+    status
+    joinedAt
+    invitedBy {
+      id
+      email
+      firstName
+      lastName
+    }
+    suspendedAt
+    suspendedBy {
+      id
+      email
+      firstName
+      lastName
+    }
+    suspensionReason
+    removedAt
+    removedBy {
+      id
+      email
+      firstName
+      lastName
+    }
+  }
+}

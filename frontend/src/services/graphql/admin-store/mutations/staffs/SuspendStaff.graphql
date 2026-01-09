@@ -1,0 +1,7 @@
+mutation SuspendStaff($input: SuspendStaffInput!) {
+  suspendStaff(input: $input) {
+    success
+    message
+    error
+  }
+}

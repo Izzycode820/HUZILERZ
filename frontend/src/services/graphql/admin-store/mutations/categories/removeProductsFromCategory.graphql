@@ -1,0 +1,19 @@
+mutation RemoveProductsFromCategory(
+  $categoryId: ID!
+  $productIds: [ID!]!
+) {
+  removeProductsFromCategory(
+    categoryId: $categoryId
+    productIds: $productIds
+  ) {
+    success
+    category {
+      id
+      name
+      productCount
+    }
+    removedCount
+    message
+    error
+  }
+}

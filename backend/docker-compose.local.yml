@@ -1,0 +1,97 @@
+# LOCAL DEVELOPMENT ENVIRONMENT
+# Simulates AWS services locally for HUZILERZ development
+# REMOVE/MODIFY FOR PRODUCTION DEPLOYMENT
+
+version: '3.8'
+
+services:
+  # MinIO - Local S3 Simulation
+  # DEPLOYMENT: Replace with actual AWS S3
+  minio:
+    image: minio/minio:latest
+    container_name: huzilerz_local_s3
+    ports:
+      - "9000:9000"  # API port
+      - "9001:9001"  # Console port
+    environment:
+      MINIO_ROOT_USER: huzilerz_access_key
+      MINIO_ROOT_PASSWORD: huzilerz_secret_key
+    command: server /data --console-address ":9001"
+    volumes:
+      - ./local_data/minio:/data
+    networks:
+      - huzilerz_network
+
+  # PostgreSQL - Local Database
+  # DEPLOYMENT: Replace with AWS RDS
+  postgres:
+    image: postgres:14
+    container_name: huzilerz_local_db
+    environment:
+      POSTGRES_DB: huzilerz_camp_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./local_data/postgres:/var/lib/postgresql/data
+    networks:
+      - huzilerz_network
+
+  # Redis - Local Cache/Celery
+  # DEPLOYMENT: Replace with AWS ElastiCache
+  redis:
+    image: redis:7-alpine
+    container_name: huzilerz_local_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./local_data/redis:/data
+    networks:
+      - huzilerz_network
+
+  # Nginx - Local Site Hosting Simulation
+  # DEPLOYMENT: Replace with AWS ALB + CloudFront
+  nginx:
+    image: nginx:alpine
+    container_name: huzilerz_local_sites
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./local_data/nginx/conf:/etc/nginx/conf.d
+      - ./local_data/nginx/sites:/var/www/sites
+      - ./local_data/nginx/logs:/var/log/nginx
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    networks:
+      - huzilerz_network
+
+  # LocalStack - AWS Services Simulation (Optional)
+  # DEPLOYMENT: Remove completely
+  localstack:
+    image: localstack/localstack:latest
+    container_name: huzilerz_localstack
+    ports:
+      - "4566:4566"  # LocalStack gateway
+    environment:
+      - SERVICES=s3,lambda,apigateway,cloudformation
+      - DEBUG=1
+      - DATA_DIR=/var/lib/localstack/data
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./local_data/localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - huzilerz_network
+
+networks:
+  huzilerz_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

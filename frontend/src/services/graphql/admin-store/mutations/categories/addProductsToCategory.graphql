@@ -1,0 +1,19 @@
+mutation AddProductsToCategory(
+  $categoryId: ID!
+  $productIds: [ID!]!
+) {
+  addProductsToCategory(
+    categoryId: $categoryId
+    productIds: $productIds
+  ) {
+    success
+    category {
+      id
+      name
+      productCount
+    }
+    addedCount
+    message
+    error
+  }
+}

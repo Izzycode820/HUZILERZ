@@ -1,0 +1,7 @@
+mutation RemovePaymentMethod($methodId: ID!) {
+  removePaymentMethod(methodId: $methodId) {
+    success
+    message
+    error
+  }
+}

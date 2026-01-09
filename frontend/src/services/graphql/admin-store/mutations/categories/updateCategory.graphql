@@ -1,0 +1,53 @@
+mutation UpdateCategory(
+  $id: ID!
+  $name: String
+  $description: String
+  $featuredMediaId: String
+  $removeFeaturedMedia: Boolean
+  $isVisible: Boolean
+  $isFeatured: Boolean
+  $sortOrder: Int
+  $slug: String
+  $metaTitle: String
+  $metaDescription: String
+) {
+  updateCategory(
+    id: $id
+    name: $name
+    description: $description
+    featuredMediaId: $featuredMediaId
+    removeFeaturedMedia: $removeFeaturedMedia
+    isVisible: $isVisible
+    isFeatured: $isFeatured
+    sortOrder: $sortOrder
+    slug: $slug
+    metaTitle: $metaTitle
+    metaDescription: $metaDescription
+  ) {
+    success
+    category {
+      id
+      name
+      description
+      slug
+      metaTitle
+      metaDescription
+      featuredMedia {
+        id
+        url
+        thumbnailUrl
+        optimizedUrl
+        width
+        height
+      }
+      isVisible
+      isFeatured
+      sortOrder
+      productCount
+      createdAt
+      updatedAt
+    }
+    message
+    error
+  }
+}

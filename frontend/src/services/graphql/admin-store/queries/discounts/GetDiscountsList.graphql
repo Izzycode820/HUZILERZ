@@ -1,0 +1,48 @@
+query GetDiscountsList(
+  $first: Int
+  $after: String
+  $search: String
+  $method: WorkspaceStoreDiscountMethodChoices
+  $discountType: WorkspaceStoreDiscountDiscountTypeChoices
+  $status: WorkspaceStoreDiscountStatusChoices
+) {
+  discounts(
+    first: $first
+    after: $after
+    code_Icontains: $search
+    method: $method
+    discountType: $discountType
+    status: $status
+  ) {
+    edges {
+      node {
+        id
+        code
+        name
+        method
+        discountType
+        status
+        discountValueType
+        value
+        customerBuysQuantity
+        customerBuysValue
+        customerGetsQuantity
+        minimumPurchaseAmount
+        minimumQuantityItems
+        limitOnePerCustomer
+        usageCount
+        canCombineWithProductDiscounts
+        canCombineWithOrderDiscounts
+        startsAt
+        endsAt
+        isActive
+        isExpired
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    totalCount
+  }
+}

@@ -1,0 +1,37 @@
+  query Themes(
+    $first: Int
+    $after: String
+    $name_Icontains: String
+    $slug: String
+    $templateType: String
+    $priceTier: String
+  ) {
+    themes(
+      first: $first
+      after: $after
+      name_Icontains: $name_Icontains
+      slug: $slug
+      templateType: $templateType
+      priceTier: $priceTier
+    ) {
+    edges {
+      node {
+        id
+        name
+        slug
+        templateType
+        previewImage
+        priceTier
+        priceAmount
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

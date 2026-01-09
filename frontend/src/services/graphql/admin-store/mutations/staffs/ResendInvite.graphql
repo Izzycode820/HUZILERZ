@@ -1,0 +1,18 @@
+mutation ResendInvite($inviteId: ID!) {
+  resendInvite(inviteId: $inviteId) {
+    success
+    invite {
+      id
+      email
+      role {
+        id
+        name
+        description
+      }
+      createdAt
+      expiresAt
+    }
+    message
+    error
+  }
+}

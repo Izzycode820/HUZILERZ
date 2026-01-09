@@ -1,0 +1,91 @@
+# Get detailed order information for order detail view
+query GetOrder($id: ID!) {
+  order(id: $id) {
+    # Core identification
+    id
+    orderNumber
+    orderSource
+
+    # Customer relationship (live data)
+    customer {
+      id
+      name
+      phone
+      email
+      city
+      region
+      totalOrders
+      totalSpent
+    }
+
+    # Customer snapshot (historical data from order creation)
+    customerName
+    customerEmail
+    customerPhone
+
+    # Shipping details
+    shippingRegion
+    shippingAddress
+    billingAddress
+
+    # Financial details
+    subtotal
+    shippingCost
+    taxAmount
+    discountAmount
+    totalAmount
+    currency
+    paymentStatus
+    paymentMethod
+
+    # Status and timeline
+    status
+    notes
+    trackingNumber
+    confirmedAt
+    shippedAt
+    deliveredAt
+    createdAt
+    updatedAt
+
+    # Computed fields for order management
+    itemCount
+    isPaid
+    canBeCancelled
+    canBeRefunded
+    canBeArchived
+    canBeUnarchived
+    requiresPaymentProcessing
+    isWhatsappOrder
+    isCashOnDelivery
+    canMarkAsPaid
+ 
+    # Unified timeline (comments + history)
+    timeline {
+      id
+      type
+      message
+      createdAt
+      isInternal
+      metadata
+      author {
+        id
+        email
+        firstName
+        lastName
+      }
+    }
+
+
+    # Order items with product details
+    items {
+      id
+      productName
+      productSku
+      quantity
+      unitPrice
+      totalPrice
+      productData
+    }
+  }
+}

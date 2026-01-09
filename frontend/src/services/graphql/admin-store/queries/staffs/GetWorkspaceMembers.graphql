@@ -1,0 +1,57 @@
+query GetWorkspaceMembers(
+  $first: Int
+  $after: String
+  $status: WorkspaceCoreMembershipStatusChoices
+  $user_Email_Icontains: String
+  $roleName: String
+) {
+  workspaceMembers(
+    first: $first
+    after: $after
+    status: $status
+    user_Email_Icontains: $user_Email_Icontains
+    roleName: $roleName
+  ) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        user {
+          id
+          email
+          firstName
+          lastName
+        }
+        role {
+          id
+          name
+          description
+          isSystem
+        }
+        status
+        joinedAt
+        invitedBy {
+          id
+          email
+          firstName
+          lastName
+        }
+        suspendedAt
+        suspendedBy {
+          id
+          email
+        }
+        removedAt
+        removedBy {
+          id
+          email
+        }
+      }
+    }
+  }
+}

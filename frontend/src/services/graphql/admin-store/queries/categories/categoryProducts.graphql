@@ -1,0 +1,30 @@
+query CategoryProducts(
+  $categoryId: ID!
+  $first: Int
+) {
+  categoryProducts(
+    categoryId: $categoryId
+    first: $first
+  ) {
+    id
+    name
+    description
+    price
+    compareAtPrice
+    mediaGallery {
+      id
+      url
+      thumbnailUrl
+      optimizedUrl
+      width
+      height
+    }
+    status
+    inventoryQuantity
+    sku
+    brand
+    vendor
+    createdAt
+    updatedAt
+  }
+}

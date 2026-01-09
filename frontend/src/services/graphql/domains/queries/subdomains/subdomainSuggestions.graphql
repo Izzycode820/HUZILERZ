@@ -1,0 +1,7 @@
+query SubdomainSuggestions($baseName: String!, $limit: Int) {
+  subdomainSuggestions(baseName: $baseName, limit: $limit) {
+    subdomain
+    available
+    fullDomain
+  }
+}

@@ -1,0 +1,13 @@
+query Domains($workspaceId: ID!) {
+  domains(workspaceId: $workspaceId) {
+    id
+    domain
+    type
+    status
+    isPrimary
+    managedBy
+    addedAt
+    subdomainChangesRemaining
+    subdomainChangesLimit
+  }
+}

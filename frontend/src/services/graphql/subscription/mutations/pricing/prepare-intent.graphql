@@ -1,0 +1,16 @@
+mutation PrepareIntent($intentData: PrepareIntentInput!) {
+  prepareIntent(intentData: $intentData) {
+    success
+    action
+    pricingMode
+    amount
+    currency
+    planName
+    scheduleDate
+    currentPlanName
+    daysUntilRenewal
+    message
+    error
+    errorCode
+  }
+}

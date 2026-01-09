@@ -1,0 +1,139 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .dashboard-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .metric-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .metric-card h4 {
+        margin: 0;
+        color: #666;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .metric-card .value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #417690;
+        margin: 8px 0;
+    }
+
+    .metric-card .value.active {
+        color: #28a745;
+    }
+
+    .metric-card .value.preview {
+        color: #17a2b8;
+    }
+
+    .metric-card .value.warning {
+        color: #ffc107;
+    }
+
+    .metric-card .value.danger {
+        color: #dc3545;
+    }
+
+    .status-bar {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    .status-badge {
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        color: white;
+        font-weight: 500;
+    }
+
+    .status-badge.active {
+        background: #28a745;
+    }
+
+    .status-badge.preview {
+        background: #17a2b8;
+    }
+
+    .status-badge.suspended {
+        background: #dc3545;
+    }
+
+    .status-badge.maintenance {
+        background: #fd7e14;
+    }
+
+    .activity-label {
+        font-size: 11px;
+        color: #666;
+        margin-top: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if dashboard_metrics %}
+<div class="dashboard-metrics">
+    <div class="metric-card">
+        <h4>Total Sites</h4>
+        <div class="value">{{ dashboard_metrics.total_sites }}</div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Status</h4>
+        <div class="status-bar">
+            <span class="status-badge active">{{ dashboard_metrics.status_breakdown.active }} Live</span>
+            <span class="status-badge preview">{{ dashboard_metrics.status_breakdown.preview }} Preview</span>
+            <span class="status-badge suspended">{{ dashboard_metrics.status_breakdown.suspended }} Suspended</span>
+            {% if dashboard_metrics.status_breakdown.maintenance %}
+            <span class="status-badge maintenance">{{ dashboard_metrics.status_breakdown.maintenance }} Maint</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Custom Domains</h4>
+        <div class="value active">{{ dashboard_metrics.sites_with_custom_domains }}</div>
+        <div class="activity-label">sites with active domains</div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Password Protected</h4>
+        <div class="value warning">{{ dashboard_metrics.password_protected }}</div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Published This Week</h4>
+        <div class="value active">{{ dashboard_metrics.published_this_week }}</div>
+    </div>
+
+    <div class="metric-card">
+        <h4>Created This Week</h4>
+        <div class="value preview">{{ dashboard_metrics.created_this_week }}</div>
+    </div>
+</div>
+{% endif %}
+
+{{ block.super }}
+{% endblock %}

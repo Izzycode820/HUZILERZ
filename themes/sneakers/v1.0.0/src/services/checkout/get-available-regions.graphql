@@ -1,0 +1,12 @@
+query GetAvailableRegions($sessionId: String!) {
+  availableShippingRegions(sessionId: $sessionId) {
+    success
+    regions {
+      name
+      price
+      estimatedDays
+    }
+    message
+    error
+  }
+}

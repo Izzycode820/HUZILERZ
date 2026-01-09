@@ -1,0 +1,47 @@
+query GetDiscount($id: ID!) {
+  discount(id: $id) {
+    id
+    code
+    name
+    method
+    discountType
+    discountValueType
+    value
+    customerBuysType
+    customerBuysQuantity
+    customerBuysValue
+    customerBuysProductIds
+    customerGetsQuantity
+    customerGetsProductIds
+    bxgyDiscountType
+    bxgyValue
+    maxUsesPerOrder
+    usageLimit
+    usageCount
+    usageLimitPerCustomer
+    startsAt
+    endsAt
+    minimumRequirementType
+    minimumPurchaseAmount
+    minimumQuantityItems
+    appliesToAllCustomers
+    customerSegmentation
+    appliesToAllProducts
+    productIds
+    categoryIds
+    appliesToRegions
+    appliesToCustomerTypes
+    limitTotalUses
+    limitOnePerCustomer
+    canCombineWithProductDiscounts
+    canCombineWithOrderDiscounts
+    status
+    totalDiscountAmount
+    totalOrders
+    isActive
+    isExpired
+    remainingUsage
+    createdAt
+    updatedAt
+  }
+}

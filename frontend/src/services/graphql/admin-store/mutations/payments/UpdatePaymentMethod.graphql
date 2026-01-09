@@ -1,0 +1,13 @@
+mutation UpdatePaymentMethod($methodId: ID!, $input: UpdatePaymentMethodInput!) {
+  updatePaymentMethod(methodId: $methodId, input: $input) {
+    success
+    message
+    error
+    paymentMethod {
+      id
+      providerName
+      checkoutUrl
+      enabled
+    }
+  }
+}
