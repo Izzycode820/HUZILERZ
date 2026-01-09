@@ -1,10 +1,17 @@
-'use client'
-
 export default function NotFound() {
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center">
-            <h2 className="text-2xl font-bold">404 - Page Not Found</h2>
-            <p className="mt-2 text-muted-foreground">
+        <div style={{
+            display: 'flex',
+            minHeight: '100vh',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '2rem'
+        }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+                404 - Page Not Found
+            </h2>
+            <p style={{ color: '#666' }}>
                 The page you're looking for doesn't exist.
             </p>
         </div>
