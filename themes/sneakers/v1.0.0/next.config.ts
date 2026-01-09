@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig = {
+  output: 'standalone',
   // Allow dev access from local network IPs
   allowedDevOrigins: ['192.168.*.*', '10.*.*.*', '172.16.*.*'],
   images: {
