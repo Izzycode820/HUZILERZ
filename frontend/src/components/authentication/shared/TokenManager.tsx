@@ -1,3 +1,5 @@
+console.log('[LOAD] TokenManager module');
+
 /**
  * Token Management Component
  * Handles silent token refresh and session management

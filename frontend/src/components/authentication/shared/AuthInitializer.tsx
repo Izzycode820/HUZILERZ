@@ -1,3 +1,5 @@
+console.log('[LOAD] AuthInitializer module');
+
 /**
  * Authentication Initializer Component
  * Handles session restoration from httpOnly refresh token cookie on app mount

@@ -1,3 +1,5 @@
+console.log('[LOAD] Providers module');
+
 'use client'
 
 import { ThemeProvider } from '@/utils/ThemeContext';

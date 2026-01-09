@@ -1,3 +1,5 @@
+console.log('[LOAD] Toaster module');
+
 "use client"
 
 // import { useTheme } from "next-themes"
