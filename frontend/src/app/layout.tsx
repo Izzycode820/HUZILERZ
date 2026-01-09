@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from '@/utils/ThemeContext';
-import { AuthInitializer } from '@/components/authentication/shared/AuthInitializer';
-import { TokenManager } from '@/components/authentication/shared/TokenManager';
+import { Providers } from './providers';
 import { Toaster } from '@/components/shadcn-ui/sonner';
 
 export const metadata: Metadata = {
@@ -27,14 +25,10 @@ export default function RootLayout({
       <body
         className="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors"
       >
-        <ThemeProvider>
-          <AuthInitializer>
-            <TokenManager>
-              {children}
-            </TokenManager>
-          </AuthInitializer>
+        <Providers>
+          {children}
           <Toaster position="top-right" richColors closeButton />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
