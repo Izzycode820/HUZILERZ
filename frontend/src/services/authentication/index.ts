@@ -209,7 +209,7 @@ export class ServiceErrorHandler {
     attemptsRemaining?: number
   } {
     if (error instanceof APIError) {
-      const details = error.details
+      const details = error.details as any
 
       if (error.status === 400 && details?.code === 'INVALID_TOTP_CODE') {
         return {

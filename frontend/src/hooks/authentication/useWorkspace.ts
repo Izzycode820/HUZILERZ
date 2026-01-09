@@ -63,12 +63,23 @@ export function useWorkspace(): UseWorkspaceReturn {
   const isCurrentWorkspaceOwner = useWorkspaceStore(workspaceSelectors.isCurrentWorkspaceOwner)
   const isCurrentWorkspaceAdmin = useWorkspaceStore(workspaceSelectors.isCurrentWorkspaceAdmin)
 
+  // Store success handlers (matching authStore pattern)
+  const setCurrentWorkspace = useWorkspaceStore((state: any) => state.setCurrentWorkspace)
+  const setWorkspaces = useWorkspaceStore((state: any) => state.setWorkspaces)
+  const addWorkspace = useWorkspaceStore((state: any) => state.addWorkspace)
+  const updateWorkspace = useWorkspaceStore((state: any) => state.updateWorkspace)
+  const removeWorkspace = useWorkspaceStore((state: any) => state.removeWorkspace)
+  const setWorkspaceMembers = useWorkspaceStore((state: any) => state.setWorkspaceMembers)
+
+  // UI State actions
+  const setLoading = useWorkspaceStore((state: any) => state.setLoading)
+  const setError = useWorkspaceStore((state: any) => state.setError)
+  const clearError = useWorkspaceStore((state: any) => state.clearError)
+
   // Store actions (direct references - stable by default in Zustand)
-  const setSwitchSuccess = useWorkspaceStore(state => state.setSwitchSuccess)
-  const startWorkspaceSwitch = useWorkspaceStore(state => state.startWorkspaceSwitch)
-  const cancelWorkspaceSwitch = useWorkspaceStore(state => state.cancelWorkspaceSwitch)
-  const setError = useWorkspaceStore(state => state.setError)
-  const clearError = useWorkspaceStore(state => state.clearError)
+  const setSwitchSuccess = useWorkspaceStore((state: any) => state.setSwitchSuccess)
+  const startWorkspaceSwitch = useWorkspaceStore((state: any) => state.startWorkspaceSwitch)
+  const cancelWorkspaceSwitch = useWorkspaceStore((state: any) => state.cancelWorkspaceSwitch)
 
   // ============================================================================
   // Stable Action Implementations

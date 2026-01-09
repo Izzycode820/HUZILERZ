@@ -35,14 +35,11 @@ export function extractWorkspaceFromJWT(token: string): {
 } | null {
   const payload = decodeJWTPayload(token);
 
-  if (!payload?.workspace_id) return null;
-
-  return {
-    id: payload.workspace_id,
-    type: payload.workspace_type || '',
-    permissions: payload.workspace_permissions || [],
-    role: payload.workspace_role || ''
-  };
+  // v3.0: Workspace context is no longer in JWT.
+  // Context is passed via X-Workspace-Id header and fetched via API.
+  // This function is kept for backward compatibility but always returns null
+  // to enforce reliance on server-validated context switching.
+  return null;
 }
 
 /**

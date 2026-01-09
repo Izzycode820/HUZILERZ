@@ -60,28 +60,41 @@ export default function CustomersListContainer() {
   const { data, loading, error, refetch } = useQuery(GetCustomersDocument, {
     variables: {
       first: pageSize,
-      after: cursors[currentPage] || undefined,
+      // after: cursors[currentPage] || undefined,
+      // TODO: Pagination temporarily disabled until GraphQL types are regenerated to include $after
       name_Icontains: searchTerm || undefined,
       customerType: customerType as any,
       region: region as any,
       isActive: getIsActiveFilter(),
     },
     skip: !currentWorkspace,
-    skip: !currentWorkspace,
   });
 
-  // Store cursor for next page when data changes
+  // Store cursor for next page when data loads
   React.useEffect(() => {
-    if (data?.customers?.pageInfo?.endCursor) {
-      setCursors(prev => ({
-        ...prev,
-        [currentPage + 1]: data.customers.pageInfo.endCursor! // Non-null assertion safe due to check
-      }));
+    const endCursor = data?.customers?.pageInfo?.endCursor;
+    if (endCursor) {
+      setCursors(prev => {
+        // Avoid unnecessary updates
+        if (prev[currentPage + 1] === endCursor) return prev;
+        return {
+          ...prev,
+          [currentPage + 1]: endCursor
+        };
+      });
     }
   }, [data, currentPage]);
 
   // Transform GraphQL data
-  const customers = data?.customers?.edges?.map(edge => edge?.node).filter((node): node is NonNullable<typeof node> => !!node) || [];
+  const customers = data?.customers?.edges?.map(edge => {
+    const node = edge?.node;
+    if (!node) return null;
+    return {
+      ...node,
+      id: node.id || '', // Ensure ID is a string for strict type safety
+    };
+  }).filter((node): node is NonNullable<typeof node> => !!node) || [];
+
   const totalCount = data?.customers?.totalCount || 0;
   const hasNextPage = data?.customers?.pageInfo?.hasNextPage || false;
   const totalPages = Math.ceil(totalCount / pageSize);

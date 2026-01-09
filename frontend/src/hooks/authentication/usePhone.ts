@@ -65,18 +65,18 @@ export function usePhone(): UsePhoneReturn {
     const pendingPhoneChange = usePhoneStore(phoneSelectors.pendingPhoneChange)
 
     // Store success handlers (matching authStore pattern)
-    const setVerificationRequestSuccess = usePhoneStore(state => state.setVerificationRequestSuccess)
-    const setVerificationConfirmSuccess = usePhoneStore(state => state.setVerificationConfirmSuccess)
-    const setPhoneChangeRequestSuccess = usePhoneStore(state => state.setPhoneChangeRequestSuccess)
-    const setPhoneChangeConfirmSuccess = usePhoneStore(state => state.setPhoneChangeConfirmSuccess)
-    const setVerificationStatus = usePhoneStore(state => state.setVerificationStatus)
+    const setVerificationRequestSuccess = usePhoneStore((state: any) => state.setVerificationRequestSuccess)
+    const setVerificationConfirmSuccess = usePhoneStore((state: any) => state.setVerificationConfirmSuccess)
+    const setPhoneChangeRequestSuccess = usePhoneStore((state: any) => state.setPhoneChangeRequestSuccess)
+    const setPhoneChangeConfirmSuccess = usePhoneStore((state: any) => state.setPhoneChangeConfirmSuccess)
+    const setVerificationStatus = usePhoneStore((state: any) => state.setVerificationStatus)
 
     // UI State actions
-    const setLoading = usePhoneStore(state => state.setLoading)
-    const setError = usePhoneStore(state => state.setError)
-    const clearError = usePhoneStore(state => state.clearError)
-    const resetVerificationFlow = usePhoneStore(state => state.resetVerificationFlow)
-    const resetPhoneChangeFlow = usePhoneStore(state => state.resetPhoneChangeFlow)
+    const setLoading = usePhoneStore((state: any) => state.setLoading)
+    const setError = usePhoneStore((state: any) => state.setError)
+    const clearError = usePhoneStore((state: any) => state.clearError)
+    const resetVerificationFlow = usePhoneStore((state: any) => state.resetVerificationFlow)
+    const resetPhoneChangeFlow = usePhoneStore((state: any) => state.resetPhoneChangeFlow)
 
     // ============================================================================
     // Stable Action Implementations (matching useAuth pattern)

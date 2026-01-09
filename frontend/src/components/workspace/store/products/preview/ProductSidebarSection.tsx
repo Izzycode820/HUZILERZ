@@ -8,8 +8,9 @@ import { cn } from "@/lib/utils";
 
 type Variant = {
   id: string;
-  option1: string;
-  option2: string;
+  option1: string | null;
+  option2: string | null;
+  option3: string | null;
   price: any | null;
   compareAtPrice: any | null;
   isAvailable: boolean | null;
@@ -65,6 +66,7 @@ export function ProductSidebarSection({
     variants.forEach((v) => {
       if (optionName === parsedOptions[0]?.name && v.option1) values.add(v.option1);
       if (optionName === parsedOptions[1]?.name && v.option2) values.add(v.option2);
+      if (optionName === parsedOptions[2]?.name && v.option3) values.add(v.option3);
     });
     return Array.from(values).filter(Boolean);
   };

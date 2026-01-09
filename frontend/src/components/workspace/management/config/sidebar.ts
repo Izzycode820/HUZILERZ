@@ -68,5 +68,6 @@ export function getManagementSidebarConfig(user: UserConfig): WorkspaceSidebarCo
     navMain,
     navSecondary,
     workspaceConfig,
+    footerActions: [], // No footer actions for management sidebar
   }
 }

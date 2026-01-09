@@ -22,7 +22,7 @@ interface ManagementLayoutClientProps {
 
 export function ManagementLayoutClient({ children }: ManagementLayoutClientProps) {
   // Get RUNTIME DATA from Zustand (changes per user)
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state: any) => state.user)
 
   // Fallback if no user loaded yet
   if (!user) {

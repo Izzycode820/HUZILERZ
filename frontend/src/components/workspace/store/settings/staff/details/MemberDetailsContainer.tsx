@@ -70,7 +70,7 @@ export default function MemberDetailsContainer({ memberId }: MemberDetailsContai
         variables: {
           input: {
             memberId: member.id,
-            roleId,
+            newRoleId: roleId,
           },
         },
       });

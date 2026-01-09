@@ -31,7 +31,7 @@ type ThemeConfigLoader = () => Promise<{
  */
 export const THEME_REGISTRY: Record<string, ThemeConfigLoader> = {
   // Clean Shoe e-commerce template with modern design
-  'ecommerce-sneakers': () => import('@themes/sneakers'),
+  'ecommerce-sneakers': () => import('@themes/sneakers') as Promise<any>,
 };
 
 /**

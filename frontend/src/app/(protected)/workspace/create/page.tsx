@@ -15,9 +15,11 @@ import { ArrowLeft } from 'lucide-react';
 export default function WorkspaceCreatePage() {
   const router = useRouter();
 
-  const handleWorkspaceCreate = (workspace: unknown) => {
+  const handleWorkspaceCreate = (workspace: { id: string } | unknown) => {
     // Navigate to the new workspace dashboard
-    router.push(`/workspace/${workspace?.workspace_id}/dashboard`);
+    if (workspace && typeof workspace === 'object' && 'id' in workspace) {
+      router.push(`/workspace/${workspace.id}/dashboard`);
+    }
   };
 
   const handleBack = () => {

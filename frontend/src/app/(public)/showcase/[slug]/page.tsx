@@ -94,7 +94,7 @@ export default function ThemeDetailsPage() {
         description={theme.description}
         author={theme.author}
         priceTier={theme.priceTier}
-        priceAmount={theme.priceAmount || 0}
+        priceAmount={Number(theme.priceAmount) || 0}
         showcaseSections={(theme.showcaseSections || []).filter((s): s is NonNullable<typeof s> => s !== null)}
         demoUrl={theme.demoUrl}
         onUseTheme={handleUseTheme}

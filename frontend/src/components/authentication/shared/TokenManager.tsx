@@ -31,10 +31,10 @@ export function TokenManager({
 
   // Auth store selectors
   const isAuthenticated = useAuthStore(authSelectors.isAuthenticated)
-  const isTokenExpired = useAuthStore(state => state.isTokenExpired)
-  const getTimeUntilExpiry = useAuthStore(state => state.getTimeUntilExpiry)
-  const refreshTokenSafe = useAuthStore(state => state.refreshTokenSafe)
-  const setLogoutSuccess = useAuthStore(state => state.setLogoutSuccess)
+  const isTokenExpired = useAuthStore((state: any) => state.isTokenExpired)
+  const getTimeUntilExpiry = useAuthStore((state: any) => state.getTimeUntilExpiry)
+  const refreshTokenSafe = useAuthStore((state: any) => state.refreshTokenSafe)
+  const setLogoutSuccess = useAuthStore((state: any) => state.setLogoutSuccess)
 
   // Soft navigation effect - triggers after logout state update
   React.useEffect(() => {
@@ -173,9 +173,9 @@ export function TokenManager({
  */
 export function useTokenManager() {
   const isAuthenticated = useAuthStore(authSelectors.isAuthenticated)
-  const isTokenExpired = useAuthStore(state => state.isTokenExpired)
-  const getTimeUntilExpiry = useAuthStore(state => state.getTimeUntilExpiry)
-  const refreshTokenSafe = useAuthStore(state => state.refreshTokenSafe)
+  const isTokenExpired = useAuthStore((state: any) => state.isTokenExpired)
+  const getTimeUntilExpiry = useAuthStore((state: any) => state.getTimeUntilExpiry)
+  const refreshTokenSafe = useAuthStore((state: any) => state.refreshTokenSafe)
 
   const forceRefresh = React.useCallback(async () => {
     if (!isAuthenticated) {

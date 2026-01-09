@@ -35,7 +35,6 @@ export {
 export {
   useEmail,
   useEmailVerificationStatus,
-  useEmailVerification,
   usePasswordReset,
   type UseEmailReturn
 } from './useEmail'

@@ -39,8 +39,8 @@ export default function WorkspaceSettingsPage() {
 
   const {
     workspaces,
-    currentWorkspace,
     getWorkspace,
+    getWorkspaceById,
     updateWorkspace,
     deleteWorkspace,
     isLoading,
@@ -65,15 +65,16 @@ export default function WorkspaceSettingsPage() {
     }
   }, [workspaceId, getWorkspace]);
 
-  // Update form data when current workspace changes
+  // Update form data when workspace changes
   useEffect(() => {
-    if (currentWorkspace && currentWorkspace.id === workspaceId) {
+    const currentWorkspace = getWorkspaceById(workspaceId);
+    if (currentWorkspace) {
       setFormData({
         name: currentWorkspace.name || '',
         description: currentWorkspace.description || ''
       });
     }
-  }, [currentWorkspace, workspaceId]);
+  }, [workspaces, workspaceId, getWorkspaceById]);
 
   const handleSave = async () => {
     if (!workspace) return;

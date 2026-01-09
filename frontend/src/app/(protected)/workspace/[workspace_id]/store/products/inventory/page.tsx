@@ -54,7 +54,7 @@ export default function InventoryPage() {
   // Pagination state
   const pageSize = 20
   const [currentPage, setCurrentPage] = useState(1)
-  const [cursors, setCursors] = useState<{ [page: number]: string }>({})
+  const [cursors, setCursors] = useState<{ [page: number]: string | undefined }>({})
 
   // Fetch locations for filter
   const { data: locationsData } = useQuery(GetLocationsDocument, {
@@ -69,16 +69,18 @@ export default function InventoryPage() {
       location: locationFilter,
     },
     skip: !currentWorkspace,
-    onCompleted: (data) => {
-      // Store cursor for next page
-      if (data?.inventory?.pageInfo?.endCursor) {
-        setCursors(prev => ({
-          ...prev,
-          [currentPage + 1]: data.inventory.pageInfo.endCursor
-        }))
-      }
-    }
   })
+
+  // Store cursor for next page when data changes
+  useEffect(() => {
+    const endCursor = data?.inventory?.pageInfo?.endCursor;
+    if (endCursor && typeof endCursor === 'string') {
+      setCursors(prev => ({
+        ...prev,
+        [currentPage + 1]: endCursor
+      }))
+    }
+  }, [data, currentPage])
 
   // Update inventory mutation
   const [updateInventory] = useMutation(UpdateInventoryDocument)

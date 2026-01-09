@@ -38,7 +38,8 @@ function mapToAvailableWorkspaces(workspaces: WorkspaceListItem[]): AvailableWor
       name: ws.name,
       type: ws.type,
       is_default: false, // Backend should provide this
-      user_role: 'owner', // Backend should provide this
+      user_role: ws.role,
+      role: ws.role,
       status: ws.status as 'active' | 'suspended', // Safe cast after filtering
       permissions: ws.permissions,
       member_count: ws.member_count,
@@ -192,8 +193,8 @@ export const useWorkspaceStore = create<WorkspaceStoreState>()(
           const response = await workspaceService.createWorkspace(request)
 
           set((state) => {
-            // Add new workspace to the list
-            state.workspaces.push(response.workspace)
+            // Add new workspace to the list (Creator is always owner)
+            state.workspaces.push({ ...response.workspace, role: 'owner' })
             // Cache the workspace details
             state.workspaceDetails[response.workspace.id] = response.workspace
             state.isCreating = false
@@ -230,7 +231,11 @@ export const useWorkspaceStore = create<WorkspaceStoreState>()(
             // Update workspace in list
             const workspaceIndex = state.workspaces.findIndex(ws => ws.id === workspaceId)
             if (workspaceIndex !== -1) {
-              state.workspaces[workspaceIndex] = { ...state.workspaces[workspaceIndex], ...response.workspace }
+              // Preserve existing role and other list-specific props
+              state.workspaces[workspaceIndex] = {
+                ...state.workspaces[workspaceIndex],
+                ...response.workspace
+              }
             }
 
             // Update workspace in details cache
@@ -273,7 +278,11 @@ export const useWorkspaceStore = create<WorkspaceStoreState>()(
             // Update workspace in list to suspended status with deletion info
             const workspaceIndex = state.workspaces.findIndex(ws => ws.id === workspaceId)
             if (workspaceIndex !== -1) {
-              state.workspaces[workspaceIndex] = response.workspace
+              // Preserve role when updating from data
+              state.workspaces[workspaceIndex] = {
+                ...state.workspaces[workspaceIndex],
+                ...response.workspace
+              }
             }
 
             // Update workspace in details cache
@@ -320,7 +329,11 @@ export const useWorkspaceStore = create<WorkspaceStoreState>()(
             // Update workspace in list to active status
             const workspaceIndex = state.workspaces.findIndex(ws => ws.id === workspaceId)
             if (workspaceIndex !== -1) {
-              state.workspaces[workspaceIndex] = response.workspace
+              // Preserve role when updating
+              state.workspaces[workspaceIndex] = {
+                ...state.workspaces[workspaceIndex],
+                ...response.workspace
+              }
             }
 
             // Update workspace in details cache

@@ -63,22 +63,30 @@ export default function CategoriesListContainer() {
   const { data, loading, error, refetch } = useQuery(CategoriesDocument, {
     variables: {
       first: pageSize,
-      after: cursors[currentPage] || undefined,
+      // after: cursors[currentPage] || undefined,
+      // TODO: Pagination temporarily disabled until GraphQL types are regenerated to include $after
+      // We have added $after to categories.graphql, need to run `pnpm run codegen:admin-store` later
       search: search || undefined,
       isVisible: visibilityFilter ? visibilityFilter === 'visible' : undefined,
       isFeatured: featuredFilter ? featuredFilter === 'featured' : undefined,
     },
     skip: !currentWorkspace, // Don't query until workspace context is available
-    onCompleted: (data) => {
-      // Store cursor for next page
-      if (data?.categories?.pageInfo?.endCursor) {
-        setCursors(prev => ({
-          ...prev,
-          [currentPage + 1]: data.categories.pageInfo.endCursor
-        }));
-      }
-    }
   });
+
+  // Store cursor for next page when data loads
+  React.useEffect(() => {
+    const endCursor = data?.categories?.pageInfo?.endCursor;
+    if (endCursor) {
+      setCursors(prev => {
+        // Avoid unnecessary updates
+        if (prev[currentPage + 1] === endCursor) return prev;
+        return {
+          ...prev,
+          [currentPage + 1]: endCursor
+        };
+      });
+    }
+  }, [data, currentPage]);
 
   // Debug: Log query state
   console.log('[CategoriesListContainer] Query state:', {
@@ -99,7 +107,7 @@ export default function CategoriesListContainer() {
     sortOrder: edge?.node?.sortOrder || 0,
     productCount: edge?.node?.productCount || 0,
     featuredMedia: edge?.node?.featuredMedia ? {
-      id: edge.node.featuredMedia.id,
+      id: edge.node.featuredMedia.id || '', // Ensure ID is a string
       url: edge.node.featuredMedia.url,
       thumbnailUrl: edge.node.featuredMedia.thumbnailUrl,
       optimizedUrl: edge.node.featuredMedia.optimizedUrl,

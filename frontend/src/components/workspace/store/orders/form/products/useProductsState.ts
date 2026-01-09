@@ -9,7 +9,7 @@ export function useProductsState() {
     const newItem: OrderItem = {
       product_id: product.id,
       product_name: product.name,
-      product_image: product.mediaUploads?.[0]?.thumbnail || null,
+      product_image: product.mediaGallery?.[0]?.thumbnailUrl || null,
       variant_id: null, // TODO: variant support later
       quantity: 1,
       unit_price: product.price.toString(),
@@ -27,10 +27,10 @@ export function useProductsState() {
       prev.map(item =>
         item.product_id === productId
           ? {
-              ...item,
-              quantity,
-              subtotal: (parseFloat(item.unit_price) * quantity).toFixed(2),
-            }
+            ...item,
+            quantity,
+            subtotal: (parseFloat(item.unit_price) * quantity).toFixed(2),
+          }
           : item
       )
     );

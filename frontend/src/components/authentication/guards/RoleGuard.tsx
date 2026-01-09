@@ -37,9 +37,9 @@ export function RoleGuard({
   // Workspace state
   const currentWorkspace = useWorkspaceStore(workspaceSelectors.currentWorkspace)
   const isWorkspaceLoading = useWorkspaceStore(workspaceSelectors.isLoading)
-  const hasPermission = useWorkspaceStore(state => state.hasPermission)
-  const isWorkspaceOwner = useWorkspaceStore(state => state.isWorkspaceOwner)
-  const isWorkspaceAdmin = useWorkspaceStore(state => state.isWorkspaceAdmin)
+  const hasPermission = useWorkspaceStore((state: any) => state.hasPermission)
+  const isWorkspaceOwner = useWorkspaceStore((state: any) => state.isWorkspaceOwner)
+  const isWorkspaceAdmin = useWorkspaceStore((state: any) => state.isWorkspaceAdmin)
 
   const hasAccess = React.useMemo(() => {
     // Must be authenticated first
@@ -154,9 +154,9 @@ export function RoleGuard({
 export function useRoleGuard() {
   const isAuthenticated = useAuthStore(authSelectors.isAuthenticated)
   const currentWorkspace = useWorkspaceStore(workspaceSelectors.currentWorkspace)
-  const hasPermission = useWorkspaceStore(state => state.hasPermission)
-  const isWorkspaceOwner = useWorkspaceStore(state => state.isWorkspaceOwner)
-  const isWorkspaceAdmin = useWorkspaceStore(state => state.isWorkspaceAdmin)
+  const hasPermission = useWorkspaceStore((state: any) => state.hasPermission)
+  const isWorkspaceOwner = useWorkspaceStore((state: any) => state.isWorkspaceOwner)
+  const isWorkspaceAdmin = useWorkspaceStore((state: any) => state.isWorkspaceAdmin)
 
   const checkPermission = React.useCallback((permission: string) => {
     return isAuthenticated && hasPermission(permission)

@@ -37,12 +37,12 @@ export function AuthInitializer({
   // Auth store state
   const isInitialized = useAuthStore(authSelectors.isInitialized)
   const isAuthenticated = useAuthStore(authSelectors.isAuthenticated)
-  const initializeSession = useAuthStore(state => state.initializeSession)
+  const initializeSession = useAuthStore((state: any) => state.initializeSession)
 
   // Workspace store state
-  const currentWorkspace = useWorkspaceStore(state => state.currentWorkspace)
-  const setCurrentWorkspace = useWorkspaceStore(state => state.setCurrentWorkspace)
-  const setAuthWorkspace = useAuthStore(state => state.setWorkspace)
+  const currentWorkspace = useWorkspaceStore((state: any) => state.currentWorkspace)
+  const setCurrentWorkspace = useWorkspaceStore((state: any) => state.setCurrentWorkspace)
+  const setAuthWorkspace = useAuthStore((state: any) => state.setWorkspace)
 
   // Step 1: Wait for hydration (prevents SSR mismatch)
   useEffect(() => {

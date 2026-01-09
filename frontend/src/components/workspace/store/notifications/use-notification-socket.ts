@@ -35,7 +35,7 @@ interface UseNotificationSocketOptions {
 
 export function useNotificationSocket(options?: UseNotificationSocketOptions) {
     const isAuthenticated = useAuthStore(authSelectors.isAuthenticated);
-    const token = useAuthStore((state) => state.token);
+    const token = useAuthStore((state: any) => state.token);
 
     const [state, setState] = useState<NotificationSocketState>({
         isConnected: false,

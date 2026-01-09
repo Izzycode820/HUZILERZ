@@ -1,16 +1,17 @@
 import OrderDetailsContainer from '@/components/workspace/store/orders/details/OrderDetailsContainer';
 
 interface OrderDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
     workspace_id: string;
-  };
+  }>;
 }
 
-export default function OrderDetailPage({ params }: OrderDetailPageProps) {
+export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
+  const { id } = await params;
   return (
     <div className="@container/main flex flex-1 flex-col">
-      <OrderDetailsContainer orderId={params.id} />
+      <OrderDetailsContainer orderId={id} />
     </div>
   );
 }

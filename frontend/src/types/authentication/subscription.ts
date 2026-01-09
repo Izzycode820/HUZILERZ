@@ -51,7 +51,6 @@ export interface UseSubscriptionAuthReturn {
   hasAnyFeature: (features: FeatureKey[]) => boolean;
   getEnabledFeatures: () => FeatureKey[];
   isActiveSubscription: () => boolean;
-  getSubscriptionLimits: () => SubscriptionAuthClaims['limits'] | null;
   clearError: () => void;
 }
 

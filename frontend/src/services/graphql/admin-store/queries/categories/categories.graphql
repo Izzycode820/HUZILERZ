@@ -1,11 +1,13 @@
 query Categories(
   $first: Int
+  $after: String
   $search: String
   $isVisible: Boolean
   $isFeatured: Boolean
 ) {
   categories(
     first: $first
+    after: $after
     search: $search
     isVisible: $isVisible
     isFeatured: $isFeatured

@@ -133,7 +133,7 @@ export function UserProfile({
       // Clear success message after 3 seconds
       setTimeout(() => setUpdateSuccess(false), 3000)
     } catch (err: unknown) {
-      const errorMessage = err.message || 'Failed to update profile. Please try again.'
+      const errorMessage = err instanceof Error ? err.message : 'Failed to update profile. Please try again.'
       setUpdateError(errorMessage)
       onError?.(errorMessage)
     } finally {

@@ -129,7 +129,7 @@ export const useOAuth2Store = create<OAuth2StoreState>()(
 
       setAvailableProviders: (providers) => {
         set((state) => {
-          state.availableProviders = providers
+          state.availableProviders = providers as any
           state.providersLoaded = true
         })
       },

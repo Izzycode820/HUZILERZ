@@ -35,7 +35,7 @@ export function OutlineNode({ item, index, label, isSelected, puck }: OutlineNod
   };
 
   // Get a preview of the content (first text field value)
-  const getPreview = () => {
+  const getPreview = (): string | null => {
     const firstTextField = Object.entries(item.props).find(
       ([key, value]) => typeof value === 'string' && key !== 'id' && value.length > 0
     );
@@ -44,7 +44,7 @@ export function OutlineNode({ item, index, label, isSelected, puck }: OutlineNod
       const [, value] = firstTextField;
       return typeof value === 'string' && value.length > 30
         ? `${value.substring(0, 30)}...`
-        : value;
+        : value as string;
     }
     return null;
   };
@@ -53,9 +53,8 @@ export function OutlineNode({ item, index, label, isSelected, puck }: OutlineNod
 
   return (
     <div
-      className={`group flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors cursor-pointer hover:bg-accent ${
-        isSelected ? 'bg-accent border-l-2 border-primary' : ''
-      }`}
+      className={`group flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors cursor-pointer hover:bg-accent ${isSelected ? 'bg-accent border-l-2 border-primary' : ''
+        }`}
       onClick={handleSelect}
     >
       <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />

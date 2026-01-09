@@ -104,7 +104,7 @@ export function AvatarUpload({
       // onSuccess?.(data.avatar_url)
 
     } catch (err: unknown) {
-      const errorMessage = err.message || 'Failed to upload avatar. Please try again.'
+      const errorMessage = err instanceof Error ? err.message : 'Failed to upload avatar. Please try again.'
       onError?.(errorMessage)
       setPreview(null)
     } finally {

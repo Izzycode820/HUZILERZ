@@ -1440,3 +1440,10 @@ export interface WorkspaceType {
   /** Workspace display name */
   name: Scalars['String']['output'];
 }
+
+/**
+ * PATCH: Missing generated type alias
+ * Unblocks build until full codegen:hosting is run against running backend
+ */
+export type WorkspaceHostingDomainPurchaseRegistrarChoices = string;
+export type WorkspaceHostingWorkspaceInfrastructureStatusChoices = string;

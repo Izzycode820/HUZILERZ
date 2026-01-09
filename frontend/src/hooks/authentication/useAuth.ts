@@ -96,15 +96,20 @@ export function useAuth(): UseAuthReturn {
   const bandwidthGb = useAuthStore(authSelectors.bandwidthGb)
 
   // Store actions (direct references for performance)
-  const setLoginSuccess = useAuthStore(state => state.setLoginSuccess)
-  const setLogoutSuccess = useAuthStore(state => state.setLogoutSuccess)
-  const setRefreshSuccess = useAuthStore(state => state.setRefreshSuccess)
-  const setLoading = useAuthStore(state => state.setLoading)
-  const setError = useAuthStore(state => state.setError)
-  const clearError = useAuthStore(state => state.clearError)
-  const updateLastActivity = useAuthStore(state => state.updateLastActivity)
-  const updateUser = useAuthStore(state => state.updateUser)
-  const can = useAuthStore(state => state.can)
+  const setLoginSuccess = useAuthStore((state: any) => state.setLoginSuccess)
+  const setLogoutSuccess = useAuthStore((state: any) => state.setLogoutSuccess)
+  const setRefreshSuccess = useAuthStore((state: any) => state.setRefreshSuccess)
+  // UI State actions
+  const setLoading = useAuthStore((state: any) => state.setLoading)
+  const setError = useAuthStore((state: any) => state.setError)
+  const clearError = useAuthStore((state: any) => state.clearError)
+  const resetAuthFlow = useAuthStore((state: any) => state.resetAuthFlow)
+  const setMfaRequired = useAuthStore((state: any) => state.setMfaRequired)
+  const setContextRestored = useAuthStore((state: any) => state.setContextRestored)
+  const setLoggingIn = useAuthStore((state: any) => state.setLoggingIn)
+  const updateLastActivity = useAuthStore((state: any) => state.updateLastActivity)
+  const updateUser = useAuthStore((state: any) => state.updateUser)
+  const can = useAuthStore((state: any) => state.can)
 
   // ============================================================================
   // Stable Action Implementations
@@ -278,8 +283,8 @@ export function useAuthUser() {
  * Hook for auth actions only - no reactive state
  */
 export function useAuthActions() {
-  const clearError = useAuthStore(state => state.clearError)
-  const updateActivity = useAuthStore(state => state.updateLastActivity)
+  const clearError = useAuthStore((state: any) => state.clearError)
+  const updateActivity = useAuthStore((state: any) => state.updateLastActivity)
 
   return { clearError, updateActivity }
 }

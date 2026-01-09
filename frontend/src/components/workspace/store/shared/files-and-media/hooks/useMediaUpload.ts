@@ -38,7 +38,7 @@ export function useMediaUpload() {
         url: URL.createObjectURL(file), // Temporary blob URL for preview
         type: file.type.startsWith('image/') ? 'image'
           : file.type.startsWith('video/') ? 'video'
-          : '3d_model',
+            : '3d_model',
         filename: file.name,
         fileSize: file.size,
         uploadedAt: new Date().toISOString(),
@@ -124,7 +124,7 @@ export function useMediaUpload() {
           }
 
           next.set(uploadId, {
-            ...current,
+            file: current?.file || file,
             status: 'completed',
             progress: 100,
             result: mediaItem,

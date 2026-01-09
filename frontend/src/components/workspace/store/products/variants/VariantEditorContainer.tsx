@@ -8,7 +8,7 @@
  * - Right panel: Selected variant editor with inventory
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useQuery, useMutation } from '@apollo/client/react';
 import { GetProductDocument } from '@/services/graphql/admin-store/queries/products/__generated__/GetProduct.generated';
@@ -37,13 +37,17 @@ export default function VariantEditorContainer() {
   const { data, loading, error, refetch } = useQuery(GetProductDocument, {
     variables: { id: productId },
     skip: !currentWorkspace || !productId,
-    onCompleted: (data) => {
-      // Auto-select first variant if none selected
-      if (!selectedVariantId && data?.product?.variants?.length > 0) {
-        setSelectedVariantId(data.product.variants[0]?.id || null);
-      }
-    },
   });
+
+  // Auto-select first variant if none selected
+  useEffect(() => {
+    if (!selectedVariantId && data?.product?.variants?.length && data.product.variants.length > 0) {
+      const firstVariantId = data.product.variants[0]?.id;
+      if (firstVariantId) {
+        setSelectedVariantId(firstVariantId);
+      }
+    }
+  }, [data, selectedVariantId]);
 
   // Update variant mutation
   const [updateVariant] = useMutation(UpdateVariantDocument);
@@ -155,37 +159,37 @@ export default function VariantEditorContainer() {
       <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
         {/* Left Panel: Variants List */}
         <VariantsList
-        product={{
-          id: product.id,
-          name: product.name,
-          status: product.status,
-          featuredMedia: product.featuredMedia,
-        }}
-        variants={filteredVariants}
-        selectedVariantId={selectedVariantId}
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        onSelectVariant={handleSelectVariant}
-        onBack={handleBack}
-        optionNames={optionNames}
-      />
-
-      {/* Right Panel: Variant Editor */}
-      {selectedVariant ? (
-        <VariantEditorForm
-          variant={selectedVariant}
+          product={{
+            id: product.id || '',
+            name: product.name,
+            status: product.status,
+            featuredMedia: product.featuredMedia,
+          }}
+          variants={filteredVariants}
+          selectedVariantId={selectedVariantId}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          onSelectVariant={handleSelectVariant}
+          onBack={handleBack}
           optionNames={optionNames}
-          productChargeTax={product.chargeTax}
-          onUpdate={handleUpdateVariant}
-          isSaving={isSaving}
         />
-      ) : (
-        <Card className="p-6">
-          <div className="text-center text-muted-foreground">
-            <p>Select a variant to edit</p>
-          </div>
-        </Card>
-      )}
+
+        {/* Right Panel: Variant Editor */}
+        {selectedVariant ? (
+          <VariantEditorForm
+            variant={selectedVariant}
+            optionNames={optionNames}
+            productChargeTax={product.chargeTax}
+            onUpdate={handleUpdateVariant}
+            isSaving={isSaving}
+          />
+        ) : (
+          <Card className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p>Select a variant to edit</p>
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );

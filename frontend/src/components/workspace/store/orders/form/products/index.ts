@@ -6,6 +6,5 @@ export type {
   OrderItem,
   ProductSearchResult,
   ProductsSectionProps,
-  ProductSearchModalProps,
   ProductItemProps,
 } from './types';

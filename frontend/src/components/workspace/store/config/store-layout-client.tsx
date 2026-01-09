@@ -113,8 +113,8 @@ export function StoreLayoutClient({ children }: StoreLayoutClientProps) {
 
   // Workspace state
   const currentWorkspace = useWorkspaceStore(workspaceSelectors.currentWorkspace)
-  const setCurrentWorkspace = useWorkspaceStore(state => state.setCurrentWorkspace)
-  const setAuthWorkspace = useAuthStore(state => state.setWorkspace)
+  const setCurrentWorkspace = useWorkspaceStore((state: any) => state.setCurrentWorkspace)
+  const setAuthWorkspace = useAuthStore((state: any) => state.setWorkspace)
 
   // Local state
   const [isRestoring, setIsRestoring] = useState(true)
@@ -241,7 +241,7 @@ export function StoreLayoutClient({ children }: StoreLayoutClientProps) {
         sidebar={<WorkspaceSidebar config={sidebarConfig} />}
         header={<WorkspaceHeader title={`${currentWorkspace.name} - Store`} />}
         mobileHeader={<MobileHeader user={{ name: user.username, email: user.email, avatar: user.avatar }} />}
-        mobileNav={<MobileBottomNav config={sidebarConfig} onMenuClick={() => setIsMobileMenuOpen(true)} />}
+        mobileNav={<MobileBottomNav onMenuClick={() => setIsMobileMenuOpen(true)} />}
       >
         {children}
       </WorkspaceLayout>

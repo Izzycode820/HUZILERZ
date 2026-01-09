@@ -39,7 +39,7 @@ export function BlocksPanel() {
                     block={{
                       type: componentType,
                       label: componentConfig.label || componentType,
-                      description: componentConfig.description || '',
+                      description: (componentConfig as any).description || '',
                     }}
                     puck={puck}
                   />
@@ -61,7 +61,7 @@ export function BlocksPanel() {
           block={{
             type: componentType,
             label: componentConfig.label || componentType,
-            description: componentConfig.description || '',
+            description: (componentConfig as any).description || '',
           }}
           puck={puck}
         />

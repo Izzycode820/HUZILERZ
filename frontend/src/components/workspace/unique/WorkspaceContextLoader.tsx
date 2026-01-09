@@ -21,8 +21,8 @@ export function WorkspaceContextLoader({ children }: WorkspaceContextLoaderProps
 
     // Workspace state
     const currentWorkspace = useWorkspaceStore(workspaceSelectors.currentWorkspace)
-    const setCurrentWorkspace = useWorkspaceStore(state => state.setCurrentWorkspace)
-    const setAuthWorkspace = useAuthStore(state => state.setWorkspace)
+    const setCurrentWorkspace = useWorkspaceStore((state: any) => state.setCurrentWorkspace)
+    const setAuthWorkspace = useAuthStore((state: any) => state.setWorkspace)
 
     // Local loading state
     const [isRestoring, setIsRestoring] = useState(true)

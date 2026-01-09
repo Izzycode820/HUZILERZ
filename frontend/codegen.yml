@@ -3,38 +3,37 @@
 # Maintains clean folder structure with co-located generated files
 #
 # Structure:
-# src/types/themes/graphql-base.ts - Theme base types
-# src/services/graphql/themes/queries/showcase/
-#   ├── themes.graphql
+# src/types/workspace/store/graphql-base.ts - Base types
+# src/services/graphql/admin-store/queries/categories/
+#   ├── categories.graphql
 #   └── __generated__/
-#       └── themes.generated.ts - Typed document for this query
+#       └── categories.generated.ts - Typed document for this query
 #
 # Usage in components:
 # import { useMutation } from '@apollo/client/react'
-# import { AddThemeDocument } from './__generated__/addTheme.generated'
-# const [addTheme] = useMutation(AddThemeDocument)
+# import { CreateCategoryDocument } from './__generated__/createCategory.generated'
+# const [create] = useMutation(CreateCategoryDocument)
+#
+# Incremental Development:
+# - Change documents paths to target different domains (products, categories, etc.)
+# - Change schema URL to target different endpoints (store, storefront, platform)
 
 ignoreNoDocuments: true
 
 schema:
-  # Theme GraphQL endpoint (hybrid public/authenticated)
-  #- http://localhost:8000/api/workspaces/hosting/graphql/:
-   - http://localhost:8000/api/subscriptions/graphql/:
-  #- http://localhost:8000/api/themes/graphql/:
-
+  - http://localhost:8000/api/workspaces/store/graphql/:
       headers:
         Authorization: "Bearer ${ADMIN_AUTH_TOKEN}"
         X-Workspace-Id: "${WORKSPACE_ID}"
 
-
 documents:
-  # Domain operations (all queries and mutations)
-  # - "src/services/graphql/hosting/mutations/**/*.graphql"
-    - "src/services/graphql/subscription/queries/**/*.graphql"
+  # Incremental development - change domain as needed
+  - "src/services/graphql/admin-store/queries/categories/**/*.graphql"
+ # - "src/services/graphql/admin-store/mutations/analytics/**/*.graphql"
 
 generates:
-  # Base types for subscription
-  src/types/subscription/graphql-base.ts:
+  # Base types for the store domain
+  src/types/workspace/store/graphql-base.ts:
     plugins:
       - "typescript"
     config:
@@ -44,13 +43,14 @@ generates:
         DateTime: string
         UUID: string
         JSON: "Record<string, any>"
-        Decimal: string
+        Decimal: any
+        Upload: any
 
   # Operation-specific types co-located with GraphQL files
-  src/services/graphql/subscription/:
+  src/services/graphql/admin-store/:
     preset: "near-operation-file"
     presetConfig:
-      baseTypesPath: ../../../types/subscription/graphql-base.ts
+      baseTypesPath: ../../../types/workspace/store/graphql-base.ts
       extension: .generated.ts
       folder: __generated__
     plugins:
@@ -64,7 +64,8 @@ generates:
         DateTime: string
         UUID: string
         JSON: "Record<string, any>"
-        Decimal: string
+        Decimal: any
+        Upload: any
       avoidOptionals:
         field: true
         inputValue: false

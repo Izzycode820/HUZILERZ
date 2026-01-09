@@ -128,7 +128,7 @@ export function PaymentMethodSelector({
           "grid gap-4",
           platformMethods.length === 1 ? "grid-cols-1" : "grid-cols-2"
         )}>
-          {platformMethods.map((method) => {
+          {platformMethods.map((method: any) => {
             const display = getProviderDisplay(method.provider);
             const isSelected = value === method.provider;
             const isRecommended = method.recommended;

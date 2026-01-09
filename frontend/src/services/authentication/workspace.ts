@@ -98,7 +98,7 @@ export class WorkspacePermissionsUtil {
       'content:delete',
       'analytics:view'
     ],
-    member: [
+    editor: [
       'content:create',
       'content:edit',
       'content:delete'
@@ -184,17 +184,18 @@ class WorkspaceContextManager {
   }
 
   /**
-   * Check if current workspace is personal
+   * Check if current workspace is personal (deprecated - no longer supported)
    */
   static isPersonalWorkspace(): boolean {
-    return this.currentWorkspace?.type === 'personal'
+    // Workspace types are now: store, blog, services, portfolio
+    return false
   }
 
   /**
-   * Check if current workspace is team
+   * Check if current workspace is team (deprecated - all workspaces are team workspaces)
    */
   static isTeamWorkspace(): boolean {
-    return this.currentWorkspace?.type === 'team'
+    return this.currentWorkspace !== null
   }
 
   /**
