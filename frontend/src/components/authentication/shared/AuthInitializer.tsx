@@ -1,3 +1,5 @@
+'use client'
+
 console.log('[LOAD] AuthInitializer module');
 
 /**
@@ -14,7 +16,6 @@ console.log('[LOAD] AuthInitializer module');
  * 6. Mark initialization complete
  */
 
-'use client'
 
 import React, { useEffect, useState } from 'react'
 import { useAuthStore, authSelectors, WorkspaceContextManager } from '@/stores/authentication/authStore'

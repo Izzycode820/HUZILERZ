@@ -1,3 +1,5 @@
+'use client'
+
 console.log('[LOAD] TokenManager module');
 
 /**
@@ -7,8 +9,6 @@ console.log('[LOAD] TokenManager module');
  *
  * v2.0 - Enhanced with soft navigation and intent preservation
  */
-
-'use client'
 
 import React from 'react'
 import { useRouter } from 'next/navigation'

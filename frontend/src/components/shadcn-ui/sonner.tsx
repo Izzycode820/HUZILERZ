@@ -1,6 +1,6 @@
-console.log('[LOAD] Toaster module');
-
 "use client"
+
+console.log('[LOAD] Toaster module');
 
 // import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner"

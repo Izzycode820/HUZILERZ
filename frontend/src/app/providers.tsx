@@ -1,6 +1,6 @@
-console.log('[LOAD] Providers module');
-
 'use client'
+
+console.log('[LOAD] Providers module');
 
 import { ThemeProvider } from '@/utils/ThemeContext';
 import { AuthInitializer } from '@/components/authentication/shared/AuthInitializer';

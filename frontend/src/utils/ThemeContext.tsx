@@ -1,6 +1,6 @@
-console.log('[LOAD] ThemeContext module');
-
 'use client';
+
+console.log('[LOAD] ThemeContext module');
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
