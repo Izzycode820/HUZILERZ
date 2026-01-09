@@ -4,22 +4,21 @@ applications:
       phases:
         preBuild:
           commands:
-            - cd ..
+            # Install pnpm globally (not included in Amplify by default)
             - npm install -g pnpm@9.15.0
+            # Install all workspace dependencies from monorepo root
+            - cd ..
             - pnpm install --frozen-lockfile
+            - cd frontend
         build:
           commands:
-            - pnpm --filter frontend run build
-        postBuild:
-          commands:
-            # Copy static assets to standalone folder (required for standalone mode)
-            - cp -r public .next/standalone/public
-            - cp -r .next/static .next/standalone/.next/static
+            - npx next build
       artifacts:
-        baseDirectory: .next/standalone
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
+          - node_modules/**/*
           - .next/cache/**/*
     appRoot: frontend

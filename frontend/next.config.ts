@@ -40,7 +40,6 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
   images: {
     unoptimized: true, // Disable image optimization for local files
     domains: ['localhost'],
