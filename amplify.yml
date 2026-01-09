@@ -8,7 +8,7 @@ applications:
             - npm install -g pnpm@9.15.0
             # Install all workspace dependencies from monorepo root
             - cd ..
-            - pnpm install --frozen-lockfile
+            - pnpm install
             - cd frontend
         build:
           commands:
