@@ -1,19 +1,17 @@
 'use client'
 
 import { ThemeProvider } from '@/utils/ThemeContext';
-// import { AuthInitializer } from '@/components/authentication/shared/AuthInitializer';
-// import { TokenManager } from '@/components/authentication/shared/TokenManager';
+import { AuthInitializer } from '@/components/authentication/shared/AuthInitializer';
+import { TokenManager } from '@/components/authentication/shared/TokenManager';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <ThemeProvider>
-            {/* Temporarily removed for diagnostic */}
-            {/* <AuthInitializer>
-        <TokenManager>
-          {children}
-        </TokenManager>
-      </AuthInitializer> */}
-            {children}
+            <AuthInitializer>
+                <TokenManager>
+                    {children}
+                </TokenManager>
+            </AuthInitializer>
         </ThemeProvider>
     );
 }
