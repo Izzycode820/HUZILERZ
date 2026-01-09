@@ -10,12 +10,16 @@ applications:
         build:
           commands:
             - pnpm --filter frontend run build
+        postBuild:
+          commands:
+            # Copy static assets to standalone folder (required for standalone mode)
+            - cp -r public .next/standalone/public
+            - cp -r .next/static .next/standalone/.next/static
       artifacts:
-        baseDirectory: .next
+        baseDirectory: .next/standalone
         files:
           - '**/*'
       cache:
         paths:
-          - node_modules/**/*
           - .next/cache/**/*
     appRoot: frontend
