@@ -11,7 +11,6 @@ export default function ProductsPage() {
 
   const { data, loading, error } = useQuery(GetProductsPaginatedDocument, {
     variables: {
-      storeSlug,
       first: 24,
     },
   });
@@ -24,9 +23,8 @@ export default function ProductsPage() {
       id: node.id,
       name: node.name,
       slug: node.slug,
-      price: typeof node.price === 'number' ? node.price : parseFloat(node.price?.toString() || '0'),
-      compareAtPrice: node.compareAtPrice ? (typeof node.compareAtPrice === 'number' ? node.compareAtPrice : parseFloat(node.compareAtPrice.toString())) : null,
-      vendor: node.vendor || undefined,
+      price: Number(node.price),
+      compareAtPrice: node.compareAtPrice ? Number(node.compareAtPrice) : undefined,
       mediaUploads: node.mediaUploads,
     };
   }).filter((node): node is NonNullable<typeof node> => Boolean(node)) || [];

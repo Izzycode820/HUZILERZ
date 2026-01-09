@@ -43,9 +43,7 @@ export default function Home() {
   let puckData = null;
   try {
     if (data?.publicPuckDataResolved?.data) {
-      puckData = JSON.parse(data.publicPuckDataResolved.data);
-      console.log('✅ Parsed puck data:', puckData);
-      console.log('📦 Content sections:', puckData?.content?.map(s => s.type));
+      puckData = JSON.parse(data.publicPuckDataResolved.data as string);
     }
   } catch (parseError) {
     console.error('❌ Error parsing puck data:', parseError);
@@ -65,7 +63,7 @@ export default function Home() {
         - Uses component definitions from puck.config.tsx
       */}
       <Render
-        config={config}
+        config={config as any}
         data={finalPuckData}
       />
     </div>

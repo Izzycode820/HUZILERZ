@@ -83,9 +83,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   // Create guest session for cart (7 days)
   const createGuestSession = useCallback(async (): Promise<string | null> => {
     try {
-      const { data } = await createCartMutation({
-        variables: { storeSlug: 'sneakers' } // TODO: Get from config
-      });
+      const { data } = await createCartMutation();
 
       if (data?.createCart?.sessionId && data.createCart.expiresAt) {
         const sessionId = data.createCart.sessionId;

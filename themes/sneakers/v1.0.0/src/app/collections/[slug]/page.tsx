@@ -69,12 +69,11 @@ export default function CollectionPage() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product) => (
               <ProductCard
-                key={product?.id}
-                image={product?.mediaUploads?.[0]?.optimizedWebp || product?.mediaUploads?.[0]?.thumbnailWebp || ""}
-                title={product?.name || ""}
-                description={product?.slug || ""}
+                id={product?.id || ""}
+                name={product?.name || ""}
+                slug={product?.slug || ""}
+                imageUrl={product?.mediaUploads?.[0]?.optimizedWebp || product?.mediaUploads?.[0]?.thumbnailWebp || ""}
                 price={product?.price?.toString() || "0"}
-                rating="four"
               />
             ))}
           </div>
