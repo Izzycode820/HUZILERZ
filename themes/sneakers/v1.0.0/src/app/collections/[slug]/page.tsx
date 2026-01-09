@@ -14,7 +14,6 @@ export default function CollectionPage() {
 
   const { data, loading, error } = useQuery(GetCategoryProductsDocument, {
     variables: {
-      storeSlug,
       categorySlug,
       limit: 50,
     },
