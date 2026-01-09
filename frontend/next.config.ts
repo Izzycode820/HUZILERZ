@@ -32,12 +32,13 @@ function getThemePackages(): string[] {
 }
 
 // @ts-ignore
-const withPWA = require("next-pwa")({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
-});
+// Temporarily disabled to debug prerender crash
+// const withPWA = require("next-pwa")({
+//   dest: "public",
+//   register: true,
+//   skipWaiting: true,
+//   disable: process.env.NODE_ENV === "development",
+// });
 
 const nextConfig: NextConfig = {
   images: {
@@ -55,4 +56,5 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPWA(nextConfig);
+// export default withPWA(nextConfig);
+export default nextConfig;
