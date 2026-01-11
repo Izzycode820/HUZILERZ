@@ -6,13 +6,11 @@ applications:
       phases:
         preBuild:
           commands:
-            - nvm install 20
-            - nvm use 20
-            - node -v
             - corepack enable
             - corepack prepare pnpm@9.15.0 --activate
-            - env | grep -i npm_config | cut -d= -f1 | xargs -I {} unset {} 2>/dev/null || true
-            - pnpm install
+            - unset npm_config_legacy_peer_deps
+            - unset npm_config___l_e_g_a_c_y___p_e_e_r___d_e_p_s_
+            - pnpm install --frozen-lockfile
         build:
           commands:
             - pnpm build
