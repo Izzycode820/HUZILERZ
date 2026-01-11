@@ -1,26 +1,25 @@
 version: 1
 
-frontend:
-  appRoot: frontend
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build
+            - cp -r public .next/standalone/public
+            - mkdir -p .next/standalone/.next
+            - cp -r .next/static .next/standalone/.next/static
 
-  phases:
-    preBuild:
-      commands:
-        - npm ci
+      artifacts:
+        baseDirectory: .next/standalone
+        files:
+          - '**/*'
 
-    build:
-      commands:
-        - npm run build
-        - cp -r public .next/standalone/public
-        - mkdir -p .next/standalone/.next
-        - cp -r .next/static .next/standalone/.next/static
-
-  artifacts:
-    baseDirectory: .next/standalone
-    files:
-      - '**/*'
-
-  cache:
-    paths:
-      - .next/cache/**/*
-      - node_modules/**/*
+      cache:
+        paths:
+          - .next/cache/**/*
+          - node_modules/**/*
