@@ -8,7 +8,7 @@ applications:
           commands:
             - corepack enable
             - corepack prepare pnpm@9.15.0 --activate
-            - pnpm install --frozen-lockfile
+            - pnpm install
         build:
           commands:
             - pnpm build
