@@ -1,24 +1,26 @@
 version: 1
-applications:
-  - frontend:
-      phases:
-        preBuild:
-          commands:
-            # Install pnpm globally (not included in Amplify by default)
-            - npm install -g pnpm@9.15.0
-            # Install all workspace dependencies from monorepo root
-            - cd ..
-            - pnpm install
-            - cd frontend
-        build:
-          commands:
-            - npx next build
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
-          - .next/cache/**/*
-    appRoot: frontend
+
+frontend:
+  appRoot: frontend
+
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+
+    build:
+      commands:
+        - npm run build
+        - cp -r public .next/standalone/public
+        - mkdir -p .next/standalone/.next
+        - cp -r .next/static .next/standalone/.next/static
+
+  artifacts:
+    baseDirectory: .next/standalone
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*
