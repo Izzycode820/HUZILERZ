@@ -54,6 +54,9 @@ const nextConfig: NextConfig = {
   experimental: {
     // Allow imports from outside the Next.js root directory (workspace themes)
     externalDir: true,
+    // 🔴 CRITICAL: Allow standalone to trace deps from monorepo root
+    // @ts-expect-error - Valid Next.js option, not in type definitions
+    outputFileTracingRoot: path.join(__dirname, '..'),
   },
 };
 
