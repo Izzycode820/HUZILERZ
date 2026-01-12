@@ -35,6 +35,9 @@ class StorefrontPasswordMiddleware(MiddlewareMixin):
     Place high in MIDDLEWARE list (after session middleware)
     """
 
+    # Subdomains that are NOT storefronts (infrastructure subdomains)
+    EXCLUDED_SUBDOMAINS = ['api', 'www', 'admin', 'cdn', 'static', 'media']
+
     # Paths that bypass password check (infrastructure/admin paths)
     BYPASS_PATHS = [
         '/admin/',
@@ -58,6 +61,14 @@ class StorefrontPasswordMiddleware(MiddlewareMixin):
         # Skip for bypass paths (admin, API, static files)
         if any(request.path.startswith(path) for path in self.BYPASS_PATHS):
             return None
+
+        # Skip for excluded subdomains (api, www, admin, etc.)
+        # These are infrastructure subdomains, not storefronts
+        hostname = request.get_host().split(':')[0].lower()
+        if '.huzilerz.com' in hostname:
+            subdomain = hostname.replace('.huzilerz.com', '')
+            if subdomain in self.EXCLUDED_SUBDOMAINS:
+                return None
 
         # Resolve DeployedSite from hostname
         site = self._resolve_deployed_site(request)
