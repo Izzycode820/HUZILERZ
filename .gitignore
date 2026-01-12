@@ -31,3 +31,6 @@ frontend_whereiwork/
 
 # Windows Reserved Filenames (Fix for git add errors)
 themes/sneakers/v1.0.0/nul
+
+# Detached Repositories
+backend/
