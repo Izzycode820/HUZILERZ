@@ -218,21 +218,38 @@ EMAIL_VERIFICATION_TOKEN_EXPIRE_HOURS = 24
 PASSWORD_RESET_TOKEN_EXPIRE_HOURS = 1
 
 # Redis Configuration
-REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
-REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
-REDIS_DB = int(os.getenv('REDIS_DB', 0))
-REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None)
+REDIS_URL = config('REDIS_URL', default=None)
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'PASSWORD': REDIS_PASSWORD,
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                # SSL Verification usually handled by the URL scheme (rediss://)
+                # But for Upstash, we sometimes need to ignore cert reqs if needed, 
+                # generally rediss:// is enough.
+                'CONNECTION_POOL_KWARGS': {'ssl_cert_reqs': None} if 'rediss' in REDIS_URL else {}
+            }
         }
     }
-}
+else:
+    REDIS_HOST = config('REDIS_HOST', default='localhost')
+    REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
+    REDIS_DB = config('REDIS_DB', default=0, cast=int)
+    REDIS_PASSWORD = config('REDIS_PASSWORD', default=None)
+
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'PASSWORD': REDIS_PASSWORD,
+            }
+        }
+    }
 
 # Session configuration
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -467,32 +484,10 @@ if USE_LOCAL_HOSTING:
     LOCAL_NGINX_CONF_DIR = config('LOCAL_NGINX_CONF_DIR', default='./local_data/nginx/conf')
 
 # Cache Configuration
-# Try Redis first, fallback to DummyCache if Redis unavailable
-try:
-    import redis
-    # Test Redis connection
-    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, password=REDIS_PASSWORD, socket_connect_timeout=1)
-    r.ping()
-    # Redis is available
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}',
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'PASSWORD': REDIS_PASSWORD,
-            }
-        }
-    }
-    print("[OK] Using Redis cache")
-except Exception as e:
-    # Redis unavailable - use DummyCache (no caching, but app continues working)
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        }
-    }
-    print(f"[WARNING] Redis unavailable ({str(e)}), using DummyCache (no caching)")
+# We trust the CACHES configuration above. 
+# Removing the startup ping check which relies on implicit local parameters
+# and causes fallback to DummyCache when REDIS_URL is used.
+pass
 
 # Django Channels Configuration (WebSocket support)
 CHANNEL_LAYERS = {
@@ -505,8 +500,8 @@ CHANNEL_LAYERS = {
 }
 
 # Celery Configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = config('CELERY_BROKER_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default='redis://localhost:6379/0')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
