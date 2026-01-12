@@ -1,1 +1,0 @@
-# Root GraphQL schema package

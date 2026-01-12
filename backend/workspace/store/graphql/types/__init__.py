@@ -1,1 +1,0 @@
-# GraphQL Type Definitions

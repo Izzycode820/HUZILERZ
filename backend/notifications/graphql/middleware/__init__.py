@@ -1,1 +1,0 @@
-# Notification Auth Middleware
