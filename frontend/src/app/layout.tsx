@@ -1,13 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Providers } from './providers';
 import { Toaster } from '@/components/shadcn-ui/sonner';
+
+// Viewport configuration (Next.js 15+ - themeColor moved here)
+export const viewport: Viewport = {
+  themeColor: "#000000",
+};
 
 export const metadata: Metadata = {
   title: "Huzilaz Camp",
   description: "For all business  owners and upcomming entrepreneurs",
   manifest: "/manifest.json",
-  themeColor: "#000000",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
