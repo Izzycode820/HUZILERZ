@@ -41,7 +41,7 @@ function getThemePackages(): string[] {
 // });
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // Removed 'output: standalone' - not needed for EC2/PM2 deployment
   images: {
     unoptimized: true, // Disable image optimization for local files
     domains: ['localhost'],
@@ -51,12 +51,11 @@ const nextConfig: NextConfig = {
   },
   // Auto-transpile all theme packages from workspace
   transpilePackages: getThemePackages(),
+  // Moved outputFileTracingRoot out of experimental (Next.js 15 change)
+  outputFileTracingRoot: path.join(__dirname, '..'),
   experimental: {
     // Allow imports from outside the Next.js root directory (workspace themes)
     externalDir: true,
-    // 🔴 CRITICAL: Allow standalone to trace deps from monorepo root
-    // @ts-expect-error - Valid Next.js option, not in type definitions
-    outputFileTracingRoot: path.join(__dirname, '..'),
   },
 };
 

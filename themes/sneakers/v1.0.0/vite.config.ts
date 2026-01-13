@@ -16,19 +16,22 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'entry.mjs'),
-      formats: ['es'],
-      fileName: 'entry'
+      entry: resolve(__dirname, 'src/entry.tsx'),
+      formats: ['iife'],
+      name: 'HuziTheme',
+      fileName: 'bundle'
     },
     rollupOptions: {
       external: [],
       output: {
-        preserveModules: false,
-        inlineDynamicImports: true
+        format: 'iife',
+        inlineDynamicImports: true,
+        globals: {}
       }
     },
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
+    minify: 'terser'
   }
 })
