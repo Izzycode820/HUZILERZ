@@ -25,7 +25,7 @@
 ### Quick Status Check (2 minutes)
 ```bash
 # 1. SSH into frontend instance
-ssh -i ~/path/to/key.pem ubuntu@3.213.99.18
+ssh -i ssh -i C:/S.T.E.V.E/V2/HUZILERZ/backend/aws/huzilerz-key.pem  ubuntu@3.213.99.18
 
 # 2. Check PM2 status
 pm2 status

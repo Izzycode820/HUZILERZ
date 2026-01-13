@@ -4,6 +4,7 @@ import { setContext } from '@apollo/client/link/context'
 import { onError } from '@apollo/client/link/error'
 import { useAuthStore } from '@/stores/authentication/authStore'
 import { useWorkspaceStore, workspaceSelectors } from '@/stores/authentication/workspaceStore'
+import { API_CONFIG } from '@/services/api/config'
 
 /*
 Later (When You Move to CDN):
@@ -54,7 +55,7 @@ const errorLink = onError(({ graphQLErrors, networkError }: any) => {
 
 // Admin Store API Client (Workspace-scoped)
 const uploadLink = new UploadHttpLink({
-  uri: 'http://localhost:8000/api/workspaces/store/graphql/',
+  uri: `${API_CONFIG.baseURL}/api/workspaces/store/graphql/`,
   credentials: 'include',
 })
 
@@ -88,7 +89,7 @@ export const adminStoreClient = new ApolloClient({
 
 // Admin Store API Client (Workspace-scoped)
 const hostinguploadLink = new UploadHttpLink({
-  uri: 'http://localhost:8000/api/workspaces/hosting/graphql/',
+  uri: `${API_CONFIG.baseURL}/api/workspaces/hosting/graphql/`,
   credentials: 'include',
 })
 
@@ -122,7 +123,7 @@ export const hostinClient = new ApolloClient({
 
 // Theme API Client (Public theme store + authenticated mutations)
 const themeUploadLink = new UploadHttpLink({
-  uri: 'http://localhost:8000/api/themes/graphql/',
+  uri: `${API_CONFIG.baseURL}/api/themes/graphql/`,
   credentials: 'include',
 })
 
@@ -136,7 +137,7 @@ export const themeClient = new ApolloClient({
 
 // Subscription API Client (Public plan showcase + authenticated subscription management)
 const subscriptionUploadLink = new UploadHttpLink({
-  uri: 'http://localhost:8000/api/subscriptions/graphql/',
+  uri: `${API_CONFIG.baseURL}/api/subscriptions/graphql/`,
   credentials: 'include',
 })
 
@@ -167,7 +168,7 @@ export const subscriptionClient = new ApolloClient({
 
 // Notification API Client (Authenticated)
 const notificationUploadLink = new UploadHttpLink({
-  uri: 'http://localhost:8000/api/notifications/graphql/',
+  uri: `${API_CONFIG.baseURL}/api/notifications/graphql/`,
   credentials: 'include',
 })
 
