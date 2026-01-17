@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/shadcn-ui/skeleton';
 import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 import { Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
 import { Button } from '@/components/shadcn-ui/button';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 // About Page Skeleton
 function AboutSkeleton() {
@@ -157,7 +157,7 @@ export default function AboutPage() {
                     Browse our collection of premium products.
                 </p>
                 <Button asChild size="lg" className="rounded-none uppercase font-bold tracking-wide">
-                    <Link href="/products">View Products</Link>
+                    <Link to="/products">View Products</Link>
                 </Button>
             </div>
         </div>

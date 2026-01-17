@@ -8,6 +8,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ApolloProvider } from '@apollo/client/react';
+import { BrowserRouter } from 'react-router-dom';
 import { Render } from '@measured/puck';
 import config from '../puck.config';
 import defaultData from '../puck.data.json';
@@ -84,9 +85,11 @@ async function initTheme() {
     root.render(
       <React.StrictMode>
         <ApolloProvider client={storefrontClient}>
-          <div className="min-h-screen bg-white">
-            <Render config={config as any} data={finalPuckData} />
-          </div>
+          <BrowserRouter>
+            <div className="min-h-screen bg-white">
+              <Render config={config as any} data={finalPuckData} />
+            </div>
+          </BrowserRouter>
         </ApolloProvider>
       </React.StrictMode>
     );

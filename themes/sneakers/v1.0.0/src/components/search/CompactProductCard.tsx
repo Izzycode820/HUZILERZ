@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
+
+import { Link } from 'react-router-dom';
 import { ShoppingBag, Heart } from 'lucide-react';
 import { Button } from '../shadcn-ui/button';
 

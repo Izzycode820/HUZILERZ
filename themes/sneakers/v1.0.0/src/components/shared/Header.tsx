@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, ShoppingBag, User, X } from 'lucide-react';
 import { Button } from '../shadcn-ui/button';
 import { useSession } from '@/lib/session/SessionProvider';
@@ -13,7 +12,7 @@ import { SearchInput } from '../search/SearchInput';
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const pathname = usePathname();
+    const { pathname } = useLocation();
     const { guestSessionId } = useSession();
 
     // Get cart data from cache only - no network requests to prevent re-renders
@@ -46,7 +45,7 @@ export function Header() {
 
                 {/* Logo */}
                 <div className="flex items-center gap-2">
-                    <Link href="/" className="text-2xl font-bold tracking-tighter sm:text-3xl uppercase">
+                    <Link to="/" className="text-2xl font-bold tracking-tighter sm:text-3xl uppercase">
                         SNEAKERS
                     </Link>
                 </div>
@@ -74,13 +73,13 @@ export function Header() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-3">
-                    <Link href="/login">
+                    <Link to="/login">
                         <Button variant="ghost" size="icon" aria-label="Account" className="h-11 w-11">
                             <User className="h-6 w-6" />
                         </Button>
                     </Link>
 
-                    <Link href="/cart">
+                    <Link to="/cart">
                         <Button variant="ghost" size="icon" className="relative group h-11 w-11" aria-label="Cart" id="cart-button">
                             <ShoppingBag className="h-6 w-6" />
                             {cartItemCount > 0 && (

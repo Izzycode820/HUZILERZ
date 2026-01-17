@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+
 import { cn } from '@/lib/utils';
 import { GetProductDetailsQuery } from '@/services/products/__generated__/get-product-details.generated';
 

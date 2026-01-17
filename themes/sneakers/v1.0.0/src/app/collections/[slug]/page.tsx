@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@apollo/client/react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProductCard from "@/components/shared/ProductCard";
 import { GetCategoryProductsDocument } from "@/services/categories/__generated__/get-category-products.generated";
 import { useStoreSlug } from "@/lib/utils/store-identifier";
@@ -27,7 +27,7 @@ export default function CollectionPage() {
       <div className="border-b border-gray-200 bg-gray-50 px-8 py-8">
         <div className="container mx-auto max-w-7xl">
           <nav className="mb-4 flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/products" className="hover:text-gray-900">
+            <Link to="/products" className="hover:text-gray-900">
               All Products
             </Link>
             <span>›</span>
@@ -59,7 +59,7 @@ export default function CollectionPage() {
         {!loading && !error && products.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12">
             <p className="mb-4 text-gray-600">No products found in this collection.</p>
-            <Link href="/products" className="text-blue-600 hover:underline">
+            <Link to="/products" className="text-blue-600 hover:underline">
               Browse all products
             </Link>
           </div>

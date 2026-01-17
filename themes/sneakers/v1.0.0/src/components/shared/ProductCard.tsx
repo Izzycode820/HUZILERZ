@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
+
 import { Heart, ShoppingBag } from 'lucide-react';
 import { Button } from '../shadcn-ui/button';
 import { cn } from '@/lib/utils';
@@ -57,7 +57,7 @@ export default function ProductCard({
 
   return (
     <div className="group relative flex flex-col overflow-hidden bg-card transition-all hover:shadow-lg">
-      <Link href={`/products/${slug}`} className="relative aspect-[3/4] overflow-hidden bg-muted">
+      <Link to={`/products/${slug}`} className="relative aspect-[3/4] overflow-hidden bg-muted">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -108,7 +108,7 @@ export default function ProductCard({
 
       <div className="flex flex-1 flex-col p-4">
         <h3 className="text-sm font-medium text-foreground">
-          <Link href={`/products/${slug}`}>
+          <Link to={`/products/${slug}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {name}
           </Link>

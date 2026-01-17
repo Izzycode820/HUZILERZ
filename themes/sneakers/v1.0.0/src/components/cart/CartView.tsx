@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
+
 import { useQuery, useMutation } from '@apollo/client/react';
 import { useSession } from '@/lib/session/SessionProvider';
 import { GetCartDocument } from '@/services/cart/__generated__/get-cart.generated';
@@ -259,7 +259,7 @@ export function CartView() {
                 <h1 className="text-3xl font-black uppercase tracking-tighter">Your Cart is Empty</h1>
                 <p className="text-muted-foreground">Looks like you haven't added anything yet.</p>
                 <Button asChild size="lg" className="rounded-none uppercase font-bold tracking-wide">
-                    <Link href="/products">
+                    <Link to="/products">
                         Continue Shopping
                     </Link>
                 </Button>
@@ -291,12 +291,10 @@ export function CartView() {
                                     {/* Product Image */}
                                     <div className="relative h-28 w-24 flex-none overflow-hidden bg-muted">
                                         {item.product.mediaUploads?.[0]?.thumbnailWebp && (
-                                            <Image
+                                            <img
                                                 src={item.product.mediaUploads[0].thumbnailWebp}
                                                 alt={item.product.name}
-                                                fill
-                                                className="object-cover"
-                                                unoptimized
+                                                className="w-full h-full object-cover"
                                             />
                                         )}
                                     </div>
@@ -438,13 +436,13 @@ export function CartView() {
                         </div>
 
                         <Button className="mt-6 w-full rounded-none uppercase font-bold tracking-wide h-12" asChild>
-                            <Link href="/checkout">
+                            <Link to="/checkout">
                                 Checkout <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                         </Button>
 
                         <div className="mt-4 text-center">
-                            <Link href="/products" className="text-sm font-medium text-muted-foreground hover:text-foreground underline transition-colors">
+                            <Link to="/products" className="text-sm font-medium text-muted-foreground hover:text-foreground underline transition-colors">
                                 Continue Shopping
                             </Link>
                         </div>

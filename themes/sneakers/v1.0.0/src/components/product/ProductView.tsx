@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@apollo/client/react';
-import { notFound } from 'next/navigation';
+import { Navigate } from 'react-router-dom';
 import { GetProductDetailsDocument } from '@/services/products/__generated__/get-product-details.generated';
 import { ProductGallery } from './ProductGallery';
 import { ProductInfo } from './ProductInfo';

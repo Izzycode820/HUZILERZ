@@ -3,7 +3,7 @@
 import { CheckCircle2, Clock, Package, Truck, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/shadcn-ui/button';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 interface OrderTrackingResultProps {
     order: {
@@ -147,12 +147,12 @@ export function OrderTrackingResult({ order, onBack }: OrderTrackingResultProps)
                 <div className="mt-12 pt-8 border-t border-border">
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button asChild variant="default" size="lg" className="rounded-none font-bold uppercase tracking-wide">
-                            <Link href="/products">
+                            <Link to="/products">
                                 Continue Shopping
                             </Link>
                         </Button>
                         <Button asChild variant="outline" size="lg" className="rounded-none font-bold uppercase tracking-wide">
-                            <Link href="/">
+                            <Link to="/">
                                 Return Home
                             </Link>
                         </Button>

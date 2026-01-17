@@ -10,7 +10,7 @@ import { GetCartDocument } from '@/services/cart/__generated__/get-cart.generate
 import { useSession } from '@/lib/session/SessionProvider';
 import { triggerFlyToCartAnimation } from '@/lib/animations/flyToCart';
 import { CompactProductCard } from './CompactProductCard';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 /**
  * Search Modal Component

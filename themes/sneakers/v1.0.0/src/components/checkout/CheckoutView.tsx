@@ -16,8 +16,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/shadcn-ui/radio-group';
 import { Skeleton } from '@/components/shadcn-ui/skeleton';
 import { Loader2, CheckCircle2, MessageCircle, Tag, MapPin, Truck, ArrowLeft, CreditCard, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
+
 import { toast } from 'sonner';
 import { Breadcrumbs } from '@/components/shared/Breadcrumbs';
 
@@ -381,7 +381,7 @@ export function CheckoutView() {
                 )}
                 <div className="flex gap-4 w-full">
                     <Button asChild variant="outline" className="flex-1 rounded-none">
-                        <Link href="/products">Continue Shopping</Link>
+                        <Link to="/products">Continue Shopping</Link>
                     </Button>
                 </div>
             </div>
@@ -400,7 +400,7 @@ export function CheckoutView() {
                 <h1 className="text-3xl font-black uppercase tracking-tighter">Your Cart is Empty</h1>
                 <p className="text-muted-foreground">Add some items before checking out.</p>
                 <Button asChild size="lg" className="rounded-none uppercase font-bold tracking-wide">
-                    <Link href="/products">Browse Products</Link>
+                    <Link to="/products">Browse Products</Link>
                 </Button>
             </div>
         );
@@ -417,7 +417,7 @@ export function CheckoutView() {
             />
 
             <div className="flex items-center gap-4 mb-12">
-                <Link href="/cart" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/cart" className="text-muted-foreground hover:text-foreground transition-colors">
                     <ArrowLeft className="h-5 w-5" />
                 </Link>
                 <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
@@ -657,12 +657,10 @@ export function CheckoutView() {
                                         <div key={item.id} className="flex gap-3">
                                             <div className="relative h-16 w-16 flex-none bg-muted overflow-hidden">
                                                 {item.product.mediaUploads?.[0]?.thumbnailWebp && (
-                                                    <Image
+                                                    <img
                                                         src={item.product.mediaUploads[0].thumbnailWebp}
                                                         alt={item.product.name}
-                                                        fill
-                                                        className="object-cover"
-                                                        unoptimized
+                                                        className="w-full h-full object-cover"
                                                     />
                                                 )}
                                             </div>
@@ -751,7 +749,7 @@ export function CheckoutView() {
                             {/* Back to Cart */}
                             <div className="mt-4 text-center">
                                 <Link
-                                    href="/cart"
+                                    to="/cart"
                                     className="text-sm font-medium text-muted-foreground hover:text-foreground underline transition-colors"
                                 >
                                     ← Back to Cart
