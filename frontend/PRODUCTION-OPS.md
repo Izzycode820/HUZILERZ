@@ -104,7 +104,7 @@ git push origin master
 **On EC2 Frontend Instance:**
 ```bash
 # 3. SSH into instance
-ssh -i ~/key.pem ubuntu@3.213.99.18
+ssh -i C:/S.T.E.V.E/V2/HUZILERZ/backend/aws/huzilerz-key.pem  ubuntu@3.213.99.18
 
 # 4. Navigate to repo
 cd /home/ubuntu/HUZILERZ
@@ -115,6 +115,9 @@ git pull origin master
 # 6. Install any new dependencies
 cd frontend
 pnpm install
+
+#activate production mode 
+NODE_ENV=production
 
 # 7. Rebuild application
 NODE_OPTIONS="--max-old-space-size=4096" npx next build

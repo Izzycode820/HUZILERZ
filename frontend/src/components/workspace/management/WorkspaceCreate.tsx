@@ -7,13 +7,13 @@ import { IconBuildingStore } from '@tabler/icons-react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
 
 // Shadcn/UI Components
 import { Button } from '@/components/shadcn-ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/shadcn-ui/card'
 import { Input } from '@/components/shadcn-ui/input'
 import { Textarea } from '@/components/shadcn-ui/textarea'
-import { Alert, AlertDescription } from '@/components/shadcn-ui/alert'
 
 // Hooks
 import { useWorkspaceManagement } from '@/hooks/workspace/core/useWorkspaceManagement'
@@ -50,10 +50,11 @@ interface WorkspaceCreateProps {
 /**
  * Workspace Create Component - Store Only
  * Simplified workspace creation - only supports 'store' type workspaces
+ * Shows toast errors and stays on page when creation fails
  */
 export function WorkspaceCreate({ onWorkspaceCreate, className }: WorkspaceCreateProps) {
   const router = useRouter()
-  const { createWorkspace, isCreating, error, clearError } = useWorkspaceManagement()
+  const { createWorkspace, isCreating } = useWorkspaceManagement()
 
   const form = useForm<CreateWorkspaceFormValues>({
     resolver: zodResolver(createWorkspaceSchema),
@@ -64,14 +65,6 @@ export function WorkspaceCreate({ onWorkspaceCreate, className }: WorkspaceCreat
     mode: 'onBlur'
   })
 
-  // Clear errors when form values change
-  const watchedValues = form.watch(['name', 'description'])
-  React.useEffect(() => {
-    if (error) {
-      clearError()
-    }
-  }, [error, clearError, watchedValues])
-
   const onSubmit = async (data: CreateWorkspaceFormValues) => {
     try {
       const response = await createWorkspace({
@@ -80,12 +73,17 @@ export function WorkspaceCreate({ onWorkspaceCreate, className }: WorkspaceCreat
         description: data.description?.trim() || undefined
       })
 
+      // Success - notify callback and navigate
       onWorkspaceCreate?.(response)
-
-      // Redirect to workspace listing dashboard
+      toast.success('Workspace created successfully!')
       router.push('/workspace')
     } catch (err) {
-      // Error is handled by the hook
+      // Error - show toast and stay on page (don't navigate)
+      const errorMessage = err instanceof Error
+        ? err.message
+        : 'Failed to create workspace. Please try again.'
+
+      toast.error(errorMessage)
       console.error('Failed to create workspace:', err)
     }
   }
@@ -129,15 +127,6 @@ export function WorkspaceCreate({ onWorkspaceCreate, className }: WorkspaceCreat
 
             <CardContent>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* Error Display */}
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertDescription>
-                      {error}
-                    </AlertDescription>
-                  </Alert>
-                )}
-
                 {/* Workspace Name */}
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-foreground">
