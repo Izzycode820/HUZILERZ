@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 
 # Configuration
 $S3_BUCKET = "huzilerz-themes"
-$CLOUDFRONT_DISTRIBUTION_ID = "E2C7AGJ9F3E9JP"
+$CLOUDFRONT_DISTRIBUTION_ID = "E3W2NLQ3EIJT6I"
 $THEME_NAME = "sneakers"
 
 Write-Host "================================" -ForegroundColor Blue
@@ -65,14 +65,14 @@ if (Test-Path "screenshots") {
 }
 
 # Step 4: Upload entire dist directory to S3
-$S3_PREFIX = "$THEME_NAME/$VERSION"
+$S3_PREFIX = "themes/$THEME_NAME/$VERSION"
 $S3_URI = "s3://$S3_BUCKET/$S3_PREFIX/"
 $CDN_URL = "https://cdn.huzilerz.com/$S3_PREFIX"
 
 Write-Host "Uploading to S3..." -ForegroundColor Blue
 Write-Host "  Destination: $S3_URI" -ForegroundColor Cyan
 
-# Sync entire dist folder with appropriate content types
+# Sync entire dist folder (public access via bucket policy, not ACLs)
 aws s3 sync dist/ $S3_URI `
     --cache-control "public, max-age=31536000, immutable" `
     --metadata "theme=$THEME_NAME,version=$VERSION" `

@@ -26,8 +26,7 @@ const storeIdentificationLink = setContext((_, { headers }) => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     const params = new URLSearchParams(window.location.search)
     const storeSlug = params.get('store') || 'demo-store'
-    const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'huzilerz.com'
-    storeHostname = `${storeSlug}.${rootDomain}`
+    storeHostname = `${storeSlug}.huzilerz.com`
   }
 
   console.log('[Apollo Store ID] Sending hostname:', {
@@ -44,37 +43,59 @@ const storeIdentificationLink = setContext((_, { headers }) => {
   }
 })
 
-// Domain-based GraphQL endpoint (workspace identified by hostname)
-const httpLink = new HttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI || 'http://localhost:8000/api/graphql',
-  credentials: 'include',
-})
+// Lazy client initialization - waits for window config
+let clientInstance: ApolloClient | null = null
 
-// Sneakers Theme Storefront Client
-export const storefrontClient = new ApolloClient({
-  link: from([
-    errorLink,
-    storeIdentificationLink.concat(httpLink),
-  ]),
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          products: {
-            merge(existing, incoming) {
-              return incoming
+function createStorefrontClient(): ApolloClient {
+  // Get GraphQL endpoint from window config (injected by backend)
+  const graphqlEndpoint = typeof window !== 'undefined'
+    ? (window as any).__HUZILERZ_STORE_CONFIG__?.graphqlEndpoint
+    : null
+
+  const uri = graphqlEndpoint || 'http://localhost:8000/api/graphql'
+
+  console.log('[Apollo Client] Initializing with endpoint:', uri)
+
+  const httpLink = new HttpLink({
+    uri,
+    credentials: 'include',
+  })
+
+  return new ApolloClient({
+    link: from([
+      errorLink,
+      storeIdentificationLink.concat(httpLink),
+    ]),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            products: {
+              merge(existing, incoming) {
+                return incoming
+              },
             },
           },
         },
       },
+    }),
+    defaultOptions: {
+      watchQuery: {
+        errorPolicy: 'all',
+      },
+      query: {
+        errorPolicy: 'all',
+      },
     },
-  }),
-  defaultOptions: {
-    watchQuery: {
-      errorPolicy: 'all',
-    },
-    query: {
-      errorPolicy: 'all',
-    },
-  },
+  })
+}
+
+// Export getter that lazily creates client on first access
+export const storefrontClient = new Proxy({} as ApolloClient, {
+  get(target, prop) {
+    if (!clientInstance) {
+      clientInstance = createStorefrontClient()
+    }
+    return (clientInstance as any)[prop]
+  }
 })
